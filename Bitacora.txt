@@ -1,0 +1,2 @@
+Martes 7-6-2020: 
+Dos horas y cuarenta minutos, aprendimos a usar Github, buscamos sprites, el mapa, como utilizar funciones de pygame e hicimos pruebas con el Github
