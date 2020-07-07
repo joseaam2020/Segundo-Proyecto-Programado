@@ -12,7 +12,7 @@ running = True
 
 while running:
 
-    mouse = 0
+    mouse = False
 
     screen.fill((0,250,0))
 
@@ -21,10 +21,11 @@ while running:
             running = False
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            mouse += 1
-            if mouse >= 3:
+            mouse = True
+            if mouse == True :
                 screen.fill((0,0,0))
                 running = False
+                
 
     pygame.display.update()
 
