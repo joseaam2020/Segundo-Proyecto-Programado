@@ -122,8 +122,6 @@ def juego():
         for fila in primer_escenario:
             x = 0
             for columna in fila:
-                if columna == '0':
-                    display.blit(escudero,(x*16,y*16))
                 if columna == '1':
                     display.blit(pared_izquierda,(x*16,y*16))
                 if columna == '2':
