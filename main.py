@@ -40,7 +40,8 @@ esquina_izquierda_arriba.set_colorkey((255,255,255))
 esquina_derecha_arriba.set_colorkey((255,255,255))
 pared_arriba.set_colorkey((255,255,255))
 
-
+#Cargando imagenes de avatares
+escudero=pygame.image.load('Tiles1/frames/knight_m_idle_anim_f0.png')
 #pared_izquierda.set_colorkey(())
 
 #Cargando Mapas
@@ -122,7 +123,7 @@ def juego():
             x = 0
             for columna in fila:
                 if columna == '0':
-                    display.blit(casilla1,(x*16,y*16))
+                    display.blit(escudero,(x*16,y*16))
                 if columna == '1':
                     display.blit(pared_izquierda,(x*16,y*16))
                 if columna == '2':
