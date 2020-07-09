@@ -74,7 +74,7 @@ def menu_principal():
         #Creando Texto
         TowerDefense = texto("Tower Defense",font,(255,0,0),screen,200,0)
         Start = texto("Start",font,(255,0,0),screen,200,50)
-        Oprit
+        Opiton = texto("Options",font,(255,0,0),screen,200,100) 
 
         #Ciclo de eventos
         for event in pygame.event.get():
