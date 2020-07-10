@@ -4,4 +4,5 @@ Miercoles 8-7-2020:
 Tres horas de aprendizaje sobre el funcionamiento de pygame y como hacer que una imagen se mueva sobre la pantalla de forma fluida(Este ultimo punto no se ha logrado aún).
 Tambien se creo la primera version de uno se los escenarios. 
 Jueves 9-7-2020:
-5 horas trabajando en estudiar más sobre github, añadir partes al primer escenario, crear el segundo escenario y crear el menu. 
+5 horas trabajando en estudiar más sobre github, añadir partes al primer escenario, crear el segundo escenario y crear el menu.
+Tambien se logro animar el movimiento de los avatares. 
