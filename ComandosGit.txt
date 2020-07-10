@@ -1,8 +1,0 @@
-cd #para cambiar de directorio 
-ls and dir #para ver los documentos en el directorio 
-git add "nombre del archivo" #para agregar el archivo (hay que crearlo por separado)
-git status #para ver los cambios que se han realizado en los archivos y cuando hay que hacer commit
-git commit -m "Comentario" nombre del archivo #Paso antes del push 
-git push -u origin master #Para subir cambios a github 
-git pull #Para extraer los cambios realizados por otro de github (Basicamente hace fetch y merge al mismo tiempo)
-git fetch #Revisa si se han hecho actualizaciones
