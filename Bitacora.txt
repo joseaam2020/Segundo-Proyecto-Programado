@@ -1,0 +1,7 @@
+Martes 7-7-2020: 
+Dos horas y cuarenta minutos, aprendimos a usar Github, buscamos sprites, el mapa, como utilizar funciones de pygame e hicimos pruebas con el Github
+Miercoles 8-7-2020:
+Tres horas de aprendizaje sobre el funcionamiento de pygame y como hacer que una imagen se mueva sobre la pantalla de forma fluida(Este ultimo punto no se ha logrado aún).
+Tambien se creo la primera version de uno se los escenarios. 
+Jueves 9-7-2020:
+5 horas trabajando en estudiar más sobre github, añadir partes al primer escenario, crear el segundo escenario y crear el menu. 
