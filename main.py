@@ -4,6 +4,7 @@ from pathlib import Path
 #Iniciando Pygame y Clock
 clock = pygame.time.Clock()
 pygame.init()
+
 #Iniciando ventana
 window_size = (400,500)
 screen = pygame.display.set_mode(size=window_size)
@@ -30,16 +31,12 @@ def cargar_img_mapa(carpeta):
     for file in lista_archivos:
         lista= str(file).split()[0].split('\\')
         nombre_img= lista[1].strip(".png")
-        print(nombre_img)
         path = (lista[0] + '/' + lista[1])
-        print(path)
         img = pygame.image.load(path).convert()
-        print(img)
         img.set_colorkey((255,255,255))
         lista_tiles.append([nombre_img,img])
     return lista_tiles
 
-#print(mapa("mapa-prueba"))
 tiles = cargar_img_mapa("Tiles2")
 
 #Cargando Imagenes del menu
@@ -55,7 +52,6 @@ casilla4= pygame.image.load("Tiles2/casilla4.png").convert()
 
 #Cargando imagenes de avatares
 escudero=pygame.image.load('Tiles1/frames1/knight_m_idle_anim_f0.png')
-#pared_izquierda.set_colorkey(())
 
 #Cargando Mapas
 mapa = mapa("mapa")
@@ -70,19 +66,24 @@ font15 = pygame.font.SysFont('berlinsansfbdemi', 15)
 #E: un text, un tipo de font, un color(RGB),una superficie, coordenadas xy
 #S: se imprime en texto con el tipo de font y color en  la superficie, coordenadas(x,y)
 #R: - 
-def texto(texto, font, color, superficie,x,y):
+def texto(texto, font, color, superficie,x,y,posicion):
     text = font.render(texto,1,color)
     textrect = text.get_rect()
-    textrect.midtop = (x,y)
+    if posicion.upper() == "CENTRO":
+        textrect.midtop = (x,y)
+    else:
+        textrect.topleft = (x,y)
     superficie.blit(text,textrect)
     return textrect
 
 def menu_principal():
     #Iniciando ciclo
     running = True
+    
     #Cargado musica del menu e iniciandola
     pygame.mixer.music.load('Musica/003 - A Hint of Things to Come.mp3')
     pygame.mixer.music.play(1000)
+    
     #Iniciando ciclo de menu
     while running:
        
@@ -93,10 +94,10 @@ def menu_principal():
         escenario(-33)
 
         #Creando Texto
-        TowerDefense = texto("Tower Defense",font40,(255,255,255),screen,200,50)
-        Iniciar = texto("Iniciar",font35,(255,255,255),screen,200,100)
-        Opciones = texto("Opciones",font35,(255,255,255),screen,200,150)
-        Creditos = texto("Creditos",font35,(255,255,255),screen,200,200)
+        TowerDefense = texto("Tower Defense",font40,(255,255,255),screen,200,50,"centro")
+        Iniciar = texto("Iniciar",font35,(255,255,255),screen,200,100,"centro")
+        Opciones = texto("Opciones",font35,(255,255,255),screen,200,150,"centro")
+        Creditos = texto("Creditos",font35,(255,255,255),screen,200,200,"centro")
 
         #Ciclo de eventos
         for event in pygame.event.get():
@@ -137,7 +138,7 @@ def opciones():
         escenario(-33)
 
         #Creando Texto
-        TowerDefense = texto("Tower Defense",font40,(255,255,255),screen,200,50)
+        TowerDefense = texto("Tower Defense",font40,(255,255,255),screen,200,50,"centro")
 
         #Ciclo de eventos
         for event in pygame.event.get():
@@ -153,6 +154,12 @@ def opciones():
 def creditos():
     #Iniciando ciclo
     running = True
+
+    creditos = open("Creditos.txt")
+    creditos_lista = creditos.read()
+    creditos.close()
+    creditos_lista = creditos_lista.split('\n')
+    print(creditos_lista)
     
     #Iniciando ciclo de menu
     while running:
@@ -164,16 +171,26 @@ def creditos():
         escenario(-33)
 
         #Creando Texto
-        TowerDefense = texto("Tower Defense",font40,(255,255,255),screen,200,50)
+        TowerDefense = texto("Tower Defense",font40,(255,255,255),screen,200,50,"centro")
 
         #Cargando imagen del menu
         scrollrect = scroll.get_rect()
         scrollrect.midtop = (200,100)
+        
+        #Agregando Texto de Creditos
+        display_creditos = pygame.Surface((150,200))
+        display_creditos.fill((255,255,255))
+        display_creditos.set_colorkey((255,255,255))
+    
+        y = 0
+        for ele in creditos_lista:
+            texto(ele,font15,(0,0,0),display_creditos,0,y,"topleft")
+            y += 15
+
+        scroll.blit(display_creditos,(55,50))
+
         screen.blit(scroll,scrollrect)
 
-        #Agregando Texto de Creditos
-        texto(''' Hola''',font15,(0,0,0),scroll,75,50)
-        
         #Ciclo de eventos
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -209,9 +226,7 @@ def escenario(y_actual):
             if columna == '0':
                 pass
             else:
-                #print(columna)
                 imagen = buscar_tile(columna,tiles)
-                #print(imagen)
                 display.blit(imagen,(x*16,y*16))
             x += 1
         y += 1
@@ -223,11 +238,8 @@ def escenario(y_actual):
 #S: la superficie de esa tile
 #R: - 
 def buscar_tile(tile,tiles):
-    #print(tiles)
     for y in tiles:
-        #print(y[0],tile)
         if y[0] == tile:
-            #print(y[1])
             return y[1]
 
 #juego()
@@ -264,7 +276,6 @@ def juego():
                 running = False
                 #Se carga el menu principal otra vez
                 menu_principal()
-                
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if y < 0:
