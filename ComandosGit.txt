@@ -6,3 +6,4 @@ git commit -m "Comentario" nombre del archivo #Paso antes del push
 git push -u origin master #Para subir cambios a github 
 git pull #Para extraer los cambios realizados por otro de github (Basicamente hace fetch y merge al mismo tiempo)
 git fetch #Revisa si se han hecho actualizaciones
+git checkout 'nombre de la branch objetivo' #Se utiliza para cambiar de branch y revisarlas o hacer cambios en ellas, se aconseja si se realiza un cambio hacer push antes de cambiar de branch, no se utilizan comillas para el nombre

@@ -6,7 +6,10 @@ Tambien se creo la primera version de uno se los escenarios.
 Jueves 9-7-2020:
 5 horas trabajando en estudiar más sobre github, añadir partes al primer escenario, crear el segundo escenario y crear el menu.
 Tambien se logro animar el movimiento de los avatares. 
+<<<<<<< HEAD
 Viernes 10-7-2020:
 2 horas trabajando en el mapa
 Sabados 10-7-2020: 
 3 horas trabajando en el mapa
+=======
+>>>>>>> refs/remotes/origin/master
