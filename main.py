@@ -240,7 +240,7 @@ def juego():
     running = True
     #Se detiene la musica del menu e inicia la musica del juego
     pygame.mixer.music.stop()
-    pygame.mixer.music.load('Musica/pokemon-opening.mp3')
+    pygame.mixer.music.load('Musica/107 - battle (vs wild pokemon).mp3')
     pygame.mixer.music.play(1000)
     #Inciando Scrolling
     y = -33
@@ -264,6 +264,7 @@ def juego():
                 running = False
                 #Se carga el menu principal otra vez
                 menu_principal()
+                
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if y < 0:
