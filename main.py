@@ -4,7 +4,6 @@ from pathlib import Path
 #Iniciando Pygame y Clock
 clock = pygame.time.Clock()
 pygame.init()
-
 #Iniciando ventana
 window_size = (400,500)
 screen = pygame.display.set_mode(size=window_size)
@@ -12,7 +11,6 @@ pygame.display.set_caption("Proyecto Programado")
 
 #Creando Superficie 
 display = pygame.Surface((112,176))
-
 
 #Cargando Mapa
 def mapa(archivo):
@@ -82,10 +80,12 @@ def texto(texto, font, color, superficie,x,y):
 def menu_principal():
     #Iniciando ciclo
     running = True
-    
+    #Cargado musica del menu e iniciandola
+    pygame.mixer.music.load('Musica/003 - A Hint of Things to Come.mp3')
+    pygame.mixer.music.play(1000)
     #Iniciando ciclo de menu
     while running:
-
+       
         #Reiniciando pantalla
         screen.fill((0,0,0))
 
@@ -107,13 +107,18 @@ def menu_principal():
                 
                 if Iniciar.collidepoint(pos_mouse):
                     juego()
+                    pygame.mixer.music.stop()
                 if Opciones.collidepoint(pos_mouse):
                     opciones()
                 if Creditos.collidepoint(pos_mouse):
                     creditos()
                 
         pygame.display.update()
-
+    #Cerrando el ciclo de musica del menu principal
+    if pygame.quit():
+        pygame.mixer.music.stop
+        
+        
 #Opciones()
 #E: -
 #S: inicia el menu de opciones
@@ -233,10 +238,13 @@ def juego():
 
     #Iniciando ciclo
     running = True
-
+    #Se detiene la musica del menu e inicia la musica del juego
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load('Musica/pokemon-opening.mp3')
+    pygame.mixer.music.play(1000)
     #Inciando Scrolling
     y = -33
-    
+
     #Ciclo de juego
     while running:
 
@@ -254,6 +262,8 @@ def juego():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                #Se carga el menu principal otra vez
+                menu_principal()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if y < 0:
