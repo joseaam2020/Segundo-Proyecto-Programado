@@ -6,7 +6,7 @@ clock = pygame.time.Clock()
 pygame.init()
 
 #Iniciando ventana
-window_size = (400,500)
+window_size = (400,480)
 screen = pygame.display.set_mode(size=window_size)
 pygame.display.set_caption("Proyecto Programado")
 
@@ -52,6 +52,14 @@ casilla4= pygame.image.load("Tiles2/casilla4.png").convert()
 
 #Cargando imagenes de avatares
 escudero=pygame.image.load('Tiles1/frames1/knight_m_idle_anim_f0.png')
+
+#Cargando imagenes de rooks
+seleccionador1 = pygame.image.load("Tiles2/seleccionador1.png").convert()
+seleccionador2 = pygame.image.load("Tiles2/seleccionador2.png").convert()
+seleccionador_rook = pygame.image.load("Tiles2/seleccionador_rook.png").convert()
+seleccionador1.set_colorkey((255,255,255))
+seleccionador2.set_colorkey((255,255,255))
+seleccionador_rook.set_colorkey((255,255,255))
 
 #Cargando Mapas
 mapa = mapa("mapa")
@@ -115,10 +123,8 @@ def menu_principal():
                     creditos()
                 
         pygame.display.update()
-    #Cerrando el ciclo de musica del menu principal
-    if pygame.quit():
-        pygame.mixer.music.stop
-        
+
+    pygame.mixer.music.stop()
         
 #Opciones()
 #E: -
@@ -203,6 +209,7 @@ def creditos():
 #S: se crea el escenario en la pantalla
 #R: - 
 def escenario(y_actual):
+
     global tiles
     y = y_actual
     y_display = 0 
@@ -250,13 +257,19 @@ def juego():
 
     #Iniciando ciclo
     running = True
+    
     #Se detiene la musica del menu e inicia la musica del juego
     pygame.mixer.music.stop()
     pygame.mixer.music.load('Musica/018 - Enemies Appear.mp3')
     pygame.mixer.music.play(1000)
+    
     #Inciando Scrolling
     y = -33
 
+    #Inciando Seleccionador
+    seleccionador = pygame.transform.scale(seleccionador1,(53,43))
+    seleccionando_casilla= True
+    
     #Ciclo de juego
     while running:
 
@@ -264,11 +277,24 @@ def juego():
 
         #Reiniciando superficie y pantalla
         screen.fill((0,0,0))
-        display.fill((0,0,0))
-
 
         #Reiniciando escenario
         escenario(y)
+
+        #Posicionando seleccionador
+        mouse_pos = pygame.mouse.get_pos()
+        pos_x = mouse_pos[0]//58
+        pos_y = mouse_pos[1]//43
+
+        if pos_y >= 2 and pos_x >= 1 and pos_x <= 5 and seleccionando_casilla:
+            screen.blit(seleccionador,(pos_x*58,pos_y*43))
+        elif not seleccionando_casilla:
+            screen.blit(seleccionador,(copia_posx*58,copia_posy*43))
+            rook_rect = seleccionador_rook.get_rect()
+            rook_rect.topleft = (copia_posx*58-5,copia_posy*43-70)
+            screen.blit(seleccionador_rook,rook_rect)
+        else:
+            pass 
         
         #Ciclo de Eventos
         for event in pygame.event.get():
@@ -278,17 +304,45 @@ def juego():
                 menu_principal()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if y < 0:
-                    meta = y + 11
-                    while y != meta:
-                        escenario(int(y))
-                        y += 0.25
-                        pygame.display.update()
-                    y = int(y)
+                if seleccionando_casilla:
+                    copia_posx = pos_x 
+                    copia_posy = pos_y
+                    seleccionador = pygame.transform.scale(seleccionador2,(53,43))
+                    seleccionando_casilla = False
                 else:
-                    pass
+                    if rook_rect.collidepoint(mouse_pos):
+                        seleccion_x = mouse_pos[0] - rook_rect.x
+                        seleccion_y = mouse_pos[1] - rook_rect.y
+                        if seleccion_x < rook_rect.width/2:
+                            if seleccion_y < rook_rect.height/2:
+                                print("Rook sand")
+                            else:
+                                print("Rook rock")
+                        else:
+                            if seleccion_y < rook_rect.height/2:
+                                print("Rook water")
+                            else:
+                                print("Rook fire")
+                    else:
+                        pass
+                    seleccionador = pygame.transform.scale(seleccionador1,(53,43))
+                    seleccionando_casilla = True
+
+                    
+                    
+                #if y < 0:
+                 #   meta = y + 11
+                  #  while y != meta:
+                   #     escenario(int(y))
+                   #     y += 0.25
+                   #     pygame.display.update()
+                    #y = int(y)
+                #else:
+                   #pass
+
 
         pygame.display.update()
+        clock.tick(60)
 
 menu_principal()
 
