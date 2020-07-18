@@ -17,27 +17,85 @@ display = pygame.Surface((112,176))
 def mapa(archivo):
     copia = open(archivo+".txt")
     mapa_lista = copia.read()
-    copia.close
+    copia.close()
     mapa_lista = mapa_lista.split('\n')
     for y in range(len(mapa_lista)):
         mapa_lista[y] = mapa_lista[y].split()
     return(mapa_lista)
 
-#Cargando Mapa
-def cargar_img_mapa(carpeta):
+#cargar_img
+#E: nombre de la caprpeta donde se encuentran las imagenes
+#S: lista de la forma [[nombre de la imagen(string), superficie]]
+#R: -
+def cargar_img(carpeta):
     path = Path(".")/carpeta
     lista_archivos = list(path.iterdir())
-    lista_tiles = []
+    lista_img = []
     for file in lista_archivos:
         lista= str(file).split()[0].split('\\')
         nombre_img= lista[1].strip(".png")
-        path = (lista[0] + '/' + lista[1])
-        img = pygame.image.load(path).convert()
-        img.set_colorkey((255,255,255))
-        lista_tiles.append([nombre_img,img])
-    return lista_tiles
+        if nombre_img == "desktop.ini":
+            pass
+        else:
+            path = (lista[0] + '/' + lista[1])
+            img = pygame.image.load(path).convert()
+            img.set_colorkey((255,255,255))
+            lista_img.append([nombre_img,img])
+    return lista_img
 
-tiles = cargar_img_mapa("Tiles2")
+#Cargando Imagenes del Mapa
+tiles = cargar_img("Tiles2")
+
+#Cargando Mapas
+mapa = mapa("mapa")
+
+#crear_matriz
+#E: numero de filas n y numero de columnas m
+#S: matriz nxm llena con ceros
+#R: - 
+def crear_matriz(n,m):
+    matriz = []
+    for fila in range(0,n):
+        intermedio = []
+        matriz.append(intermedio)
+        for columna in range(0,m):
+            intermedio.append(0)
+    return matriz
+        
+#Colorcar en matriz
+#E: matriz en la que se quiere colocar,elemento,donde se quiere colorcar (nxm)
+#S: matriz con el elemento en posicion dad
+#R: -
+def colocar_matriz(matriz,ele,n,m):
+    matriz[n][m] = ele
+
+#Cargando Rooks
+matriz_rooks = crear_matriz(9,5)
+img_rooks = cargar_img("Rooks")
+print(img_rooks)
+
+#Leer matriz rooks
+#E: una superficien
+#S: blit de los elementos de la matriz_rooks
+def leer_matriz_rooks(superficie):
+    global matriz_rooks
+    n= len(matriz_rooks)
+    m= len(matriz_rooks[0])
+
+    for fila in range(0,n):
+        for columna in range(0,m):
+            #print(fila,columna)
+            ele = matriz_rooks[fila][columna]
+            if ele == "1":
+                superficie.blit("desierto_rook",(m*16,n*16))
+            elif ele == "2":
+                superficie.blit("rock_rook",(m*16,n*16))
+            elif ele == "3":
+                superficie.blit("water_rook",(m*16,n*16))
+            elif ele == "4":
+                superficie.blit("fire_rook",(m*16,n*16))
+            else:
+                pass
 
 #Cargando Imagenes del menu
 scroll = pygame.image.load("Tiles2/scroll.png").convert()
@@ -61,10 +119,7 @@ seleccionador1.set_colorkey((255,255,255))
 seleccionador2.set_colorkey((255,255,255))
 seleccionador_rook.set_colorkey((255,255,255))
 
-#Cargando Mapas
-mapa = mapa("mapa")
-
-#Creand fonts 
+#Creando fonts 
 font40 = pygame.font.SysFont('berlinsansfbdemi', 40)
 font35 = pygame.font.SysFont('berlinsansfbdemi', 35)
 font30 = pygame.font.SysFont('berlinsansfbdemi', 30)
@@ -233,10 +288,12 @@ def escenario(y_actual):
             if columna == '0':
                 pass
             else:
-                imagen = buscar_tile(columna,tiles)
+                imagen = buscar_img(columna,tiles)
                 display.blit(imagen,(x*16,y*16))
             x += 1
         y += 1
+
+    leer_matriz_rooks(display)
 
     screen.blit(pygame.transform.scale(display,(window_size)),(0,0))#Tansformando superficie a la escala de la ventana
 
@@ -244,9 +301,9 @@ def escenario(y_actual):
 #E: El nombre del tile que se busca y la lista de tiles
 #S: la superficie de esa tile
 #R: - 
-def buscar_tile(tile,tiles):
-    for y in tiles:
-        if y[0] == tile:
+def buscar_img(nombre,lista):
+    for y in lista:
+        if y[0] == nombre:
             return y[1]
 
 #juego()
@@ -313,22 +370,29 @@ def juego():
                     if rook_rect.collidepoint(mouse_pos):
                         seleccion_x = mouse_pos[0] - rook_rect.x
                         seleccion_y = mouse_pos[1] - rook_rect.y
+                        #Id de los diferentes rooks en la matriz
+                        #Sand = 1
+                        #Rock = 2
+                        #Water = 3
+                        #Fire = 4
                         if seleccion_x < rook_rect.width/2:
                             if seleccion_y < rook_rect.height/2:
                                 print("Rook sand")
+                                colocar_matriz(matriz_rooks,1,pos_y,pos_x-1)
                             else:
                                 print("Rook rock")
+                                colocar_matriz(matriz_rooks,2,pos_y,pos_x-1)
                         else:
                             if seleccion_y < rook_rect.height/2:
                                 print("Rook water")
+                                colocar_matriz(matriz_rooks,3,pos_y,pos_x-1)
                             else:
                                 print("Rook fire")
+                                colocar_matriz(matriz_rooks,4,pos_y,pos_x-1)
                     else:
                         pass
                     seleccionador = pygame.transform.scale(seleccionador1,(53,43))
                     seleccionando_casilla = True
-
-                    
                     
                 #if y < 0:
                  #   meta = y + 11
@@ -339,7 +403,6 @@ def juego():
                     #y = int(y)
                 #else:
                    #pass
-
 
         pygame.display.update()
         clock.tick(60)
