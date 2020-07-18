@@ -79,21 +79,21 @@ print(img_rooks)
 #S: blit de los elementos de la matriz_rooks
 def leer_matriz_rooks(superficie):
     global matriz_rooks
+    global im_roo
     n= len(matriz_rooks)
     m= len(matriz_rooks[0])
 
     for fila in range(0,n):
         for columna in range(0,m):
-            #print(fila,columna)
-            ele = matriz_rooks[fila][columna]
+            ele = str(matriz_rooks[fila][columna])
             if ele == "1":
-                superficie.blit("desierto_rook",(m*16,n*16))
+                superficie.blit(buscar_img("desierto_rook",img_rooks),(columna*16,fila*16))
             elif ele == "2":
-                superficie.blit("rock_rook",(m*16,n*16))
+                superficie.blit(buscar_img("rock_rook",img_rooks),(columna*16,fila*16))
             elif ele == "3":
-                superficie.blit("water_rook",(m*16,n*16))
+                superficie.blit(buscar_img("water_rook",img_rooks),(columna*16,fila*16))
             elif ele == "4":
-                superficie.blit("fire_rook",(m*16,n*16))
+                superficie.blit(buscar_img("fire_rook",img_rooks),(columna*16,fila*16))
             else:
                 pass
 
@@ -389,6 +389,8 @@ def juego():
                             else:
                                 print("Rook fire")
                                 colocar_matriz(matriz_rooks,4,pos_y,pos_x-1)
+                        print(matriz_rooks)
+                            
                     else:
                         pass
                     seleccionador = pygame.transform.scale(seleccionador1,(53,43))
