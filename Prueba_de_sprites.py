@@ -12,11 +12,11 @@ pygame.display.set_caption("Prueba de Sprites")
 clock = pygame.time.Clock()
 Escudero = player.Escudero((ancho_ventana/2, alto_ventana))
 canibal=player.Caníbal(((ancho_ventana/2), alto_ventana))
-arquero= player.Flechador(((ancho_ventana/2), alto_ventana))
-leñador= player.Leñador(((ancho_ventana/2), alto_ventana))
+arquero= player.Flechador(((ancho_ventana/2), alto_ventana/2))
+leñador= player.Leñador(((ancho_ventana/2), alto_ventana/2))
 Avatar=[Escudero,canibal,arquero,leñador]
 a=range(0,3)
-shuffle(Avatar)
+#shuffle(Avatar)
 fin = False
 
 while fin == False:
@@ -26,8 +26,8 @@ while fin == False:
             fin = True
 
     screen.fill(pygame.Color('gray'))
-    Avatar[0].handle_event(event)
-    screen.blit(Avatar[0].image, Avatar[0].rect)
+    Avatar[3].handle_event(event)
+    screen.blit(Avatar[3].image, Avatar[3].rect)
     pygame.display.flip()
     clock.tick(5)
 
