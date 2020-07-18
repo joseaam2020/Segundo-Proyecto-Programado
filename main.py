@@ -87,13 +87,13 @@ def leer_matriz_rooks(superficie):
         for columna in range(0,m):
             ele = str(matriz_rooks[fila][columna])
             if ele == "1":
-                superficie.blit(buscar_img("desierto_rook",img_rooks),(columna*16,fila*16))
+                superficie.blit(buscar_img("desierto_rook",img_rooks),((columna+1)*16,(fila+2)*16))
             elif ele == "2":
-                superficie.blit(buscar_img("rock_rook",img_rooks),(columna*16,fila*16))
+                superficie.blit(buscar_img("rock_rook",img_rooks),((columna+1)*16,(fila+2)*16))
             elif ele == "3":
-                superficie.blit(buscar_img("water_rook",img_rooks),(columna*16,fila*16))
+                superficie.blit(buscar_img("water_rook",img_rooks),((columna+1)*16,(fila+2)*16))
             elif ele == "4":
-                superficie.blit(buscar_img("fire_rook",img_rooks),(columna*16,fila*16))
+                superficie.blit(buscar_img("fire_rook",img_rooks),((columna+1)*16,(fila+2)*16))
             else:
                 pass
 
@@ -325,7 +325,7 @@ def juego():
 
     #Inciando Seleccionador
     seleccionador = pygame.transform.scale(seleccionador1,(53,43))
-    seleccionando_casilla= True
+    casilla_seleccionada = False
     
     #Ciclo de juego
     while running:
@@ -343,15 +343,19 @@ def juego():
         pos_x = mouse_pos[0]//58
         pos_y = mouse_pos[1]//43
 
-        if pos_y >= 2 and pos_x >= 1 and pos_x <= 5 and seleccionando_casilla:
+        #print(pos_x,pos_y)
+
+        if pos_x > 0 and pos_x < 6 and pos_y > 1 and not casilla_seleccionada:
             screen.blit(seleccionador,(pos_x*58,pos_y*43))
-        elif not seleccionando_casilla:
+            seleccionando_casilla = True
+        elif casilla_seleccionada:
+            seleccionando_casilla = False
             screen.blit(seleccionador,(copia_posx*58,copia_posy*43))
             rook_rect = seleccionador_rook.get_rect()
             rook_rect.topleft = (copia_posx*58-5,copia_posy*43-70)
             screen.blit(seleccionador_rook,rook_rect)
         else:
-            pass 
+            seleccionando_casilla = False
         
         #Ciclo de Eventos
         for event in pygame.event.get():
@@ -364,38 +368,40 @@ def juego():
                 if seleccionando_casilla:
                     copia_posx = pos_x 
                     copia_posy = pos_y
+                    casilla_seleccionada = True
                     seleccionador = pygame.transform.scale(seleccionador2,(53,43))
-                    seleccionando_casilla = False
                 else:
-                    if rook_rect.collidepoint(mouse_pos):
-                        seleccion_x = mouse_pos[0] - rook_rect.x
-                        seleccion_y = mouse_pos[1] - rook_rect.y
-                        #Id de los diferentes rooks en la matriz
-                        #Sand = 1
-                        #Rock = 2
-                        #Water = 3
-                        #Fire = 4
-                        if seleccion_x < rook_rect.width/2:
-                            if seleccion_y < rook_rect.height/2:
-                                print("Rook sand")
-                                colocar_matriz(matriz_rooks,1,pos_y,pos_x-1)
+                    if casilla_seleccionada:
+                        if rook_rect.collidepoint(mouse_pos):
+                            seleccion_x = mouse_pos[0] - rook_rect.x
+                            seleccion_y = mouse_pos[1] - rook_rect.y
+                            #Id de los diferentes rooks en la matriz
+                            #Sand = 1
+                            #Rock = 2
+                            #Water = 3
+                            #Fire = 4
+                            if seleccion_x < rook_rect.width/2:
+                                if seleccion_y < rook_rect.height/2:
+                                    print("Rook sand")
+                                    colocar_matriz(matriz_rooks,1,copia_posy-2,copia_posx-1)
+                                else:
+                                    print("Rook rock")
+                                    colocar_matriz(matriz_rooks,2,copia_posy-2,copia_posx-1)
                             else:
-                                print("Rook rock")
-                                colocar_matriz(matriz_rooks,2,pos_y,pos_x-1)
+                                if seleccion_y < rook_rect.height/2:
+                                    print("Rook water")
+                                    colocar_matriz(matriz_rooks,3,copia_posy-2,copia_posx-1)
+                                else:
+                                    print("Rook fire")
+                                    colocar_matriz(matriz_rooks,4,copia_posy-2,copia_posx-1)
+                            print(matriz_rooks)
+                                
                         else:
-                            if seleccion_y < rook_rect.height/2:
-                                print("Rook water")
-                                colocar_matriz(matriz_rooks,3,pos_y,pos_x-1)
-                            else:
-                                print("Rook fire")
-                                colocar_matriz(matriz_rooks,4,pos_y,pos_x-1)
-                        print(matriz_rooks)
-                            
-                    else:
-                        pass
+                            pass
+                        
                     seleccionador = pygame.transform.scale(seleccionador1,(53,43))
                     seleccionando_casilla = True
-                    
+                    casilla_seleccionada = False
                 #if y < 0:
                  #   meta = y + 11
                   #  while y != meta:
