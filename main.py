@@ -1,6 +1,7 @@
 import pygame
 from pathlib import Path
 import random
+from rook_class import *
 
 #Iniciando Pygame y Clock
 clock = pygame.time.Clock()
@@ -89,14 +90,14 @@ def colocar_aleatorio(matriz, lista,lista_pesos):
 
 #Cargando Rooks
 matriz_rooks = crear_matriz(9,5)
-img_rooks = cargar_img("Rooks")
 
 #Leer matriz rooks
 #E: una superficie
 #S: blit de los elementos de la matriz_rooks
-def leer_matriz_rooks(superficie):
+def leer_matriz_rooks():
     global matriz_rooks
     global img_rooks
+    global allasprites
     n= len(matriz_rooks)
     m= len(matriz_rooks[0])
 
@@ -104,13 +105,33 @@ def leer_matriz_rooks(superficie):
         for columna in range(0,m):
             ele = str(matriz_rooks[fila][columna])
             if ele == "1":
-                superficie.blit(buscar_img("desierto_rook",img_rooks),((columna+1)*16,(fila+2)*16))
+                rook = Rooks("desierto",[columna,fila])
+                rook.rect.x = (columna+1)*16
+                rook.rect.y = (fila+2)*16
+                rook.image = rook.image.convert()
+                rook.image.set_colorkey((255,255,255))
+                allsprites.add(rook)
             elif ele == "2":
-                superficie.blit(buscar_img("rock_rook",img_rooks),((columna+1)*16,(fila+2)*16))
+                rook = Rooks("roca",[columna,fila])
+                rook.rect.x = (columna+1)*16
+                rook.rect.y = (fila+2)*16
+                rook.image = rook.image.convert()
+                rook.image.set_colorkey((255,255,255))
+                allsprites.add(rook)
             elif ele == "3":
-                superficie.blit(buscar_img("water_rook",img_rooks),((columna+1)*16,(fila+2)*16))
+                rook = Rooks("agua",[columna,fila])
+                rook.rect.x = (columna+1)*16
+                rook.rect.y = (fila+2)*16
+                rook.image = rook.image.convert()
+                rook.image.set_colorkey((255,255,255))
+                allsprites.add(rook)
             elif ele == "4":
-                superficie.blit(buscar_img("fire_rook",img_rooks),((columna+1)*16,(fila+2)*16))
+                rook = Rooks("fuego",[columna,fila])
+                rook.rect.x = (columna+1)*16
+                rook.rect.y = (fila+2)*16
+                rook.image = rook.image.convert()
+                rook.image.set_colorkey((255,255,255))
+                allsprites.add(rook)
             else:
                 pass
 
@@ -175,6 +196,9 @@ font35 = pygame.font.SysFont('berlinsansfbdemi', 35)
 font30 = pygame.font.SysFont('berlinsansfbdemi', 30)
 font15 = pygame.font.SysFont('berlinsansfbdemi', 15)
 
+#Iniciando Sprite Groups
+allsprites = pygame.sprite.Group()
+
 #text(texto, font, color, superficie,x,y)
 #E: un text, un tipo de font, un color(RGB),una superficie, coordenadas xy
 #S: se imprime en texto con el tipo de font y color en  la superficie, coordenadas(x,y)
@@ -222,7 +246,6 @@ def menu_principal():
                 pos_mouse = pygame.mouse.get_pos()
                 
                 if Iniciar.collidepoint(pos_mouse):
-                    running=False
                     juego()
                     pygame.mixer.music.stop()
                 if Opciones.collidepoint(pos_mouse):
@@ -346,8 +369,10 @@ def escenario(y_actual):
             x += 1
         y += 1
 
-    leer_matriz_rooks(display)
+    leer_matriz_rooks()
     leer_matriz_monedas(display)
+
+    allsprites.draw(display)
 
     screen.blit(pygame.transform.scale(display,(window_size)),(0,0))#Tansformando superficie a la escala de la ventana
 
