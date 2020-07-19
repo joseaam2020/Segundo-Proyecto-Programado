@@ -222,6 +222,7 @@ def menu_principal():
                 pos_mouse = pygame.mouse.get_pos()
                 
                 if Iniciar.collidepoint(pos_mouse):
+                    running=False
                     juego()
                     pygame.mixer.music.stop()
                 if Opciones.collidepoint(pos_mouse):
