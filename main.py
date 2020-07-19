@@ -81,8 +81,11 @@ def colocar_aleatorio(matriz, lista,lista_pesos):
         
     for fila in range(0,len(matriz)):
         for columna in range(0,len(matriz[0])):
-            choice = random.choices(lista,probabilidades,k=1)
-            matriz[fila][columna] = choice[0]
+            if matriz[fila][columna] != 0 :
+                pass
+            else:
+                choice = random.choices(lista,probabilidades,k=1)
+                matriz[fila][columna] = choice[0]
 
 #Cargando Rooks
 matriz_rooks = crear_matriz(9,5)
@@ -127,6 +130,8 @@ def leer_matriz_monedas(superficie):
     n = len(matriz_monedas)
     m = len(matriz_monedas[0])
 
+    copia = pygame.transform.scale(moneda_pantalla,(10,10))
+
     for fila in range(0,n):
         for columna in range(0,m):
             if matriz_rooks[fila][columna] != 0:
@@ -134,11 +139,11 @@ def leer_matriz_monedas(superficie):
             else:
                 ele = str(matriz_monedas[fila][columna])
                 if ele == "1":
-                    superficie.blit(moneda_pantalla,((columna+1)*16,(fila+2)*16))
+                    superficie.blit(copia,((columna+1)*16+2,(fila+2)*16+2))
                 elif ele == "2":
-                    superficie.blit(moneda_pantalla,((columna+1)*16,(fila+2)*16))
+                    superficie.blit(copia,((columna+1)*16+2,(fila+2)*16+2))
                 elif ele == "3":
-                    superficie.blit(moneda_pantalla,((columna+1)*16,(fila+2)*16))
+                    superficie.blit(copia,((columna+1)*16+2,(fila+2)*16+2))
                 else:
                     pass
 
@@ -397,7 +402,7 @@ def juego():
         moneda_pantalla = pygame.transform.scale(moneda_pantalla,(25,20))
         screen.blit(moneda_pantalla,(monedas_x,0))
         texto_moneda = texto(str(monedas),font15,(255,255,255),screen,monedas_x,0,"derecha")
-        colocar_aleatorio(matriz_monedas,[0,"1","2","3"],[100,1,1,1])
+        colocar_aleatorio(matriz_monedas,[0,"1","2","3"],[70000,1,1,1])
         
         #Posicionando seleccionador
         mouse_pos = pygame.mouse.get_pos()
