@@ -1,5 +1,6 @@
 import pygame
 from pathlib import Path
+import random
 
 #Iniciando Pygame y Clock
 clock = pygame.time.Clock()
@@ -69,17 +70,30 @@ def crear_matriz(n,m):
 def colocar_matriz(matriz,ele,n,m):
     matriz[n][m] = ele
 
+#Colocar aleatorio en matriz
+#E: matriz en la que se quiere colocar,lista de elementos,peso de los elementoss(reduce probabilidad)
+#S: matriz con elementos de la lista en posiciones aleatorias 
+#R: -
+def colocar_aleatorio(matriz, lista,lista_pesos):
+    probabilidades = crear_matriz(1,len(lista))[0]
+    for i in range(0,len(lista_pesos)):
+        probabilidades[i] = lista_pesos[i]
+        
+    for fila in range(0,len(matriz)):
+        for columna in range(0,len(matriz[0])):
+            choice = random.choices(lista,probabilidades,k=1)
+            matriz[fila][columna] = choice[0]
+
 #Cargando Rooks
 matriz_rooks = crear_matriz(9,5)
 img_rooks = cargar_img("Rooks")
-print(img_rooks)
 
 #Leer matriz rooks
-#E: una superficien
+#E: una superficie
 #S: blit de los elementos de la matriz_rooks
 def leer_matriz_rooks(superficie):
     global matriz_rooks
-    global im_roo
+    global img_rooks
     n= len(matriz_rooks)
     m= len(matriz_rooks[0])
 
@@ -96,6 +110,37 @@ def leer_matriz_rooks(superficie):
                 superficie.blit(buscar_img("fire_rook",img_rooks),((columna+1)*16,(fila+2)*16))
             else:
                 pass
+
+#Iniciando monedas
+monedas =  0
+moneda_pantalla = pygame.image.load("Tiles2/moneda.png").convert()
+moneda_pantalla.set_colorkey((255,255,255))
+matriz_monedas = crear_matriz(9,5)
+
+#Leer matriz monedas
+#E: superficie 
+#S: blit de los elementos de la matriz_monedas
+def leer_matriz_monedas(superficie):
+    global matriz_monedas
+    global matriz_rooks
+    global moneda_pantalla
+    n = len(matriz_monedas)
+    m = len(matriz_monedas[0])
+
+    for fila in range(0,n):
+        for columna in range(0,m):
+            if matriz_rooks[fila][columna] != 0:
+                pass
+            else:
+                ele = str(matriz_monedas[fila][columna])
+                if ele == "1":
+                    superficie.blit(moneda_pantalla,((columna+1)*16,(fila+2)*16))
+                elif ele == "2":
+                    superficie.blit(moneda_pantalla,((columna+1)*16,(fila+2)*16))
+                elif ele == "3":
+                    superficie.blit(moneda_pantalla,((columna+1)*16,(fila+2)*16))
+                else:
+                    pass
 
 #Cargando Imagenes del menu
 scroll = pygame.image.load("Tiles2/scroll.png").convert()
@@ -134,6 +179,8 @@ def texto(texto, font, color, superficie,x,y,posicion):
     textrect = text.get_rect()
     if posicion.upper() == "CENTRO":
         textrect.midtop = (x,y)
+    elif posicion.upper() == "DERECHA":
+        textrect.topright = (x,y)
     else:
         textrect.topleft = (x,y)
     superficie.blit(text,textrect)
@@ -170,7 +217,6 @@ def menu_principal():
                 pos_mouse = pygame.mouse.get_pos()
                 
                 if Iniciar.collidepoint(pos_mouse):
-                    running=False
                     juego()
                     pygame.mixer.music.stop()
                 if Opciones.collidepoint(pos_mouse):
@@ -295,6 +341,7 @@ def escenario(y_actual):
         y += 1
 
     leer_matriz_rooks(display)
+    leer_matriz_monedas(display)
 
     screen.blit(pygame.transform.scale(display,(window_size)),(0,0))#Tansformando superficie a la escala de la ventana
 
@@ -327,6 +374,12 @@ def juego():
     #Inciando Seleccionador
     seleccionador = pygame.transform.scale(seleccionador1,(53,43))
     casilla_seleccionada = False
+
+    #Cargando monedas
+    global monedas
+    global moneda_pantalla
+
+    monedas = 4000
     
     #Ciclo de juego
     while running:
@@ -339,6 +392,13 @@ def juego():
         #Reiniciando escenario
         escenario(y)
 
+        #Colocando monedas
+        monedas_x = screen.get_width()-moneda_pantalla.get_width()
+        moneda_pantalla = pygame.transform.scale(moneda_pantalla,(25,20))
+        screen.blit(moneda_pantalla,(monedas_x,0))
+        texto_moneda = texto(str(monedas),font15,(255,255,255),screen,monedas_x,0,"derecha")
+        colocar_aleatorio(matriz_monedas,[0,"1","2","3"],[100,1,1,1])
+        
         #Posicionando seleccionador
         mouse_pos = pygame.mouse.get_pos()
         pos_x = mouse_pos[0]//58
