@@ -26,8 +26,9 @@ while fin == False:
             fin = True
 
     screen.fill(pygame.Color('gray'))
-    Avatar[3].handle_event(event)
-    screen.blit(Avatar[3].image, Avatar[3].rect)
+    Avatar[0].handle_event(event)
+    screen.blit(Avatar[0].image, Avatar[0].rect)
+    Avatar[0].set_position(((ancho_ventana)/2,alto_ventana))
     pygame.display.flip()
     clock.tick(5)
 
