@@ -2,12 +2,15 @@ import pygame
 from pathlib import Path
 import random
 from rook_class import *
+import player
 
 #Iniciando Pygame y Clock
 clock = pygame.time.Clock()
 pygame.init()
 
 #Iniciando ventana
+ancho_ventana=400
+alto_ventana=480
 window_size = (400,480)
 screen = pygame.display.set_mode(size=window_size)
 pygame.display.set_caption("Proyecto Programado")
@@ -134,7 +137,7 @@ def leer_matriz_rooks():
                 allsprites.add(rook)
             else:
                 pass
-
+            
 #Iniciando monedas
 monedas =  0
 moneda_pantalla = pygame.image.load("Tiles2/moneda.png").convert()
@@ -180,7 +183,10 @@ casilla2= pygame.image.load("Tiles2/casilla2.png").convert()
 casilla4= pygame.image.load("Tiles2/casilla4.png").convert()
 
 #Cargando imagenes de avatares
-escudero=pygame.image.load('Tiles1/frames1/knight_m_idle_anim_f0.png')
+Escudero = player.Escudero((ancho_ventana/2, alto_ventana+80),0.2,5)
+canibal=player.Caníbal(((ancho_ventana/2), alto_ventana))
+arquero= player.Flechador(((ancho_ventana/2), alto_ventana/2))
+leñador= player.Leñador(((ancho_ventana/2), alto_ventana/2))
 
 #Cargando imagenes de rooks
 seleccionador1 = pygame.image.load("Tiles2/seleccionador1.png").convert()
@@ -218,10 +224,11 @@ def texto(texto, font, color, superficie,x,y,posicion):
 def menu_principal():
     #Iniciando ciclo
     running = True
-    
+    musica=True
     #Cargado musica del menu e iniciandola
-    pygame.mixer.music.load('Musica/003 - A Hint of Things to Come.mp3')
-    pygame.mixer.music.play(1000)
+    if musica==True:
+        pygame.mixer.music.load('Musica/003 - A Hint of Things to Come.mp3')
+        pygame.mixer.music.play(1000)
     
     #Iniciando ciclo de menu
     while running:
@@ -242,11 +249,19 @@ def menu_principal():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type==pygame.KEYDOWN:
+                if event.key== pygame.K_1:
+                    musica=False
+                    pygame.mixer.music.stop()
+                if event.key== pygame.K_2:
+                    musica=True
+                    pygame.mixer.music.play()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos_mouse = pygame.mouse.get_pos()
                 
                 if Iniciar.collidepoint(pos_mouse):
-                    juego()
+                    running=False
+                    juego(musica)
                     pygame.mixer.music.stop()
                 if Opciones.collidepoint(pos_mouse):
                     opciones()
@@ -389,15 +404,15 @@ def buscar_img(nombre,lista):
 #E: -
 #S: inicia el cliclo de juego
 #R: - 
-def juego():
+def juego(musica):
 
     #Iniciando ciclo
     running = True
     
     #Se detiene la musica del menu e inicia la musica del juego
-    pygame.mixer.music.stop()
-    pygame.mixer.music.load('Musica/018 - Enemies Appear.mp3')
-    pygame.mixer.music.play(1000)
+    if musica==True:
+        pygame.mixer.music.load('Musica/018 - Enemies Appear.mp3')
+        pygame.mixer.music.play(1000)
     
     #Inciando Scrolling
     y = -33
@@ -451,11 +466,21 @@ def juego():
         
         #Ciclo de Eventos
         for event in pygame.event.get():
+            Escudero.handle_event(event,allsprites)
+            screen.blit(Escudero.image, Escudero.rect)
+            canibal.handle_event(event,allsprites)
+            screen.blit(canibal.image, canibal.rect)
             if event.type == pygame.QUIT:
                 running = False
                 #Se carga el menu principal otra vez
                 menu_principal()
-
+            if event.type==pygame.KEYDOWN:
+                if event.key== pygame.K_1:
+                    musica=False
+                    pygame.mixer.music.stop()
+                if event.key== pygame.K_2:
+                    musica=True
+                    pygame.mixer.music.play()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if seleccionando_casilla:
                     copia_posx = pos_x 
