@@ -140,9 +140,16 @@ def leer_matriz_rooks():
             
 #Iniciando monedas
 monedas =  0
-moneda_pantalla = pygame.image.load("Tiles2/moneda.png").convert()
-moneda_pantalla.set_colorkey((255,255,255))
+moneda_oro = pygame.image.load("Tiles2/moneda_oro.png").convert()
+moneda_plata = pygame.image.load("Tiles2/moneda_plata.png").convert()
+moneda_bronce = pygame.image.load("Tiles2/moneda_bronce.png").convert()
+moneda_oro.set_colorkey((255,255,255))
+moneda_plata.set_colorkey((255,255,255))
+moneda_bronce.set_colorkey((255,255,255))
+sonido_moneda = pygame.mixer.Sound("SFX/sonido_moneda.wav")
+sonido_moneda.set_volume(500)
 matriz_monedas = crear_matriz(9,5)
+
 
 #Leer matriz monedas
 #E: superficie 
@@ -154,7 +161,8 @@ def leer_matriz_monedas(superficie):
     n = len(matriz_monedas)
     m = len(matriz_monedas[0])
 
-    copia = pygame.transform.scale(moneda_pantalla,(10,10))
+    copia_oro = pygame.transform.scale(moneda_oro,(10,10))
+    copia_bronce = pygame.transform.scale(moneda_bronce,(10,10))
 
     for fila in range(0,n):
         for columna in range(0,m):
@@ -163,11 +171,11 @@ def leer_matriz_monedas(superficie):
             else:
                 ele = str(matriz_monedas[fila][columna])
                 if ele == "1":
-                    superficie.blit(copia,((columna+1)*16+2,(fila+2)*16+2))
+                    superficie.blit(copia_bronce,((columna+1)*16+2,(fila+2)*16+2))
                 elif ele == "2":
-                    superficie.blit(copia,((columna+1)*16+2,(fila+2)*16+2))
+                    superficie.blit(moneda_plata,((columna+1)*16,(fila+2)*16))
                 elif ele == "3":
-                    superficie.blit(copia,((columna+1)*16+2,(fila+2)*16+2))
+                    superficie.blit(copia_oro,((columna+1)*16+2,(fila+2)*16+2))
                 else:
                     pass
 
@@ -423,9 +431,10 @@ def juego(musica):
 
     #Cargando monedas
     global monedas
-    global moneda_pantalla
+    global moneda_oro
+    global sonido_moneda
 
-    monedas = 4000
+    monedas = 0
     
     #Ciclo de juego
     while running:
@@ -439,11 +448,11 @@ def juego(musica):
         escenario(y)
 
         #Colocando monedas
-        monedas_x = screen.get_width()-moneda_pantalla.get_width()
-        moneda_pantalla = pygame.transform.scale(moneda_pantalla,(25,20))
-        screen.blit(moneda_pantalla,(monedas_x,0))
+        monedas_x = screen.get_width()-moneda_oro.get_width()
+        moneda_oro = pygame.transform.scale(moneda_oro,(25,20))
+        screen.blit(moneda_oro,(monedas_x,0))
         texto_moneda = texto(str(monedas),font15,(255,255,255),screen,monedas_x,0,"derecha")
-        colocar_aleatorio(matriz_monedas,[0,"1","2","3"],[70000,1,1,1])
+        colocar_aleatorio(matriz_monedas,[0,"1","2","3"],[100000,1,1,1])
         
         #Posicionando seleccionador
         mouse_pos = pygame.mouse.get_pos()
@@ -483,10 +492,21 @@ def juego(musica):
                     pygame.mixer.music.play()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if seleccionando_casilla:
-                    copia_posx = pos_x 
-                    copia_posy = pos_y
-                    casilla_seleccionada = True
-                    seleccionador = pygame.transform.scale(seleccionador2,(53,43))
+                    if matriz_monedas[pos_y-2][pos_x-1]!= 0:
+                        ele = matriz_monedas[pos_y-2][pos_x-1]
+                        if ele == "1":
+                            monedas += 25
+                        elif ele == "2":
+                            monedas += 50
+                        elif ele == "3":
+                            monedas += 100
+                        sonido_moneda.play(0)
+                        colocar_matriz(matriz_monedas,0,pos_y-2,pos_x-1)
+                    else:
+                        copia_posx = pos_x 
+                        copia_posy = pos_y
+                        casilla_seleccionada = True
+                        seleccionador = pygame.transform.scale(seleccionador2,(53,43))
                 else:
                     if casilla_seleccionada:
                         if rook_rect.collidepoint(mouse_pos):
