@@ -151,6 +151,9 @@ casilla2= pygame.image.load("Tiles2/casilla2.png").convert()
 #Cargando Imagenes del escenario2
 casilla4= pygame.image.load("Tiles2/casilla4.png").convert()
 
+#Creando matriz de avatares
+matriz_avatares=crear_matriz(10,5)
+
 #Cargando imagenes de avatares
 aparicion=[70,300,130,190,250]
 Escudero = player.Escudero((random.choice(aparicion), alto_ventana+80),0.2,5)
@@ -432,11 +435,14 @@ def juego():
             screen.blit(seleccionador_rook,rook_rect)
         else:
             seleccionando_casilla = False
+        #De momento esto funciona
+        Escudero.handle_event(allsprites)
+        screen.blit(Escudero.image, Escudero.rect)
         
         #Ciclo de Eventos
         for event in pygame.event.get():
-            Escudero.handle_event(event,allsprites)
-            screen.blit(Escudero.image, Escudero.rect)
+            
+            
             canibal.handle_event(event,allsprites)
             screen.blit(canibal.image, canibal.rect)
             random.shuffle(aparicion)

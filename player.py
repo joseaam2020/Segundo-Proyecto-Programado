@@ -41,7 +41,7 @@ class Escudero(pygame.sprite.Sprite):
         if direction == 'stand_up':
             self.clip(self.up_states[0])
         self.image = self.sheet.subsurface(self.sheet.get_clip())
-    def handle_event(self, event,grupo):
+    def handle_event(self,grupo):
         if pygame.sprite.spritecollide(self,grupo,False):
             self.update('stand_up')
         else:
