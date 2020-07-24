@@ -8,6 +8,9 @@ import player
 clock = pygame.time.Clock()
 pygame.init()
 
+#Variable que se encarga de si la musica suena o se mutea
+musica=True
+
 #Iniciando ventana
 ancho_ventana=400
 alto_ventana=480
@@ -149,12 +152,12 @@ casilla2= pygame.image.load("Tiles2/casilla2.png").convert()
 casilla4= pygame.image.load("Tiles2/casilla4.png").convert()
 
 #Cargando imagenes de avatares
-Escudero = player.Escudero((ancho_ventana/2, alto_ventana+80),0.2,5)
-canibal=player.Caníbal(((ancho_ventana/2), alto_ventana))
+aparicion=[70,300,130,190,250]
+Escudero = player.Escudero((random.choice(aparicion), alto_ventana+80),0.2,5)
+canibal=player.Caníbal(((ancho_ventana/2)-10, alto_ventana))
 arquero= player.Flechador(((ancho_ventana/2), alto_ventana/2))
 leñador= player.Leñador(((ancho_ventana/2), alto_ventana/2))
 
-allsprites.add(Escudero)
 
 #Cargando imagenes de rooks
 seleccionador1 = pygame.image.load("Tiles2/seleccionador1.png").convert()
@@ -189,7 +192,7 @@ def texto(texto, font, color, superficie,x,y,posicion):
 def menu_principal():
     #Iniciando ciclo
     running = True
-    musica=True
+    global musica
     #Cargado musica del menu e iniciandola
     if musica==True:
         pygame.mixer.music.load('Musica/003 - A Hint of Things to Come.mp3')
@@ -226,7 +229,7 @@ def menu_principal():
                 
                 if Iniciar.collidepoint(pos_mouse):
                     running=False
-                    juego(musica)
+                    juego()
                     pygame.mixer.music.stop()
                 if Opciones.collidepoint(pos_mouse):
                     opciones()
@@ -368,8 +371,9 @@ def buscar_img(nombre,lista):
 #E: -
 #S: inicia el cliclo de juego
 #R: - 
-def juego(musica):
-
+def juego():
+    global musica
+    global aparicion
     #Iniciando ciclo
     running = True
     
@@ -435,6 +439,7 @@ def juego(musica):
             screen.blit(Escudero.image, Escudero.rect)
             canibal.handle_event(event,allsprites)
             screen.blit(canibal.image, canibal.rect)
+            random.shuffle(aparicion)
             if event.type == pygame.QUIT:
                 running = False
                 #Se carga el menu principal otra vez
