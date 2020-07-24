@@ -94,49 +94,8 @@ def colocar_aleatorio(matriz, lista,lista_pesos):
 #Cargando Rooks
 matriz_rooks = crear_matriz(9,5)
 
-#Leer matriz rooks
-#E: una superficie
-#S: blit de los elementos de la matriz_rooks
-def leer_matriz_rooks():
-    global matriz_rooks
-    global img_rooks
-    global allasprites
-    n= len(matriz_rooks)
-    m= len(matriz_rooks[0])
-
-    for fila in range(0,n):
-        for columna in range(0,m):
-            ele = str(matriz_rooks[fila][columna])
-            if ele == "1":
-                rook = Rooks("desierto",[columna,fila])
-                rook.rect.x = (columna+1)*16
-                rook.rect.y = (fila+2)*16
-                rook.image = rook.image.convert()
-                rook.image.set_colorkey((255,255,255))
-                allsprites.add(rook)
-            elif ele == "2":
-                rook = Rooks("roca",[columna,fila])
-                rook.rect.x = (columna+1)*16
-                rook.rect.y = (fila+2)*16
-                rook.image = rook.image.convert()
-                rook.image.set_colorkey((255,255,255))
-                allsprites.add(rook)
-            elif ele == "3":
-                rook = Rooks("agua",[columna,fila])
-                rook.rect.x = (columna+1)*16
-                rook.rect.y = (fila+2)*16
-                rook.image = rook.image.convert()
-                rook.image.set_colorkey((255,255,255))
-                allsprites.add(rook)
-            elif ele == "4":
-                rook = Rooks("fuego",[columna,fila])
-                rook.rect.x = (columna+1)*16
-                rook.rect.y = (fila+2)*16
-                rook.image = rook.image.convert()
-                rook.image.set_colorkey((255,255,255))
-                allsprites.add(rook)
-            else:
-                pass
+#Iniciando Sprite Groups
+allsprites = pygame.sprite.Group()
             
 #Iniciando monedas
 monedas =  0
@@ -149,7 +108,6 @@ moneda_bronce.set_colorkey((255,255,255))
 sonido_moneda = pygame.mixer.Sound("SFX/sonido_moneda.wav")
 sonido_moneda.set_volume(500)
 matriz_monedas = crear_matriz(9,5)
-
 
 #Leer matriz monedas
 #E: superficie 
@@ -196,6 +154,8 @@ canibal=player.Caníbal(((ancho_ventana/2), alto_ventana))
 arquero= player.Flechador(((ancho_ventana/2), alto_ventana/2))
 leñador= player.Leñador(((ancho_ventana/2), alto_ventana/2))
 
+allsprites.add(Escudero)
+
 #Cargando imagenes de rooks
 seleccionador1 = pygame.image.load("Tiles2/seleccionador1.png").convert()
 seleccionador2 = pygame.image.load("Tiles2/seleccionador2.png").convert()
@@ -209,9 +169,6 @@ font40 = pygame.font.SysFont('berlinsansfbdemi', 40)
 font35 = pygame.font.SysFont('berlinsansfbdemi', 35)
 font30 = pygame.font.SysFont('berlinsansfbdemi', 30)
 font15 = pygame.font.SysFont('berlinsansfbdemi', 15)
-
-#Iniciando Sprite Groups
-allsprites = pygame.sprite.Group()
 
 #text(texto, font, color, superficie,x,y)
 #E: un text, un tipo de font, un color(RGB),una superficie, coordenadas xy
@@ -392,7 +349,6 @@ def escenario(y_actual):
             x += 1
         y += 1
 
-    leer_matriz_rooks()
     leer_matriz_monedas(display)
 
     allsprites.draw(display)
@@ -517,21 +473,48 @@ def juego(musica):
                             #Rock = 2
                             #Water = 3
                             #Fire = 4
+                            columna = copia_posx-1
+                            fila = copia_posy-2
                             if seleccion_x < rook_rect.width/2:
                                 if seleccion_y < rook_rect.height/2:
                                     print("Rook sand")
+                                    rook = Rooks("desierto",[columna,fila])
+                                    rook.rect.x = (columna+1)*16
+                                    rook.rect.y = (fila+2)*16
+                                    rook.image = rook.image.convert()
+                                    rook.image.set_colorkey((255,255,255))
+                                    allsprites.add(rook) 
                                     colocar_matriz(matriz_rooks,1,copia_posy-2,copia_posx-1)
                                 else:
                                     print("Rook rock")
+                                    rook = Rooks("roca",[columna,fila])
+                                    rook.rect.x = (columna+1)*16
+                                    rook.rect.y = (fila+2)*16
+                                    rook.image = rook.image.convert()
+                                    rook.image.set_colorkey((255,255,255))
+                                    allsprites.add(rook)
                                     colocar_matriz(matriz_rooks,2,copia_posy-2,copia_posx-1)
                             else:
                                 if seleccion_y < rook_rect.height/2:
                                     print("Rook water")
+                                    rook = Rooks("agua",[columna,fila])
+                                    rook.rect.x = (columna+1)*16
+                                    rook.rect.y = (fila+2)*16
+                                    rook.image = rook.image.convert()
+                                    rook.image.set_colorkey((255,255,255))
+                                    allsprites.add(rook)
                                     colocar_matriz(matriz_rooks,3,copia_posy-2,copia_posx-1)
                                 else:
                                     print("Rook fire")
+                                    rook = Rooks("fuego",[columna,fila])
+                                    rook.rect.x = (columna+1)*16
+                                    rook.rect.y = (fila+2)*16
+                                    rook.image = rook.image.convert()
+                                    rook.image.set_colorkey((255,255,255))
+                                    allsprites.add(rook)
                                     colocar_matriz(matriz_rooks,4,copia_posy-2,copia_posx-1)
                             print(matriz_rooks)
+                            print(allsprites.sprites())
                                 
                         else:
                             pass
