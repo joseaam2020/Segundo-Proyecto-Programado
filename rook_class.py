@@ -24,5 +24,6 @@ class Rooks(pygame.sprite.Sprite):
         elif tipo.upper() == "ROCA":
             self.image = pygame.image.load('Rooks/rock_rook.png')
             self.rect = self.image.get_rect()
+    
 
 

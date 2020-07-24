@@ -53,6 +53,7 @@ tiles = cargar_img("Tiles2")
 
 #Cargando Mapas
 mapa = mapa("mapa")
+y_escenario = 0
 
 #crear_matriz
 #E: numero de filas n y numero de columnas m
@@ -194,6 +195,8 @@ def menu_principal():
     if musica==True:
         pygame.mixer.music.load('Musica/003 - A Hint of Things to Come.mp3')
         pygame.mixer.music.play(1000)
+
+    global y_escenario
     
     #Iniciando ciclo de menu
     while running:
@@ -202,7 +205,7 @@ def menu_principal():
         screen.fill((0,0,0))
 
         #Inciando Escenario de fondo
-        escenario(-33)
+        escenario(y_escenario)
 
         #Creando Texto
         TowerDefense = texto("Tower Defense",font40,(255,255,255),screen,200,50,"centro")
@@ -244,6 +247,7 @@ def menu_principal():
 def opciones():
     #Iniciando ciclo
     running = True
+    global y_escenario
     
     #Iniciando ciclo de menu
     while running:
@@ -252,7 +256,7 @@ def opciones():
         screen.fill((0,0,0))
 
         #Inciando Escenario de fondo
-        escenario(-33)
+        escenario(y_escenario)
 
         #Creando Texto
         TowerDefense = texto("Tower Defense",font40,(255,255,255),screen,200,50,"centro")
@@ -271,13 +275,15 @@ def opciones():
 def creditos():
     #Iniciando ciclo
     running = True
+    global y_escenario
 
+    #Cargando Creditos
     creditos = open("Creditos.txt")
     creditos_lista = creditos.read()
     creditos.close()
     creditos_lista = creditos_lista.split('\n')
     print(creditos_lista)
-    
+
     #Iniciando ciclo de menu
     while running:
 
@@ -285,7 +291,7 @@ def creditos():
         screen.fill((0,0,0))
 
         #Inciando Escenario de fondo
-        escenario(-33)
+        escenario(y_escenario)
 
         #Creando Texto
         TowerDefense = texto("Tower Defense",font40,(255,255,255),screen,200,50,"centro")
@@ -379,7 +385,7 @@ def juego(musica):
         pygame.mixer.music.play(1000)
     
     #Inciando Scrolling
-    y = -33
+    global y_escenario
 
     #Inciando Seleccionador
     seleccionador = pygame.transform.scale(seleccionador1,(53,43))
@@ -401,7 +407,7 @@ def juego(musica):
         screen.fill((0,0,0))
 
         #Reiniciando escenario
-        escenario(y)
+        escenario(y_escenario)
 
         #Colocando monedas
         monedas_x = screen.get_width()-moneda_oro.get_width()
@@ -531,7 +537,7 @@ def juego(musica):
                     #y = int(y)
                 #else:
                    #pass
-
+                   
         pygame.display.update()
         clock.tick(60)
 
