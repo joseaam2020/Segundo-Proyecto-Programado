@@ -164,27 +164,59 @@ print(matriz_avatares,matriz_de_spawn)
 matriz_avatares[-1] = matriz_de_spawn[0]
 print(matriz_avatares)
 
-def leer_matriz_avatar():
+def leer_matriz_avatar(dificultad):
     global allsprites
     global grupo_avatares
     
     spawn = matriz_avatares[-1]
 
     for i in range(0,len(spawn)):
-        if spawn[i] == '1':
-            avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
-            avatar.add(allsprites,grupo_avatares)
-        if spawn[i] == '3':
-            avatar= player.Caníbal(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
-            avatar.add(allsprites,grupo_avatares) 
-        if spawn[i] == '2':
-            avatar= player.Flechador(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
-            avatar.add(allsprites,grupo_avatares)
-        if spawn[i] == '4':
-            avatar= player.Leñador(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
-            avatar.add(allsprites,grupo_avatares)
-        else:
-            pass
+        if dificultad=='Facil':
+            if spawn[i] == '1':
+                avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            if spawn[i] == '3':
+                avatar= player.Caníbal(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares) 
+            if spawn[i] == '2':
+                avatar= player.Flechador(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            if spawn[i] == '4':
+                avatar= player.Leñador(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            else:
+                pass
+        if dificultad=='Normal':
+            if spawn[i] == '1':
+                avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            if spawn[i] == '3':
+                avatar= player.Caníbal(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares) 
+            if spawn[i] == '2':
+                avatar= player.Flechador(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            if spawn[i] == '4':
+                avatar= player.Leñador(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            else:
+                pass
+        if dificultad=='Dificil':
+            if spawn[i] == '1':
+                avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            if spawn[i] == '3':
+                avatar= player.Caníbal(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares) 
+            if spawn[i] == '2':
+                avatar= player.Flechador(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            if spawn[i] == '4':
+                avatar= player.Leñador(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            else:
+                pass
+
             
 #Cargando imagenes de avatares
 aparicion=[70,300,130,190,250]
@@ -248,6 +280,7 @@ def menu_principal():
         Iniciar = texto("Iniciar",font35,(255,255,255),screen,200,100,"centro")
         Opciones = texto("Opciones",font35,(255,255,255),screen,200,150,"centro")
         Creditos = texto("Creditos",font35,(255,255,255),screen,200,200,"centro")
+        Instrucciones = texto("Instrucciones",font35,(255,255,255),screen,200,250,"centro")
 
         #Ciclo de eventos
         for event in pygame.event.get():
@@ -271,6 +304,9 @@ def menu_principal():
                     opciones()
                 if Creditos.collidepoint(pos_mouse):
                     creditos()
+                if Instrucciones.collidepoint(pos_mouse):
+                    instrucciones()
+                
                 
         pygame.display.update()
 
@@ -357,6 +393,63 @@ def creditos():
                 
         pygame.display.update()
 
+#Instrucciones
+#Muestra la información sobre el funcionamiento del juego
+#Por cuestiones de error las ñ se remplazaran por nh y las letras acentuadas apareceran sin acento
+def instrucciones():
+    #Iniciando ciclo
+    running = True
+    global y_escenario
+
+    #Cargando Instrucciones
+    instrucciones = open("Instrucciones.txt")
+    instrucciones_lista = instrucciones.read()
+    instrucciones_lista = instrucciones_lista.split('\n')
+    print(instrucciones_lista)
+
+    #Iniciando ciclo de menu
+    while running:
+
+        #Reinciando pantalla
+        screen.fill((0,0,0))
+
+        #Inciando Escenario de fondo
+        escenario(y_escenario)
+
+        #Creando Texto
+        TowerDefense = texto("Tower Defense",font40,(255,255,255),screen,200,50,"centro")
+
+        #Cargando imagen del menu
+        scrollrect = scroll.get_rect()
+        scrollrect.midtop = (200,100)
+        
+        #Agregando Texto de Creditos
+        display_instrucciones = pygame.Surface((160,230))
+        display_instrucciones.fill((255,255,255))
+        display_instrucciones.set_colorkey((255,255,255))
+    
+        y = 0
+        for ele in instrucciones_lista:
+            texto(ele,font15,(0,0,0),display_instrucciones,0,y,"topleft")
+            y += 10
+            
+                    
+        scroll.blit(display_instrucciones,(50,50))
+
+        screen.blit(scroll,scrollrect)
+
+        #Ciclo de eventos
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type== pygame.MOUSEBUTTONDOWN:
+                if event.button==pygame.BUTTON_WHEELDOWN:
+                    print(5)
+                if event.button==pygame.BUTTON_WHEELUP:
+                    print(6)
+                    
+        pygame.display.update()        
+
 #escenario()
 #E: -
 #S: se crea el escenario en la pantalla
@@ -394,7 +487,7 @@ def escenario(y_actual):
     leer_matriz_monedas(display)
     for avatar in grupo_avatares.sprites():
         #print(avatar,avatar.rect.y)
-        avatar.handle_event(grupo_rooks)
+        avatar.handle_event(grupo_rooks,grupo_rooks)
         avatar.image = pygame.transform.scale(avatar.image,(14,20))
         #print(avatar,avatar.rect.y)
     allsprites.draw(display)
@@ -407,6 +500,7 @@ def escenario(y_actual):
 #R: - 
 def buscar_img(nombre,lista):
     for y in lista:
+        
         if y[0] == nombre:
             return y[1]
 
@@ -417,6 +511,7 @@ def buscar_img(nombre,lista):
 def juego():
     global musica
     global aparicion
+    global matriz_avatares
     #Iniciando ciclo
     running = True
     
@@ -439,7 +534,7 @@ def juego():
 
     monedas = 0
 
-    leer_matriz_avatar()
+    leer_matriz_avatar('Normal')
     print (allsprites.sprites(),grupo_avatares.sprites())
     
     #Ciclo de juego
@@ -490,6 +585,9 @@ def juego():
             #random.shuffle(aparicion)
             if event.type == pygame.QUIT:
                 running = False
+                guarda=str(matriz_avatares)
+                with open('Guardado.txt','w') as g:
+                    g.write(guarda)
                 #Se carga el menu principal otra vez
                 menu_principal()
             if event.type==pygame.KEYDOWN:

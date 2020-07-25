@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import pygame
+import rook_class
 
 class Escudero(pygame.sprite.Sprite):
     def __init__(self, position,velocidad,lapso_entre_ataques,posicion_matriz,matriz):
@@ -17,8 +18,13 @@ class Escudero(pygame.sprite.Sprite):
         self.posicion_matriz = posicion_matriz
         self.control_matriz = 0
         self.matriz = matriz
+        self.life=10
         self.posiciony_real = position[1]
         self.posicionrecty_anterior = 0
+        self.weapon= pygame.image.load('Avatares/Escudero/weapon_anime_sword.png')
+        self.weapon.set_clip(pygame.Rect(0,0,10,20))
+        self.attack=self.weapon.subsurface(self.weapon.get_clip())
+        self.weaponrect =self.weapon.get_rect()
     def set_position(self,posicion):
         position=posicion
         print ('Lo hice')
@@ -58,14 +64,22 @@ class Escudero(pygame.sprite.Sprite):
            
         if direction == 'stand_up':
             self.clip(self.up_states[0])
+            
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         
-    def handle_event(self,grupo):
-        if pygame.sprite.spritecollide(self,grupo,False) or self.posicion_matriz[1]<=0:
-            self.update('stand_up')
+    def handle_event(self,rooks,atq_rooks):
+        if self.life>0:
+            if pygame.sprite.spritecollide(self,rooks,False) or self.posicion_matriz[1]<=0:
+                self.update('stand_up')
+            if pygame.sprite.spritecollide(self,atq_rooks,False):
+                for i in atq_rooks:
+                    self.life-=i.damage
+                print(self.life)
+            else:
+                self.update('up')
         else:
-            self.update('up')    
-
+            self.kill()
+            
 class Caníbal(pygame.sprite.Sprite):
     def __init__(self, position,velocidad,lapso_entre_ataques,posicion_matriz,matriz):
         self.sheet = pygame.image.load('Avatares/Caníbal/caníbal_sprite.png')
@@ -75,6 +89,7 @@ class Caníbal(pygame.sprite.Sprite):
         self.rect.topleft = position
         self.frame = 0
         self.speed = velocidad
+        self.life=20
         pygame.sprite.Sprite.__init__(self)
         self.up_states = { 0: (0, 0, 28, 40),1:(0, 0, 28, 40),2:(0, 0, 28, 40),3:(0, 0, 28, 40),4:(0, 0, 28, 40),5:(0, 0, 28, 40), 6: (29, 0, 28, 40),7:(29, 0, 28, 40),8:(29, 0, 28, 40),9:(29, 0, 28, 40),10:(29, 0, 28, 40),11:(29, 0, 28, 40), 12: (57, 0, 28, 40),13:(57, 0, 28, 40),14:(57, 0, 28, 40),15:(57, 0, 28, 40),16:(57, 0, 28, 40),17:(57, 0, 28, 40),18:(86,0,28,40),19:(86,0,28,40),20:(86,0,28,40),21:(86,0,28,40),22:(86,0,28,40), 23:(86,0,28,40) }
         self.posicion_matriz = posicion_matriz
@@ -122,11 +137,17 @@ class Caníbal(pygame.sprite.Sprite):
             self.clip(self.up_states[0])
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         
-    def handle_event(self,grupo):
-        if pygame.sprite.spritecollide(self,grupo,False) or self.posicion_matriz[1]<=0:
-            self.update('stand_up')
+    def handle_event(self,rooks,atq_rooks):
+        if self.life>0:
+            if pygame.sprite.spritecollide(self,rooks,False) or self.posicion_matriz[1]<=0:
+                self.update('stand_up')
+            if pygame.sprite.spritecollide(self,atq_rooks,False):
+                for i in atq_rooks:
+                    self.life-=i.damage
+            else:
+                self.update('up')
         else:
-            self.update('up')    
+            self.kill()
 
 class Flechador(pygame.sprite.Sprite):
     def __init__(self, position,velocidad,lapso_entre_ataques,posicion_matriz,matriz):
@@ -137,6 +158,7 @@ class Flechador(pygame.sprite.Sprite):
         self.rect.topleft = position
         pygame.sprite.Sprite.__init__(self)
         self.frame = 0
+        self.life=5
         self.speed = velocidad
         self.up_states = { 0: (0, 0, 26, 50),1:(0, 0, 26, 50),2:(0, 0, 26, 50),3:(0, 0, 26, 50),4:(0, 0, 26, 50),5:(0, 0, 26, 50), 6: (34, 0, 26, 50),7:(34, 0, 26, 50),8:(34, 0, 26, 50),9:(34, 0, 26, 50),10:(34, 0, 26, 50),11:(34, 0, 26, 50), 12: (65, 0, 26, 50),13:(65, 0, 26, 50),14:(65, 0, 26, 50),15:(65, 0, 26, 50),16:(65, 0, 26, 50),17:(65, 0, 26, 50), 18:(100,0,26,50),19:(100,0,26,50),20:(100,0,26,50),21:(100,0,26,50),22:(100,0,26,50),23:(100,0,26,50) }
         self.posicion_matriz = posicion_matriz
@@ -184,11 +206,17 @@ class Flechador(pygame.sprite.Sprite):
             self.clip(self.up_states[0])
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         
-    def handle_event(self,grupo):
-        if pygame.sprite.spritecollide(self,grupo,False) or self.posicion_matriz[1]<=0:
-            self.update('stand_up')
+    def handle_event(self,rooks,atq_rooks):
+        if self.life>0:
+            if pygame.sprite.spritecollide(self,rooks,False) or self.posicion_matriz[1]<=0:
+                self.update('stand_up')
+            if pygame.sprite.spritecollide(self,atq_rooks,False):
+                for i in atq_rooks:
+                    self.life-=i.damage
+            else:
+                self.update('up')
         else:
-            self.update('up')    
+            self.kill()
 
 class Leñador(pygame.sprite.Sprite):
     def __init__(self, position,velocidad,lapso_entre_ataques,posicion_matriz,matriz):
@@ -199,6 +227,7 @@ class Leñador(pygame.sprite.Sprite):
         self.rect.topleft = position
         pygame.sprite.Sprite.__init__(self)
         self.frame = 0
+        self.life=5
         self.speed = velocidad
         self.up_states = { 0: (0, 0, 35, 50),1:(0, 0, 35, 50),2:(0, 0, 35, 50),3:(0, 0, 35, 50),4:(0, 0, 35, 50),5:(0, 0, 35, 50),6:(42, 0, 35, 50),7:(42, 0, 35, 50),8:(42, 0, 35, 50),9:(42, 0, 35, 50),10:(42, 0, 35, 50),11:(42, 0, 35, 50), 12: (88, 0, 35, 50),13:(88, 0, 35, 50),14:(88, 0, 35, 50),15:(88, 0, 35, 50),16:(88, 0, 35, 50),17:(88, 0, 35, 50), 18:(132,0,35,50),19:(132,0,35,50),20:(132,0,35,50),21:(132,0,35,50),22:(132,0,35,50),23:(132,0,35,50) }
         self.posicion_matriz = posicion_matriz
@@ -246,9 +275,15 @@ class Leñador(pygame.sprite.Sprite):
             self.clip(self.up_states[0])
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         
-    def handle_event(self,grupo):
-        if pygame.sprite.spritecollide(self,grupo,False) or self.posicion_matriz[1]<=0:
-            self.update('stand_up')
+    def handle_event(self,rooks,atq_rooks):
+        if self.life>0:
+            if pygame.sprite.spritecollide(self,rooks,False) or self.posicion_matriz[1]<=0:
+                self.update('stand_up')
+            if pygame.sprite.spritecollide(self,atq_rooks,False):
+                for i in atq_rooks:
+                    self.life-=i.damage
+            else:
+                self.update('up')
         else:
-            self.update('up')    
+            self.kill()
         
