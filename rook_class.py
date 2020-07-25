@@ -15,15 +15,19 @@ class Rooks(pygame.sprite.Sprite):
         if tipo.upper() == "FUEGO":
             self.image =  pygame.image.load('Rooks/fire_rook.png')
             self.rect = self.image.get_rect()
+            self.resistencia = 0
         elif tipo.upper() == "AGUA":
             self.image = pygame.image.load('Rooks/water_rook.png')
             self.rect = self.image.get_rect()
+            self.resistencia = 14
         elif tipo.upper() == "DESIERTO":
             self.image = pygame.image.load('Rooks/desierto_rook.png')
             self.rect = self.image.get_rect()
+            self.resistencia = 16
         elif tipo.upper() == "ROCA":
             self.image = pygame.image.load('Rooks/rock_rook.png')
             self.rect = self.image.get_rect()
+            self.resistencia = 16
     
 
 

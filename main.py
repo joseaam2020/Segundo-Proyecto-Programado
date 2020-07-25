@@ -100,6 +100,8 @@ matriz_rooks = crear_matriz(9,5)
 
 #Iniciando Sprite Groups
 allsprites = pygame.sprite.Group()
+grupo_avatares = pygame.sprite.Group()
+grupo_rooks = pygame.sprite.Group()
             
 #Iniciando monedas
 monedas =  0
@@ -500,7 +502,7 @@ def juego():
                                     rook.rect.y = (fila+2)*16
                                     rook.image = rook.image.convert()
                                     rook.image.set_colorkey((255,255,255))
-                                    allsprites.add(rook) 
+                                    rook.add(allsprites,grupo_rooks) 
                                     colocar_matriz(matriz_rooks,1,copia_posy-2,copia_posx-1)
                                 else:
                                     print("Rook rock")
@@ -509,7 +511,7 @@ def juego():
                                     rook.rect.y = (fila+2)*16
                                     rook.image = rook.image.convert()
                                     rook.image.set_colorkey((255,255,255))
-                                    allsprites.add(rook)
+                                    rook.add(allsprites,grupo_rooks)
                                     colocar_matriz(matriz_rooks,2,copia_posy-2,copia_posx-1)
                             else:
                                 if seleccion_y < rook_rect.height/2:
@@ -519,7 +521,7 @@ def juego():
                                     rook.rect.y = (fila+2)*16
                                     rook.image = rook.image.convert()
                                     rook.image.set_colorkey((255,255,255))
-                                    allsprites.add(rook)
+                                    rook.add(allsprites,grupo_rooks)
                                     colocar_matriz(matriz_rooks,3,copia_posy-2,copia_posx-1)
                                 else:
                                     print("Rook fire")
@@ -528,7 +530,7 @@ def juego():
                                     rook.rect.y = (fila+2)*16
                                     rook.image = rook.image.convert()
                                     rook.image.set_colorkey((255,255,255))
-                                    allsprites.add(rook)
+                                    rook.add(allsprites,grupo_rooks)
                                     colocar_matriz(matriz_rooks,4,copia_posy-2,copia_posx-1)
                             print(matriz_rooks)
                             print(allsprites.sprites())
