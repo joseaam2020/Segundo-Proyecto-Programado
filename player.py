@@ -5,7 +5,7 @@ import pygame
 class Escudero(pygame.sprite.Sprite):
     def __init__(self, position,velocidad,lapso_entre_ataques,posicion_matriz,matriz):
         self.sheet = pygame.image.load('Avatares/Escudero/sprites_escudero.png')
-        self.sheet.set_clip(pygame.Rect(0, 0, 30, 50))
+        self.sheet.set_clip(pygame.Rect(0, 0, 10, 50))
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         self.rect = self.image.get_rect()
         self.rect.topleft=position
@@ -17,6 +17,8 @@ class Escudero(pygame.sprite.Sprite):
         self.posicion_matriz = posicion_matriz
         self.control_matriz = 0
         self.matriz = matriz
+        self.posiciony_real = position[1]
+        self.posicionrecty_anterior = 0
     def set_position(self,posicion):
         position=posicion
         print ('Lo hice')
@@ -40,12 +42,14 @@ class Escudero(pygame.sprite.Sprite):
     def update(self, direction):
         if direction == 'up':
             self.clip(self.up_states)
-            print(self.rect.y)
-            if self.rect.y % 16 == 0:
+            if self.rect.y % 16 == 0 and self.posicionrecty_anterior != self.rect.y:
+                self.posicionrecty_anterior = self.rect.y
+                #print(self.rect.y,self.posiciony_real,self.posicion_matriz[1])
                 self.posicion_matriz[1] -= 1
                 self.matriz[self.posicion_matriz[1]][self.posicion_matriz[0]] = "1"
-                print(self.posicion_matriz)
-            self.rect.y -= self.speed
+            self.posiciony_real -= self.speed
+            self.rect.y = round(self.posiciony_real)
+           
         if direction == 'stand_up':
             self.clip(self.up_states[0])
         self.image = self.sheet.subsurface(self.sheet.get_clip())

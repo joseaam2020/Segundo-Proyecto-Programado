@@ -170,7 +170,7 @@ def leer_matriz_avatar():
     
     spawn = matriz_avatares[-1]
     for i in range(0,len(spawn)): 
-        avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.001,5,[len(spawn)-(i+1),len(matriz_avatares)],matriz_avatares)
+        avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.01,5,[len(spawn)-(i+1),len(matriz_avatares)],matriz_avatares)
         avatar.add(allsprites,grupo_avatares)
         
         
