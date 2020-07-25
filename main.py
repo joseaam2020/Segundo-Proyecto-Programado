@@ -383,7 +383,7 @@ def escenario(y_actual):
     for avatar in grupo_avatares.sprites():
         #print(avatar,avatar.rect.y)
         avatar.handle_event(grupo_rooks)
-        avatar.image = pygame.transform.scale(avatar.image,(16,16))
+        avatar.image = pygame.transform.scale(avatar.image,(14,20))
         #print(avatar,avatar.rect.y)
     allsprites.draw(display)
 
