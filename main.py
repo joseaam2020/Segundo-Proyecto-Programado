@@ -170,7 +170,7 @@ def leer_matriz_avatar():
     
     spawn = matriz_avatares[-1]
     for i in range(0,len(spawn)):
-        avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+2)*16),1,5,[i,len(matriz_avatares)-1],matriz_avatares)
+        avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+2)*16),0.2,5,[i,len(matriz_avatares)-1],matriz_avatares)
         avatar.add(allsprites,grupo_avatares)
         
         
@@ -381,9 +381,9 @@ def escenario(y_actual):
     
     leer_matriz_monedas(display)
     for avatar in grupo_avatares.sprites():
-        print(avatar,avatar.rect.y)
+        #print(avatar,avatar.rect.y)
         avatar.handle_event(grupo_rooks)
-        print(avatar,avatar.rect.y)
+        #print(avatar,avatar.rect.y)
     allsprites.draw(display)
 
     screen.blit(pygame.transform.scale(display,(window_size)),(0,0))#Tansformando superficie a la escala de la ventana
