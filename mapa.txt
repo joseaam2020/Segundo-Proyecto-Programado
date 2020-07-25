@@ -1,11 +1,44 @@
-7666668
-3555554
-2000001
-2000001
-2000001
-2000001
-2000001
-2000001
-2000001
-2000001
-2000001
+wall wall wall wall wall wall wall
+colum_arriba casilla4 casilla4 casilla4 casilla4 casilla4 colum_arriba
+colum casilla4 casilla4 casilla4 casilla4 casilla4 colum
+base_colum casilla4 casilla4 casilla4 casilla4 casilla4 base_colum
+colum_arriba casilla4 casilla4 casilla4 casilla4 casilla4 colum_arriba
+colum casilla4 casilla4 casilla4 casilla4 casilla4 colum
+base_colum casilla4 casilla4 casilla4 casilla4 casilla4 base_colum
+colum_arriba casilla4 casilla4 casilla4 casilla4 casilla4 colum_arriba
+colum casilla4 casilla4 casilla4 casilla4 casilla4 colum
+base_colum casilla4 casilla4 casilla4 casilla4 casilla4 base_colum
+colum_arriba casilla4 casilla4 casilla4 casilla4 casilla4 colum_arriba
+colum casilla4 casilla4 casilla4 casilla4 casilla4 colum
+base_colum casilla4 casilla4 casilla4 casilla4 casilla4 base_colum
+colum_arriba casilla4 casilla4 casilla4 casilla4 casilla4 colum_arriba
+colum casilla4 casilla4 casilla4 casilla4 casilla4 colum
+base_colum casilla4 casilla4 casilla4 casilla4 casilla4 base_colum
+colum_arriba casilla4 casilla4 casilla4 casilla4 casilla4 colum_arriba
+colum casilla4 casilla4 casilla4 casilla4 casilla4 colum
+base_colum casilla4 casilla4 casilla4 casilla4 casilla4 base_colum
+colum_arriba casilla4 casilla4 casilla4 casilla4 casilla4 colum_arriba
+colum casilla4 casilla4 casilla4 casilla4 casilla4 colum
+base_colum casilla4 casilla4 casilla4 casilla4 casilla4 base_colum
+colum colum casilla4 casilla4 casilla4 colum colum
+base_colum base_colum casilla4 casilla4 casilla4 base_colum base_colum
+0 flores casilla4 casilla4 casilla4 flores 0
+arbol casilla2 casilla4 casilla4 casilla4 casilla2 arbol
+0 flores casilla4 casilla4 casilla4 flores 0
+arbol casilla2 casilla4 casilla4 casilla4 casilla2 arbol
+0 flores casilla4 casilla4 casilla4 flores 0
+arbol casilla2 casilla4 casilla4 casilla4 casilla2 arbol
+0 flores casilla4 casilla4 casilla4 flores 0
+arbol casilla2 casilla4 casilla4 casilla4 casilla2 arbol
+0 flores casilla4 casilla4 casilla4 flores 0
+casilla1.5 casilla1.5 casilla1.5 casilla1.5 casilla1.5 casilla1.5 casilla1.5
+roca casilla1 casilla1 casilla1 casilla1 casilla1 roca
+roca casilla3 casilla1 casilla3 casilla1 casilla3 roca
+roca casilla1 casilla3 casilla1 casilla3 casilla1 roca
+roca casilla3 casilla1 casilla3 casilla1 casilla3 roca
+roca casilla1 casilla3 casilla1 casilla3 casilla1 roca
+roca casilla3 casilla1 casilla3 casilla1 casilla3 roca
+roca casilla1 casilla3 casilla1 casilla3 casilla1 roca
+roca casilla3 casilla1 casilla3 casilla1 casilla3 roca
+roca casilla1 casilla3 casilla1 casilla3 casilla1 roca
+roca casilla3 casilla1 casilla3 casilla1 casilla3 roca
