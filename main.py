@@ -169,8 +169,8 @@ def leer_matriz_avatar():
     global grupo_avatares
     
     spawn = matriz_avatares[-1]
-    for i in range(0,len(spawn)):
-        avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+2)*16),1,5,[len(spawn)-(i+1),len(matriz_avatares)-1],matriz_avatares)
+    for i in range(0,len(spawn)): 
+        avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.001,5,[len(spawn)-(i+1),len(matriz_avatares)],matriz_avatares)
         avatar.add(allsprites,grupo_avatares)
         
         
@@ -383,7 +383,7 @@ def escenario(y_actual):
     for avatar in grupo_avatares.sprites():
         #print(avatar,avatar.rect.y)
         avatar.handle_event(grupo_rooks)
-        avatar.image = pygame.transform.scale(avatar.image,(14,20))
+        avatar.image = pygame.transform.scale(avatar.image,(16,16))
         #print(avatar,avatar.rect.y)
     allsprites.draw(display)
 
