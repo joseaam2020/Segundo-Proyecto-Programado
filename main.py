@@ -172,16 +172,16 @@ def leer_matriz_avatar():
 
     for i in range(0,len(spawn)):
         if spawn[i] == '1':
-            avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.2,5,[len(spawn)-(i+1),len(matriz_avatares)],matriz_avatares)
+            avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
             avatar.add(allsprites,grupo_avatares)
         if spawn[i] == '3':
-            avatar= player.Caníbal(((i+1)*16,(len(matriz_avatares)+1)*16),0.2,5,[len(spawn)-(i+1),len(matriz_avatares)],matriz_avatares)
+            avatar= player.Caníbal(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
             avatar.add(allsprites,grupo_avatares) 
         if spawn[i] == '2':
-            avatar= player.Flechador(((i+1)*16,(len(matriz_avatares)+1)*16),0.2,5,[len(spawn)-(i+1),len(matriz_avatares)],matriz_avatares)
+            avatar= player.Flechador(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
             avatar.add(allsprites,grupo_avatares)
         if spawn[i] == '4':
-            avatar= player.Leñador(((i+1)*16,(len(matriz_avatares)+1)*16),0.2,5,[len(spawn)-(i+1),len(matriz_avatares)],matriz_avatares)
+            avatar= player.Leñador(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
             avatar.add(allsprites,grupo_avatares)
         else:
             pass

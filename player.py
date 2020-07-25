@@ -47,6 +47,12 @@ class Escudero(pygame.sprite.Sprite):
                 #print(self.rect.y,self.posiciony_real,self.posicion_matriz[1])
                 self.posicion_matriz[1] -= 1
                 self.matriz[self.posicion_matriz[1]][self.posicion_matriz[0]] = "1"
+                #print(self.posicion_matriz)
+                if self.posicion_matriz[1] == 9:
+                    pass
+                else:
+                    self.matriz[self.posicion_matriz[1]+1][self.posicion_matriz[0]] = 0
+                    #print(self.matriz)
             self.posiciony_real -= self.speed
             self.rect.y = round(self.posiciony_real)
            
@@ -103,7 +109,12 @@ class Caníbal(pygame.sprite.Sprite):
                 self.posicionrecty_anterior = self.rect.y
                 #print(self.rect.y,self.posiciony_real,self.posicion_matriz[1])
                 self.posicion_matriz[1] -= 1
-                self.matriz[self.posicion_matriz[1]][self.posicion_matriz[0]] = "1"
+                self.matriz[self.posicion_matriz[1]][self.posicion_matriz[0]] = "3"
+                if self.posicion_matriz[1] == 9:
+                    pass
+                else:
+                    self.matriz[self.posicion_matriz[1]+1][self.posicion_matriz[0]] = 0
+                    #print(self.matriz)
             self.posiciony_real -= self.speed
             self.rect.y = round(self.posiciony_real)
            
@@ -160,7 +171,12 @@ class Flechador(pygame.sprite.Sprite):
                 self.posicionrecty_anterior = self.rect.y
                 #print(self.rect.y,self.posiciony_real,self.posicion_matriz[1])
                 self.posicion_matriz[1] -= 1
-                self.matriz[self.posicion_matriz[1]][self.posicion_matriz[0]] = "1"
+                self.matriz[self.posicion_matriz[1]][self.posicion_matriz[0]] = "2"
+                if self.posicion_matriz[1] == 9:
+                    pass
+                else:
+                    self.matriz[self.posicion_matriz[1]+1][self.posicion_matriz[0]] = 0
+                    #print(self.matriz)
             self.posiciony_real -= self.speed
             self.rect.y = round(self.posiciony_real)
            
@@ -217,7 +233,12 @@ class Leñador(pygame.sprite.Sprite):
                 self.posicionrecty_anterior = self.rect.y
                 #print(self.rect.y,self.posiciony_real,self.posicion_matriz[1])
                 self.posicion_matriz[1] -= 1
-                self.matriz[self.posicion_matriz[1]][self.posicion_matriz[0]] = "1"
+                self.matriz[self.posicion_matriz[1]][self.posicion_matriz[0]] = "4"
+                if self.posicion_matriz[1] == 9:
+                    pass
+                else:
+                    self.matriz[self.posicion_matriz[1]+1][self.posicion_matriz[0]] = 0
+                    #print(self.matriz)
             self.posiciony_real -= self.speed
             self.rect.y = round(self.posiciony_real)
            
