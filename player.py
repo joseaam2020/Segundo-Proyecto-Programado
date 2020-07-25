@@ -15,7 +15,8 @@ class Escudero(pygame.sprite.Sprite):
         self.timeattack=lapso_entre_ataques
         pygame.sprite.Sprite.__init__(self)
         self.posicion_matriz = posicion_matriz
-        control_matriz = 0
+        self.control_matriz = 0
+        self.matriz = matriz
     def set_position(self,posicion):
         position=posicion
         print ('Lo hice')
@@ -39,11 +40,11 @@ class Escudero(pygame.sprite.Sprite):
     def update(self, direction):
         if direction == 'up':
             self.clip(self.up_states)
-            control_matriz += self.speed
-            if control_matriz >= 16:
+            self.control_matriz += self.speed
+            if self.control_matriz >= 16:
                 self.posicion_matriz[1] -= 1 
-                matriz[self.posicion_matriz[0]][self.posicion_matriz[1]] = "1"
-                control_matiz = 0 
+                self.matriz[self.posicion_matriz[0]][self.posicion_matriz[1]] = "1"
+                self.control_matiz = 0 
             self.rect.y -= self.speed
         if direction == 'stand_up':
             self.clip(self.up_states[0])
