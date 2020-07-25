@@ -11,12 +11,14 @@ pygame.init()
 #Variable que se encarga de si la musica suena o se mutea
 musica=True
 
+
 #Iniciando ventana
 ancho_ventana=400
 alto_ventana=480
 window_size = (400,480)
 screen = pygame.display.set_mode(size=window_size)
 pygame.display.set_caption("Proyecto Programado")
+
 
 #Creando Superficie 
 display = pygame.Surface((112,176))
@@ -100,8 +102,7 @@ matriz_rooks = crear_matriz(9,5)
 
 #Iniciando Sprite Groups
 allsprites = pygame.sprite.Group()
-grupo_avatares = pygame.sprite.Group()
-grupo_rooks = pygame.sprite.Group()
+grupo_avatares=pygame.sprite.Group()
             
 #Iniciando monedas
 monedas =  0
@@ -156,14 +157,24 @@ casilla4= pygame.image.load("Tiles2/casilla4.png").convert()
 
 #Creando matriz de avatares
 matriz_avatares=crear_matriz(10,5)
+matriz_de_spawn= crear_matriz(1,5)
+colocar_aleatorio(matriz_de_spawn,[0,"1","2","3","4"],[1,1,1,1,1])
+print(matriz_avatares,matriz_de_spawn)
+matriz_avatares[-1] = matriz_de_spawn[0]
+print(matriz_avatares)
 
+def leer_matriz_avatar(): 
+    spawn = matriz_avatares[-1]
+    for i in range(0,len(spawn)):
+        avatar= player.Escudero(((i+1)*16,(len(matriz_avatar)+2)*16),0.2,5,[i,len(matriz_avatar-1)],matriz_avatares)
+        avatar.add(allsprites,grupo_avatares)
+        print (spawn)
 #Cargando imagenes de avatares
 aparicion=[70,300,130,190,250]
-Escudero = player.Escudero((random.choice(aparicion), alto_ventana+80),0.2,5)
+#Escudero = player.Escudero(((i+1)*16,(len(matriz_avatar)+2)*16),0.2,5,[i,len(matriz_avatar-1)],matriz_avatares)
 canibal=player.Caníbal(((ancho_ventana/2)-10, alto_ventana))
 arquero= player.Flechador(((ancho_ventana/2), alto_ventana/2))
 leñador= player.Leñador(((ancho_ventana/2), alto_ventana/2))
-
 
 #Cargando imagenes de rooks
 seleccionador1 = pygame.image.load("Tiles2/seleccionador1.png").convert()
@@ -362,9 +373,10 @@ def escenario(y_actual):
                 display.blit(imagen,(x*16,y*16))
             x += 1
         y += 1
-
+    
     leer_matriz_monedas(display)
-
+    print(grupo_avatares.sprites())
+    print(allsprites.sprites())
     allsprites.draw(display)
 
     screen.blit(pygame.transform.scale(display,(window_size)),(0,0))#Tansformando superficie a la escala de la ventana
@@ -444,8 +456,7 @@ def juego():
         else:
             seleccionando_casilla = False
         #De momento esto funciona
-        Escudero.handle_event(allsprites)
-        screen.blit(Escudero.image, Escudero.rect)
+       
         
         #Ciclo de Eventos
         for event in pygame.event.get():
@@ -502,7 +513,7 @@ def juego():
                                     rook.rect.y = (fila+2)*16
                                     rook.image = rook.image.convert()
                                     rook.image.set_colorkey((255,255,255))
-                                    rook.add(allsprites,grupo_rooks) 
+                                    allsprites.add(rook) 
                                     colocar_matriz(matriz_rooks,1,copia_posy-2,copia_posx-1)
                                 else:
                                     print("Rook rock")
@@ -511,7 +522,7 @@ def juego():
                                     rook.rect.y = (fila+2)*16
                                     rook.image = rook.image.convert()
                                     rook.image.set_colorkey((255,255,255))
-                                    rook.add(allsprites,grupo_rooks)
+                                    allsprites.add(rook)
                                     colocar_matriz(matriz_rooks,2,copia_posy-2,copia_posx-1)
                             else:
                                 if seleccion_y < rook_rect.height/2:
@@ -521,7 +532,7 @@ def juego():
                                     rook.rect.y = (fila+2)*16
                                     rook.image = rook.image.convert()
                                     rook.image.set_colorkey((255,255,255))
-                                    rook.add(allsprites,grupo_rooks)
+                                    allsprites.add(rook)
                                     colocar_matriz(matriz_rooks,3,copia_posy-2,copia_posx-1)
                                 else:
                                     print("Rook fire")
@@ -530,7 +541,7 @@ def juego():
                                     rook.rect.y = (fila+2)*16
                                     rook.image = rook.image.convert()
                                     rook.image.set_colorkey((255,255,255))
-                                    rook.add(allsprites,grupo_rooks)
+                                    allsprites.add(rook)
                                     colocar_matriz(matriz_rooks,4,copia_posy-2,copia_posx-1)
                             print(matriz_rooks)
                             print(allsprites.sprites())
