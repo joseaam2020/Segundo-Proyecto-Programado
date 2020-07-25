@@ -163,12 +163,16 @@ print(matriz_avatares,matriz_de_spawn)
 matriz_avatares[-1] = matriz_de_spawn[0]
 print(matriz_avatares)
 
-def leer_matriz_avatar(): 
+def leer_matriz_avatar():
+    global allsprites
+    global grupo_avatares
+    
     spawn = matriz_avatares[-1]
     for i in range(0,len(spawn)):
-        avatar= player.Escudero(((i+1)*16,(len(matriz_avatar)+2)*16),0.2,5,[i,len(matriz_avatar-1)],matriz_avatares)
+        avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+2)*16),0.2,5,[i,len(matriz_avatares)-1],matriz_avatares)
         avatar.add(allsprites,grupo_avatares)
-        print (spawn)
+        print (allsprites,grupo_avatares)
+        
 #Cargando imagenes de avatares
 aparicion=[70,300,130,190,250]
 #Escudero = player.Escudero(((i+1)*16,(len(matriz_avatar)+2)*16),0.2,5,[i,len(matriz_avatar-1)],matriz_avatares)
@@ -375,8 +379,6 @@ def escenario(y_actual):
         y += 1
     
     leer_matriz_monedas(display)
-    print(grupo_avatares.sprites())
-    print(allsprites.sprites())
     allsprites.draw(display)
 
     screen.blit(pygame.transform.scale(display,(window_size)),(0,0))#Tansformando superficie a la escala de la ventana
@@ -418,6 +420,8 @@ def juego():
     global sonido_moneda
 
     monedas = 0
+
+    leer_matriz_avatar()
     
     #Ciclo de juego
     while running:

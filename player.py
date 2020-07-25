@@ -8,7 +8,7 @@ class Escudero(pygame.sprite.Sprite):
         self.sheet.set_clip(pygame.Rect(0, 0, 30, 50))
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         self.rect = self.image.get_rect()
-        self.rect.topleft=position[1]
+        self.rect.topleft=position
         self.frame = 0
         self.up_states = { 0: (0, 0, 30, 50),1: (0, 0, 30, 50),2: (0, 0, 30, 50),3: (0, 0, 30, 50),4: (0, 0, 30, 50),5: (0, 0, 30, 50),6: (37, 0, 30, 50),7:(37, 0, 30, 50),8:(37, 0, 30, 50),9:(37, 0, 30, 50),10:(37, 0, 30, 50),11:(37, 0, 30, 50), 12: (77, 0, 30, 50),13:(77, 0, 30, 50),13:(77, 0, 30, 50),14:(77, 0, 30, 50),15:(77, 0, 30, 50),16:(77, 0, 30, 50),17:(77, 0, 30, 50),18:(114,0,30,50),19:(114,0,30,50),20:(114,0,30,50),21:(114,0,30,50),22:(114,0,30,50),23:(114,0,30,50) }
         self.speed = velocidad
