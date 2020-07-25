@@ -169,17 +169,28 @@ def leer_matriz_avatar():
     global grupo_avatares
     
     spawn = matriz_avatares[-1]
-    for i in range(0,len(spawn)): 
-        avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.001,5,[len(spawn)-(i+1),len(matriz_avatares)],matriz_avatares)
-        avatar.add(allsprites,grupo_avatares)
-        
-        
+    for i in range(0,len(spawn)):
+        if spawn[i] == '1':
+            avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+2)*16),1,5,[len(spawn)-(i+1),len(matriz_avatares)-1],matriz_avatares)
+            avatar.add(allsprites,grupo_avatares)
+        if spawn[i] == '3':
+            avatar= player.Caníbal(((i+1)*16,(len(matriz_avatares)+2)*16),1,5,[len(spawn)-(i+1),len(matriz_avatares)-1],matriz_avatares)
+            avatar.add(allsprites,grupo_avatares) 
+        if spawn[i] == '2':
+            avatar= player.Flechador(((i+1)*16,(len(matriz_avatares)+2)*16),1,5,[len(spawn)-(i+1),len(matriz_avatares)-1],matriz_avatares)
+            avatar.add(allsprites,grupo_avatares)
+        if spawn[i] == '4':
+            avatar= player.Leñador(((i+1)*16,(len(matriz_avatares)+2)*16),1,5,[len(spawn)-(i+1),len(matriz_avatares)-1],matriz_avatares)
+            avatar.add(allsprites,grupo_avatares)
+        else:
+            pass
+            
 #Cargando imagenes de avatares
 aparicion=[70,300,130,190,250]
 #Escudero = player.Escudero(((i+1)*16,(len(matriz_avatar)+2)*16),0.2,5,[i,len(matriz_avatar-1)],matriz_avatares)
-canibal=player.Caníbal(((ancho_ventana/2)-10, alto_ventana))
-arquero= player.Flechador(((ancho_ventana/2), alto_ventana/2))
-leñador= player.Leñador(((ancho_ventana/2), alto_ventana/2))
+#canibal=player.Caníbal(((ancho_ventana/2)-10, alto_ventana))
+#arquero= player.Flechador(((ancho_ventana/2), alto_ventana/2))
+#leñador= player.Leñador(((ancho_ventana/2), alto_ventana/2))
 
 #Cargando imagenes de rooks
 seleccionador1 = pygame.image.load("Tiles2/seleccionador1.png").convert()
@@ -383,7 +394,7 @@ def escenario(y_actual):
     for avatar in grupo_avatares.sprites():
         #print(avatar,avatar.rect.y)
         avatar.handle_event(grupo_rooks)
-        avatar.image = pygame.transform.scale(avatar.image,(16,16))
+        avatar.image = pygame.transform.scale(avatar.image,(14,20))
         #print(avatar,avatar.rect.y)
     allsprites.draw(display)
 
@@ -473,9 +484,9 @@ def juego():
         for event in pygame.event.get():
             
             
-            canibal.handle_event(event,allsprites)
-            screen.blit(canibal.image, canibal.rect)
-            random.shuffle(aparicion)
+            #canibal.handle_event(event,allsprites)
+            #screen.blit(canibal.image, canibal.rect)
+            #random.shuffle(aparicion)
             if event.type == pygame.QUIT:
                 running = False
                 #Se carga el menu principal otra vez
