@@ -41,10 +41,12 @@ class Escudero(pygame.sprite.Sprite):
         if direction == 'up':
             self.clip(self.up_states)
             self.control_matriz += self.speed
+            print(self.control_matriz)
             if self.control_matriz >= 16:
-                self.posicion_matriz[1] -= 1 
-                self.matriz[self.posicion_matriz[0]][self.posicion_matriz[1]] = "1"
-                self.control_matiz = 0 
+                self.posicion_matriz[1] -= 1
+                print(self.posicion_matriz)
+                self.matriz[self.posicion_matriz[1]][self.posicion_matriz[0]] = "1"
+                self.control_matriz = 0 
             self.rect.y -= self.speed
         if direction == 'stand_up':
             self.clip(self.up_states[0])
