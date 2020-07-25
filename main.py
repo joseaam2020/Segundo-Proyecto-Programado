@@ -171,7 +171,7 @@ def leer_matriz_avatar():
     for i in range(0,len(spawn)):
         avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+2)*16),0.2,5,[i,len(matriz_avatares)-1],matriz_avatares)
         avatar.add(allsprites,grupo_avatares)
-        print (allsprites,grupo_avatares)
+        
         
 #Cargando imagenes de avatares
 aparicion=[70,300,130,190,250]
@@ -379,6 +379,10 @@ def escenario(y_actual):
         y += 1
     
     leer_matriz_monedas(display)
+    for avatar in grupo_avatares.sprites():
+        print(avatar,avatar.rect.y)
+        avatar.handle_event(allsprites)
+        print(avatar,avatar.rect.y)
     allsprites.draw(display)
 
     screen.blit(pygame.transform.scale(display,(window_size)),(0,0))#Tansformando superficie a la escala de la ventana
@@ -422,6 +426,7 @@ def juego():
     monedas = 0
 
     leer_matriz_avatar()
+    print (allsprites.sprites(),grupo_avatares.sprites())
     
     #Ciclo de juego
     while running:

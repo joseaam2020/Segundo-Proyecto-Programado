@@ -45,7 +45,6 @@ class Escudero(pygame.sprite.Sprite):
                 matriz[self.posicion_matriz[0]][self.posicion_matriz[1]] = "1"
                 control_matiz = 0 
             self.rect.y -= self.speed
-            
         if direction == 'stand_up':
             self.clip(self.up_states[0])
         self.image = self.sheet.subsurface(self.sheet.get_clip())
