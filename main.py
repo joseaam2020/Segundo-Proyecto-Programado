@@ -548,8 +548,6 @@ def escenario(y_actual):
             x += 1
         y += 1
 
-    
-    leer_matriz_monedas(display)
     for avatar in grupo_avatares.sprites():
         #print(avatar,avatar.rect.y)
         avatar.handle_event(grupo_rooks,grupo_particulas)
@@ -571,6 +569,8 @@ def escenario(y_actual):
         particula.image.set_colorkey((0,0,0))
         if grupo_particulas.has(particula):
             particula.add(allsprites)
+            
+    leer_matriz_monedas(display)
 
     allsprites.draw(display)
 
