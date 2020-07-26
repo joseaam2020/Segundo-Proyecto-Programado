@@ -589,7 +589,7 @@ def juego():
         moneda_oro = pygame.transform.scale(moneda_oro,(25,20))
         screen.blit(moneda_oro,(monedas_x,0))
         texto_moneda = texto(str(monedas),font15,(255,255,255),screen,monedas_x,0,"derecha")
-        colocar_aleatorio(matriz_monedas,[0,"1","2","3"],[100000,1,1,1])
+        colocar_aleatorio(matriz_monedas,[0,"1","2","3"],[100000,10,1,0.1])
         
         #Posicionando seleccionador
         mouse_pos = pygame.mouse.get_pos()

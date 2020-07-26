@@ -172,7 +172,7 @@ class Caníbal(pygame.sprite.Sprite):
 
 class Flechador(pygame.sprite.Sprite):
     def __init__(self, position,velocidad,lapso_entre_ataques,posicion_matriz,matriz):
-        self.sheet = pygame.image.load('Avatares/Flechador/sprites_flechador.png')
+        self.sheet = pygame.image.load('Avatares/Flechador/sprites_flechador2.png')
         self.sheet.set_clip(pygame.Rect(0, 0, 10, 10))
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         self.rect = self.image.get_rect()
@@ -181,7 +181,9 @@ class Flechador(pygame.sprite.Sprite):
         self.frame = 0
         self.life=5
         self.speed = velocidad
-        self.up_states = { 0: (0, 0, 26, 50),1:(0, 0, 26, 50),2:(0, 0, 26, 50),3:(0, 0, 26, 50),4:(0, 0, 26, 50),5:(0, 0, 26, 50), 6: (34, 0, 26, 50),7:(34, 0, 26, 50),8:(34, 0, 26, 50),9:(34, 0, 26, 50),10:(34, 0, 26, 50),11:(34, 0, 26, 50), 12: (65, 0, 26, 50),13:(65, 0, 26, 50),14:(65, 0, 26, 50),15:(65, 0, 26, 50),16:(65, 0, 26, 50),17:(65, 0, 26, 50), 18:(100,0,26,50),19:(100,0,26,50),20:(100,0,26,50),21:(100,0,26,50),22:(100,0,26,50),23:(100,0,26,50) }
+        self.up_states = { 0: (0, 0, 26, 50),1:(0, 0, 26, 50),2:(0, 0, 26, 50),3:(0, 0, 26, 50),4:(0, 0, 26, 50),5:(0, 0, 26, 50), 6: (34, 0, 26, 50),7:(34, 0, 26, 50),8:(34, 0, 26, 50),9:(34, 0, 26, 50),10:(34, 0, 26, 50),
+                           11:(34, 0, 26, 50), 12: (65, 0, 26, 50),13:(65, 0, 26, 50),14:(65, 0, 26, 50),15:(65, 0, 26, 50),16:(65, 0, 26, 50),17:(65, 0, 26, 50), 18:(100,0,26,50),19:(100,0,26,50),20:(100,0,26,50),21:(100,0,26,50),
+                           22:(100,0,26,50),23:(100,0,26,50),24:(131,0,26,50),25:(131,0,26,50),26:(131,0,26,50),27:(131,0,26,50),28:(131,0,26,50),29:(131,0,26,50) }
         self.posicion_matriz = posicion_matriz
         self.control_matriz = 0
         self.matriz = matriz
@@ -225,7 +227,7 @@ class Flechador(pygame.sprite.Sprite):
             self.rect.y = round(self.posiciony_real)
            
         if direction == 'stand_up':
-            self.clip(self.up_states[0])
+            self.clip(self.up_states[24])
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         
     def handle_event(self,rooks,atq_rooks):
