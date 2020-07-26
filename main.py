@@ -104,6 +104,7 @@ matriz_rooks = crear_matriz(9,5)
 allsprites = pygame.sprite.Group()
 grupo_avatares=pygame.sprite.Group()
 grupo_rooks = pygame.sprite.Group()
+grupo_particulas = pygame.sprite.Group()
             
 #Iniciando monedas
 monedas =  0
@@ -172,16 +173,16 @@ def leer_matriz_avatar():
 
     for i in range(0,len(spawn)):
         if spawn[i] == '1':
-            avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
+            avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.1,5,[i,len(matriz_avatares)],matriz_avatares)
             avatar.add(allsprites,grupo_avatares)
         if spawn[i] == '3':
-            avatar= player.Caníbal(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
+            avatar= player.Caníbal(((i+1)*16,(len(matriz_avatares)+1)*16),0.1,5,[i,len(matriz_avatares)],matriz_avatares)
             avatar.add(allsprites,grupo_avatares) 
         if spawn[i] == '2':
-            avatar= player.Flechador(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
+            avatar= player.Flechador(((i+1)*16,(len(matriz_avatares)+1)*16),0.1,5,[i,len(matriz_avatares)],matriz_avatares)
             avatar.add(allsprites,grupo_avatares)
         if spawn[i] == '4':
-            avatar= player.Leñador(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
+            avatar= player.Leñador(((i+1)*16,(len(matriz_avatares)+1)*16),0.1,5,[i,len(matriz_avatares)],matriz_avatares)
             avatar.add(allsprites,grupo_avatares)
         else:
             pass
@@ -200,6 +201,22 @@ seleccionador_rook = pygame.image.load("Tiles2/seleccionador_rook.png").convert(
 seleccionador1.set_colorkey((255,255,255))
 seleccionador2.set_colorkey((255,255,255))
 seleccionador_rook.set_colorkey((255,255,255))
+
+#Cargando imagenes particula
+particulas_fuego = pygame.image.load('Effects/Explosion_Poof.png').convert()
+particulas_agua =pygame.image.load('Effects/Bright_Sparkle.png').convert()
+particulas_roca =pygame.image.load('Effects/Cloud_Poof.png').convert()
+particulas_desierto =pygame.image.load('Effects/Yellow_sparkle.png').convert()
+
+particulas_fuego.set_colorkey((255,255,255))
+particulas_agua.set_colorkey((255,255,255))
+particulas_roca.set_colorkey((255,255,255))
+particulas_desierto.set_colorkey((255,255,255))
+
+particulas_fuego = pygame.transform.rotate(particulas_fuego,90)
+particulas_agua = pygame.transform.rotate(particulas_agua,90)
+particulas_roca = pygame.transform.rotate(particulas_roca,90)
+particulas_desierto = pygame.transform.rotate(particulas_desierto,90)
 
 #Creando fonts 
 font40 = pygame.font.SysFont('berlinsansfbdemi', 40)
@@ -390,6 +407,7 @@ def escenario(y_actual):
                 display.blit(imagen,(x*16,y*16))
             x += 1
         y += 1
+
     
     leer_matriz_monedas(display)
     for avatar in grupo_avatares.sprites():
@@ -397,6 +415,24 @@ def escenario(y_actual):
         avatar.handle_event(grupo_rooks)
         avatar.image = pygame.transform.scale(avatar.image,(14,20))
         #print(avatar,avatar.rect.y)
+
+    for rook in grupo_rooks.sprites():
+        if rook.tipo.upper() == "FUEGO":
+            rook.iniciar_ataque(grupo_avatares,grupo_particulas,particulas_fuego,7)
+        elif rook.tipo.upper() == "AGUA":
+            rook.iniciar_ataque(grupo_avatares,grupo_particulas,particulas_agua,4)
+        elif rook.tipo.upper() == "DESIERTO":
+            rook.iniciar_ataque(grupo_avatares,grupo_particulas,particulas_desierto,4)
+        elif rook.tipo.upper() == "ROCA":
+            rook.iniciar_ataque(grupo_avatares,grupo_particulas,particulas_roca,7)
+            
+    
+    for particula in grupo_particulas.sprites():
+        particula.update(grupo_avatares)
+        particula.image.set_colorkey((0,0,0))
+        if grupo_particulas.has(particula):
+            particula.add(allsprites)
+
     allsprites.draw(display)
 
     screen.blit(pygame.transform.scale(display,(window_size)),(0,0))#Tansformando superficie a la escala de la ventana
@@ -532,8 +568,6 @@ def juego():
                                 if seleccion_y < rook_rect.height/2:
                                     print("Rook sand")
                                     rook = Rooks("desierto",[columna,fila])
-                                    rook.rect.x = (columna+1)*16
-                                    rook.rect.y = (fila+2)*16
                                     rook.image = rook.image.convert()
                                     rook.image.set_colorkey((255,255,255))
                                     rook.add(allsprites,grupo_rooks)
@@ -541,8 +575,6 @@ def juego():
                                 else:
                                     print("Rook rock")
                                     rook = Rooks("roca",[columna,fila])
-                                    rook.rect.x = (columna+1)*16
-                                    rook.rect.y = (fila+2)*16
                                     rook.image = rook.image.convert()
                                     rook.image.set_colorkey((255,255,255))
                                     rook.add(allsprites,grupo_rooks)
@@ -551,8 +583,6 @@ def juego():
                                 if seleccion_y < rook_rect.height/2:
                                     print("Rook water")
                                     rook = Rooks("agua",[columna,fila])
-                                    rook.rect.x = (columna+1)*16
-                                    rook.rect.y = (fila+2)*16
                                     rook.image = rook.image.convert()
                                     rook.image.set_colorkey((255,255,255))
                                     rook.add(allsprites,grupo_rooks)
@@ -560,8 +590,6 @@ def juego():
                                 else:
                                     print("Rook fire")
                                     rook = Rooks("fuego",[columna,fila])
-                                    rook.rect.x = (columna+1)*16
-                                    rook.rect.y = (fila+2)*16
                                     rook.image = rook.image.convert()
                                     rook.image.set_colorkey((255,255,255))
                                     rook.add(allsprites,grupo_rooks)
