@@ -149,7 +149,9 @@ def leer_matriz_monedas(superficie):
 
 #Cargando Imagenes del menu
 scroll = pygame.image.load("Tiles2/scroll.png").convert()
+triangulo_seleccion = pygame.image.load("Tiles2/triangulo_seleccion.png").convert()
 scroll.set_colorkey((255,255,255))
+triangulo_seleccion.set_colorkey((255,255,255))
 
 #Cargando Imagenes del escenario1
 casilla1= pygame.image.load("Tiles2/casilla1.png").convert()
@@ -374,6 +376,16 @@ def creditos():
     creditos_lista = creditos_lista.split('\n')
     print(creditos_lista)
 
+    #Iniciando Valor y de display_creditos
+    creditos_y = 0
+
+    #Cargando Imagen triangulo_seleccion
+    global triangulo_seleccion
+
+    #Cargando fotos
+    foto_jose = pygame.image.load("Tiles2/foto_jose.jpg").convert()
+    foto_jordy = pygame.image.load("Tiles2/foto_jordy.jpg").convert()
+    
     #Iniciando ciclo de menu
     while running:
 
@@ -388,26 +400,60 @@ def creditos():
 
         #Cargando imagen del menu
         scrollrect = scroll.get_rect()
-        scrollrect.midtop = (200,100)
+        scrollrect.topleft = (0,0)
+        tsrect = triangulo_seleccion.get_rect()
+        tsrect.midtop= (125,300)
+        
+        creditos = pygame.Surface((scrollrect.width,scrollrect.height))
+        creditos.set_colorkey((0,0,0))
+        creditosrect = creditos.get_rect()
+        creditosrect.midtop= (150,100)
+        
+        frame =  pygame.Surface((150,240))
+        framerect = frame.get_rect()
+        framerect.topleft = (55,50)
+        frame.fill((255,255,255))
         
         #Agregando Texto de Creditos
-        display_creditos = pygame.Surface((150,200))
-        display_creditos.fill((255,255,255))
-        display_creditos.set_colorkey((255,255,255))
+        texto_creditos = pygame.Surface((150,800))
+        texto_creditos.fill((255,255,255))
+        texto_creditos.set_colorkey((255,255,255))
+        texto_creditosrect = texto_creditos.get_rect()
     
         y = 0
         for ele in creditos_lista:
-            texto(ele,font15,(0,0,0),display_creditos,0,y,"topleft")
+            texto(ele,font15,(0,0,0),texto_creditos,0,y,"topleft")
             y += 15
-
-        scroll.blit(display_creditos,(55,50))
-
-        screen.blit(scroll,scrollrect)
+            
+        frame.blit(texto_creditos,(0,creditos_y))
+        frame.set_colorkey((255,255,255))
+        creditos.blit(scroll,scrollrect)
+        creditos.blit(frame,framerect)
+        creditos.blit(triangulo_seleccion,tsrect)
+        if creditos_y < 0:
+            triangulo_seleccion2 = pygame.transform.rotate(triangulo_seleccion,180)
+            ts2rect = triangulo_seleccion2.get_rect()
+            ts2rect.midtop = (125,10)
+            creditos.blit(triangulo_seleccion2,ts2rect)
+        
+        screen.blit(creditos,creditosrect)
+        screen.blit(foto_jordy,(280,150))
+        screen.blit(foto_jose,(280,300))
 
         #Ciclo de eventos
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                x,y = mouse_pos
+                x,y=[x-creditosrect.x,y-creditosrect.y]
+                if tsrect.collidepoint((x,y)):
+                    creditos_y -= frame.get_height()
+                elif creditos_y < 0:
+                    if  ts2rect.collidepoint((x,y)):
+                        creditos_y += frame.get_height()
+                
                 
         pygame.display.update()
 
