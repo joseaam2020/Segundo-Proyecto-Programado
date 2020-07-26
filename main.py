@@ -161,7 +161,7 @@ casilla4= pygame.image.load("Tiles2/casilla4.png").convert()
 #Creando matriz de avatares
 matriz_avatares=crear_matriz(10,5)
 matriz_de_spawn= crear_matriz(1,5)
-colocar_aleatorio(matriz_de_spawn,[0,"1","2","3","4"],[1,1,1,1,1])
+colocar_aleatorio(matriz_de_spawn,[0,"1","2","3","4"],[1000,50,100,10,5])
 print(matriz_avatares,matriz_de_spawn)
 matriz_avatares[-1] = matriz_de_spawn[0]
 print(matriz_avatares)
@@ -466,14 +466,16 @@ def instrucciones():
                 if event.button==pygame.BUTTON_WHEELUP:
                     print(6)
                     
-        pygame.display.update()        
+        pygame.display.update()
 
+        
+appear=0
 #escenario()
 #E: -
 #S: se crea el escenario en la pantalla
 #R: - 
 def escenario(y_actual):
-
+    global appear
     global tiles
     y = y_actual
     y_display = 0 
@@ -503,12 +505,11 @@ def escenario(y_actual):
         y += 1
 
     
-    leer_matriz_monedas(display)
+
     for avatar in grupo_avatares.sprites():
         #print(avatar,avatar.rect.y)
         avatar.handle_event(grupo_rooks,grupo_particulas)
         avatar.image = pygame.transform.scale(avatar.image,(14,20))
-        #print(avatar,avatar.rect.y)
 
     for rook in grupo_rooks.sprites():
         if rook.tipo.upper() == "FUEGO":
@@ -525,7 +526,7 @@ def escenario(y_actual):
         particula.image.set_colorkey((0,0,0))
         if grupo_particulas.has(particula):
             particula.add(allsprites)
-
+    print(appear)
     allsprites.draw(display)
 
     screen.blit(pygame.transform.scale(display,(window_size)),(0,0))#Tansformando superficie a la escala de la ventana
@@ -545,6 +546,7 @@ def buscar_img(nombre,lista):
 #S: inicia el cliclo de juego
 #R: - 
 def juego():
+    global appear
     global musica
     global aparicion
     global matriz_avatares
@@ -572,13 +574,16 @@ def juego():
 
     #Definiendo Velocidad de ataque rooks
     velocidad_ataque = 1
-
-    leer_matriz_avatar('Normal')
     print (allsprites.sprites(),grupo_avatares.sprites())
     
     #Ciclo de juego
     while running:
-
+        appear+=1
+        if appear == 1000:
+            colocar_aleatorio(matriz_de_spawn,[0,"1","2","3","4"],[1,50,100,10,5])
+            matriz_avatares[-1] = matriz_de_spawn[0]
+            leer_matriz_avatar('Normal')
+            appear=0
         mouse = False
 
         #Reiniciando superficie y pantalla
@@ -624,9 +629,9 @@ def juego():
             #random.shuffle(aparicion)
             if event.type == pygame.QUIT:
                 running = False
-                guarda=str(matriz_avatares)
-                with open('Guardado.txt','w') as g:
-                    g.write(guarda)
+                #guarda=str(matriz_avatares)
+                #with open('Guardado.txt','w') as g:
+                    #g.write(guarda)
                 #Se carga el menu principal otra vez
                 menu_principal()
                 

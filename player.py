@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import pygame
 import rook_class
 #Todas las clases funcionan de la misma forma, por lo que solo se definira la primera, en este caso Escudero
@@ -27,13 +26,19 @@ Atributos:
 '''       
 class Escudero(pygame.sprite.Sprite):
     def __init__(self, position,velocidad,lapso_entre_ataques,posicion_matriz,matriz):
-        self.sheet = pygame.image.load('Avatares/Escudero/sprites_escudero.png')
+        self.sheet = pygame.image.load('Avatares/Escudero/sprites_escudero2.png')
         self.sheet.set_clip(pygame.Rect(0, 0, 10, 10))
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         self.rect = self.image.get_rect()
         self.rect.topleft=position
         self.frame = 0
-        self.up_states = { 0: (0, 0, 30, 50),1: (0, 0, 30, 50),2: (0, 0, 30, 50),3: (0, 0, 30, 50),4: (0, 0, 30, 50),5: (0, 0, 30, 50),6: (37, 0, 30, 50),7:(37, 0, 30, 50),8:(37, 0, 30, 50),9:(37, 0, 30, 50),10:(37, 0, 30, 50),11:(37, 0, 30, 50), 12: (77, 0, 30, 50),13:(77, 0, 30, 50),13:(77, 0, 30, 50),14:(77, 0, 30, 50),15:(77, 0, 30, 50),16:(77, 0, 30, 50),17:(77, 0, 30, 50),18:(114,0,30,50),19:(114,0,30,50),20:(114,0,30,50),21:(114,0,30,50),22:(114,0,30,50) }
+        self.up_states = { 0: (0, 0, 30, 50),1: (0, 0, 30, 50),2: (0, 0, 30, 50),3: (0, 0, 30, 50),
+                           4: (0, 0, 30, 50),5: (0, 0, 30, 50),6: (37, 0, 30, 50),7:(37, 0, 30, 50),
+                           8:(37, 0, 30, 50),9:(37, 0, 30, 50),10:(37, 0, 30, 50),11:(37, 0, 30, 50),
+                           12: (77, 0, 30, 50),13:(77, 0, 30, 50),13:(77, 0, 30, 50),14:(77, 0, 30, 50),
+                           15:(77, 0, 30, 50),16:(77, 0, 30, 50),17:(77, 0, 30, 50),18:(114,0,30,50),
+                           19:(114,0,30,50),20:(114,0,30,50),21:(114,0,30,50),22:(114,0,30,50),23:(114,0,30,50),
+                           24:(154,0,30,50)}
         self.speed = velocidad
         self.timeattack=lapso_entre_ataques
         pygame.sprite.Sprite.__init__(self)
@@ -42,11 +47,9 @@ class Escudero(pygame.sprite.Sprite):
         self.life=10
         self.posiciony_real = position[1]
         self.posicionrecty_anterior = 0
-        #self.weapon= pygame.image.load('Avatares/Escudero/atacando.png')
-        #self.weapon.set_clip(pygame.Rect(0,0,10,50))
-        #self.attack=self.weapon.subsurface(self.weapon.get_clip())
-        #self.attack_states={0:(0,0,30,55)}
-        #self.weaponrect =self.weapon.get_rect()
+        self.wait=0
+
+
     def set_position(self,posicion):
         position=posicion
         print ('Lo hice')
@@ -87,19 +90,26 @@ class Escudero(pygame.sprite.Sprite):
         if direction == 'stand_up':
             self.clip(self.up_states[0])
         self.image = self.sheet.subsurface(self.sheet.get_clip())
+
+        if direction == 'attack':
+            self.clip(self.up_states[24])
         
     def handle_event(self,rooks,atq_rooks):
         if self.life>0:
             #print(self.posicion_matriz[1])
-            if pygame.sprite.spritecollide(self,rooks,False) or self.posicion_matriz[1]<=0:
-                print("Hecho")
-                self.update('stand_up')          
+            if self.wait==self.timeattack and pygame.sprite.spritecollide(self,rooks,False) :
+                    self.update('attack')
+                    self.wait=0
+            elif pygame.sprite.spritecollide(self,rooks,False) or self.posicion_matriz[1]<=0:
+                self.update('stand_up')
+               
             else:
                 self.update('up')
                 for i in pygame.sprite.spritecollide(self,atq_rooks,False):
                     self.life-=i.damage  
-        else:
-            self.kill()
+                if self.life<=0:
+                    self.kill()
+                self.wait+=1
             
 class Caníbal(pygame.sprite.Sprite):
     def __init__(self, position,velocidad,lapso_entre_ataques,posicion_matriz,matriz):
@@ -229,6 +239,8 @@ class Flechador(pygame.sprite.Sprite):
         if direction == 'stand_up':
             self.clip(self.up_states[24])
         self.image = self.sheet.subsurface(self.sheet.get_clip())
+    #def atque(self):
+        
         
     def handle_event(self,rooks,atq_rooks):
         if self.life>0:
