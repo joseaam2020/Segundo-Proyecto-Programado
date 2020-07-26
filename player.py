@@ -87,14 +87,13 @@ class Escudero(pygame.sprite.Sprite):
         if direction == 'stand_up':
             self.clip(self.up_states[0])
         self.image = self.sheet.subsurface(self.sheet.get_clip())
-    #def ataque(self):
-        #self.clip(self.attack_states)
         
     def handle_event(self,rooks,atq_rooks):
         if self.life>0:
+            #print(self.posicion_matriz[1])
             if pygame.sprite.spritecollide(self,rooks,False) or self.posicion_matriz[1]<=0:
+                print("Hecho")
                 self.update('stand_up')
-                self.ataque()
             for i in pygame.sprite.spritecollide(self,atq_rooks,False):
                 print(self.life)
                 self.life-=i.damage              
@@ -148,6 +147,7 @@ class Caníbal(pygame.sprite.Sprite):
                 #print(self.rect.y,self.posiciony_real,self.posicion_matriz[1])
                 self.posicion_matriz[1] -= 1
                 self.matriz[self.posicion_matriz[1]][self.posicion_matriz[0]] = "3"
+                #print(self.posicion_matriz)
                 if self.posicion_matriz[1] == 9:
                     pass
                 else:
@@ -218,6 +218,7 @@ class Flechador(pygame.sprite.Sprite):
                 #print(self.rect.y,self.posiciony_real,self.posicion_matriz[1])
                 self.posicion_matriz[1] -= 1
                 self.matriz[self.posicion_matriz[1]][self.posicion_matriz[0]] = "2"
+                #print(self.posicion_matriz)
                 if self.posicion_matriz[1] == 9:
                     pass
                 else:
@@ -288,6 +289,7 @@ class Leñador(pygame.sprite.Sprite):
                 #print(self.rect.y,self.posiciony_real,self.posicion_matriz[1])
                 self.posicion_matriz[1] -= 1
                 self.matriz[self.posicion_matriz[1]][self.posicion_matriz[0]] = "4"
+                #print(self.posicion_matriz)
                 if self.posicion_matriz[1] == 9:
                     pass
                 else:
