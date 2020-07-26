@@ -92,15 +92,8 @@ class Escudero(pygame.sprite.Sprite):
         if self.life>0:
             #print(self.posicion_matriz[1])
             if pygame.sprite.spritecollide(self,rooks,False) or self.posicion_matriz[1]<=0:
-<<<<<<< HEAD
                 print("Hecho")
-                self.update('stand_up')
-            for i in pygame.sprite.spritecollide(self,atq_rooks,False):
-                print(self.life)
-                self.life-=i.damage              
-=======
-                self.update('stand_up')               
->>>>>>> refs/remotes/origin/desarrollo
+                self.update('stand_up')          
             else:
                 self.update('up')
                 for i in pygame.sprite.spritecollide(self,atq_rooks,False):
