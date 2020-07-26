@@ -573,7 +573,6 @@ def escenario(y_actual):
         if grupo_particulas.has(particula):
             particula.add(allsprites)
     leer_matriz_monedas(display)
-    print(appear)
     allsprites.draw(display)
 
     screen.blit(pygame.transform.scale(display,(window_size)),(0,0))#Tansformando superficie a la escala de la ventana
