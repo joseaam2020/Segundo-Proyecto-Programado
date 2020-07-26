@@ -59,7 +59,7 @@ class Escudero(pygame.sprite.Sprite):
         
     def get_frame(self, frame_set):
         self.frame += 1
-        if self.frame > (len(frame_set) - 1):
+        if self.frame > (len(frame_set) - 2):
             self.frame = 0
         return frame_set[self.frame]
 
@@ -102,14 +102,19 @@ class Escudero(pygame.sprite.Sprite):
                     self.wait=0
             elif pygame.sprite.spritecollide(self,rooks,False) or self.posicion_matriz[1]<=0:
                 self.update('stand_up')
-               
+                self.wait+=1
+                for i in pygame.sprite.spritecollide(self,atq_rooks,False):
+                    self.life-=i.damage
+                    self.wait+=1               
             else:
                 self.update('up')
                 for i in pygame.sprite.spritecollide(self,atq_rooks,False):
-                    self.life-=i.damage  
-                if self.life<=0:
-                    self.kill()
-                self.wait+=1
+                    self.life-=i.damage
+                    self.wait+=1
+        else:
+            self.kill()
+            self.matriz[self.posicion_matriz[1]][self.posicion_matriz[0]]=0
+            self.wait+=1
             
 class Caníbal(pygame.sprite.Sprite):
     def __init__(self, position,velocidad,lapso_entre_ataques,posicion_matriz,matriz):

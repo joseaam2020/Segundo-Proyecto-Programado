@@ -550,12 +550,12 @@ def escenario(y_actual):
             x += 1
         y += 1
 
-    
 
     for avatar in grupo_avatares.sprites():
         #print(avatar,avatar.rect.y)
         avatar.handle_event(grupo_rooks,grupo_particulas)
         avatar.image = pygame.transform.scale(avatar.image,(14,20))
+    
 
     for rook in grupo_rooks.sprites():
         if rook.tipo.upper() == "FUEGO":
@@ -572,6 +572,7 @@ def escenario(y_actual):
         particula.image.set_colorkey((0,0,0))
         if grupo_particulas.has(particula):
             particula.add(allsprites)
+    leer_matriz_monedas(display)
     print(appear)
     allsprites.draw(display)
 
@@ -616,10 +617,10 @@ def juego():
     global moneda_oro
     global sonido_moneda
 
-    monedas = 0
+    monedas = 500
 
     #Definiendo Velocidad de ataque rooks
-    velocidad_ataque = 1
+    velocidad_ataque = 0.9
     print (allsprites.sprites(),grupo_avatares.sprites())
     
     #Ciclo de juego
@@ -720,35 +721,41 @@ def juego():
                                 columna = copia_posx-1
                                 fila = copia_posy-2
                                 if seleccion_x < rook_rect.width/2:
-                                    if seleccion_y < rook_rect.height/2:
-                                        print("Rook sand")
-                                        rook = Rooks("desierto",[columna,fila],velocidad_ataque)
-                                        rook.image = rook.image.convert()
-                                        rook.image.set_colorkey((255,255,255))
-                                        rook.add(allsprites,grupo_rooks)
-                                        colocar_matriz(matriz_rooks,1,copia_posy-2,copia_posx-1)
-                                    else:
-                                        print("Rook rock")
-                                        rook = Rooks("roca",[columna,fila],velocidad_ataque)
-                                        rook.image = rook.image.convert()
-                                        rook.image.set_colorkey((255,255,255))
-                                        rook.add(allsprites,grupo_rooks)
-                                        colocar_matriz(matriz_rooks,2,copia_posy-2,copia_posx-1)
+                                    if monedas>=50:
+                                        if seleccion_y < rook_rect.height/2:
+                                            print("Rook sand")
+                                            rook = Rooks("desierto",[columna,fila],velocidad_ataque)
+                                            rook.image = rook.image.convert()
+                                            rook.image.set_colorkey((255,255,255))
+                                            rook.add(allsprites,grupo_rooks)
+                                            colocar_matriz(matriz_rooks,1,copia_posy-2,copia_posx-1)
+                                        monedas-=50
+                                    elif monedas>=100:
+                                        if seleccion_y > rook_rect.height/2:
+                                            print("Rook rock")
+                                            rook = Rooks("roca",[columna,fila],velocidad_ataque)
+                                            rook.image = rook.image.convert()
+                                            rook.image.set_colorkey((255,255,255))
+                                            rook.add(allsprites,grupo_rooks)
+                                            colocar_matriz(matriz_rooks,2,copia_posy-2,copia_posx-1)
+                                        monedas-=100
                                 else:
-                                    if seleccion_y < rook_rect.height/2:
-                                        print("Rook water")
-                                        rook = Rooks("agua",[columna,fila],velocidad_ataque)
-                                        rook.image = rook.image.convert()
-                                        rook.image.set_colorkey((255,255,255))
-                                        rook.add(allsprites,grupo_rooks)
-                                        colocar_matriz(matriz_rooks,3,copia_posy-2,copia_posx-1)
-                                    else:
-                                        print("Rook fire")
-                                        rook = Rooks("fuego",[columna,fila],velocidad_ataque)
-                                        rook.image = rook.image.convert()
-                                        rook.image.set_colorkey((255,255,255))
-                                        rook.add(allsprites,grupo_rooks)
-                                        colocar_matriz(matriz_rooks,4,copia_posy-2,copia_posx-1)
+                                    if monedas>=150:
+                                        if seleccion_y < rook_rect.height/2:
+                                            print("Rook water")
+                                            rook = Rooks("agua",[columna,fila],velocidad_ataque)
+                                            rook.image = rook.image.convert()
+                                            rook.image.set_colorkey((255,255,255))
+                                            rook.add(allsprites,grupo_rooks)
+                                            colocar_matriz(matriz_rooks,3,copia_posy-2,copia_posx-1)
+                                        else:
+                                            print("Rook fire")
+                                            rook = Rooks("fuego",[columna,fila],velocidad_ataque)
+                                            rook.image = rook.image.convert()
+                                            rook.image.set_colorkey((255,255,255))
+                                            rook.add(allsprites,grupo_rooks)
+                                            colocar_matriz(matriz_rooks,4,copia_posy-2,copia_posx-1)
+                                        monedas-=150
                                 print(matriz_rooks)
                                 print(allsprites.sprites())
                             else:
