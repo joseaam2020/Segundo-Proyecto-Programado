@@ -37,7 +37,7 @@ class Rooks(pygame.sprite.Sprite):
                     x,y = self.rect.topleft
                     x += self.rect.width//2
                     distancia = sprite.rect.y - y
-                    self.ataque = Particula([x,y],distancia,imagen,frames,damage)
+                    self.ataque = Particula([x,y],distancia,imagen,frames,damage,self)
                     self.ataque.add(grupo2)
                     #print(grupo2)
                 else:

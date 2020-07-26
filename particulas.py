@@ -5,7 +5,7 @@ pygame.init()
 
 
 class Particula(pygame.sprite.Sprite):
-    def __init__(self,posicion,distancia,imagen,frames,damage):
+    def __init__(self,posicion,distancia,imagen,frames,damage,rook):
         super().__init__()
         self.posicion = posicion
         self.distancia = distancia
@@ -17,6 +17,7 @@ class Particula(pygame.sprite.Sprite):
         self.rect.midtop = posicion
         self.duracion_frames = self.distancia//self.frames
         self.damage = damage
+        self.rook = rook
     
     def update(self,grupo):
         #print(pygame.sprite.spritecollide(self,grupo,False))
@@ -33,6 +34,7 @@ class Particula(pygame.sprite.Sprite):
             self.rect.midtop = pos_tmp
         else:
             self.kill()
+            self.rook.ataque = None
             #if self.altura_imagen <= 0:
              #   self.kill()
             #else:

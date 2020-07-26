@@ -95,7 +95,7 @@ class Escudero(pygame.sprite.Sprite):
             if pygame.sprite.spritecollide(self,rooks,False) or self.posicion_matriz[1]<=0:
                 self.update('stand_up')
                 self.ataque()
-            for i in pygame.sprite.spritecollide(self,atq_rooks,True):
+            for i in pygame.sprite.spritecollide(self,atq_rooks,False):
                 print(self.life)
                 self.life-=i.damage              
             else:
@@ -165,7 +165,7 @@ class Caníbal(pygame.sprite.Sprite):
             if pygame.sprite.spritecollide(self,rooks,False) or self.posicion_matriz[1]<=0:
                 self.update('stand_up')
                 #self.ataque()
-            for i in pygame.sprite.spritecollide(self,atq_rooks,True):
+            for i in pygame.sprite.spritecollide(self,atq_rooks,False):
                 print(self.life)
                 self.life-=i.damage              
             else:
@@ -235,7 +235,7 @@ class Flechador(pygame.sprite.Sprite):
             if pygame.sprite.spritecollide(self,rooks,False) or self.posicion_matriz[1]<=0:
                 self.update('stand_up')
                 #self.ataque()
-            for i in pygame.sprite.spritecollide(self,atq_rooks,True):
+            for i in pygame.sprite.spritecollide(self,atq_rooks,False):
                 print(self.life)
                 self.life-=i.damage              
             else:
@@ -305,7 +305,7 @@ class Leñador(pygame.sprite.Sprite):
             if pygame.sprite.spritecollide(self,rooks,False) or self.posicion_matriz[1]<=0:
                 self.update('stand_up')
                 #self.ataque()
-            for i in pygame.sprite.spritecollide(self,atq_rooks,True):
+            for i in pygame.sprite.spritecollide(self,atq_rooks,False):
                 print(self.life)
                 self.life-=i.damage              
             else:
