@@ -37,6 +37,7 @@ def mapa(archivo):
 #E: nombre de la caprpeta donde se encuentran las imagenes
 #S: lista de la forma [[nombre de la imagen(string), superficie]]
 #R: -
+
 def cargar_img(carpeta):
     path = Path(".")/carpeta
     lista_archivos = list(path.iterdir())
@@ -289,7 +290,7 @@ def menu_principal():
             if event.type==pygame.KEYDOWN:
                 if event.key== pygame.K_1:
                     musica=False
-                    pygame.mixer.music.stop()
+                    pygame.mixer.music.fadeout(2000)
                 if event.key== pygame.K_2:
                     musica=True
                     pygame.mixer.music.play()
@@ -593,7 +594,7 @@ def juego():
             if event.type==pygame.KEYDOWN:
                 if event.key== pygame.K_1:
                     musica=False
-                    pygame.mixer.music.stop()
+                    pygame.mixer.music.fadeout(2000)
                 if event.key== pygame.K_2:
                     musica=True
                     pygame.mixer.music.play()
