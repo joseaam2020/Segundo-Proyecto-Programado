@@ -570,6 +570,9 @@ def juego():
 
     monedas = 0
 
+    #Definiendo Velocidad de ataque rooks
+    velocidad_ataque = 1
+
     leer_matriz_avatar('Normal')
     print (allsprites.sprites(),grupo_avatares.sprites())
     
@@ -598,7 +601,7 @@ def juego():
 
         #print(pos_x,pos_y)
 
-        if pos_x > 0 and pos_x < 6 and pos_y > 1 and not casilla_seleccionada:
+        if pos_x > 0 and pos_x < 6 and pos_y > 1 and pos_y < 11 and not casilla_seleccionada:
             screen.blit(seleccionador,(pos_x*58,pos_y*43))
             seleccionando_casilla = True
         elif casilla_seleccionada:
@@ -668,14 +671,14 @@ def juego():
                                 if seleccion_x < rook_rect.width/2:
                                     if seleccion_y < rook_rect.height/2:
                                         print("Rook sand")
-                                        rook = Rooks("desierto",[columna,fila])
+                                        rook = Rooks("desierto",[columna,fila],velocidad_ataque)
                                         rook.image = rook.image.convert()
                                         rook.image.set_colorkey((255,255,255))
                                         rook.add(allsprites,grupo_rooks)
                                         colocar_matriz(matriz_rooks,1,copia_posy-2,copia_posx-1)
                                     else:
                                         print("Rook rock")
-                                        rook = Rooks("roca",[columna,fila])
+                                        rook = Rooks("roca",[columna,fila],velocidad_ataque)
                                         rook.image = rook.image.convert()
                                         rook.image.set_colorkey((255,255,255))
                                         rook.add(allsprites,grupo_rooks)
@@ -683,21 +686,20 @@ def juego():
                                 else:
                                     if seleccion_y < rook_rect.height/2:
                                         print("Rook water")
-                                        rook = Rooks("agua",[columna,fila])
+                                        rook = Rooks("agua",[columna,fila],velocidad_ataque)
                                         rook.image = rook.image.convert()
                                         rook.image.set_colorkey((255,255,255))
                                         rook.add(allsprites,grupo_rooks)
                                         colocar_matriz(matriz_rooks,3,copia_posy-2,copia_posx-1)
                                     else:
                                         print("Rook fire")
-                                        rook = Rooks("fuego",[columna,fila])
+                                        rook = Rooks("fuego",[columna,fila],velocidad_ataque)
                                         rook.image = rook.image.convert()
                                         rook.image.set_colorkey((255,255,255))
                                         rook.add(allsprites,grupo_rooks)
                                         colocar_matriz(matriz_rooks,4,copia_posy-2,copia_posx-1)
                                 print(matriz_rooks)
                                 print(allsprites.sprites())
-                                    
                             else:
                                 pass
                             

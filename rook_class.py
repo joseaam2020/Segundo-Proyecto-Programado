@@ -5,14 +5,14 @@ from particulas import *
 pygame.init()
 
 class Rooks(pygame.sprite.Sprite):
-    def __init__(self,tipo,posicion_matriz):
+    def __init__(self,tipo,posicion_matriz,timer_ataque):
         super().__init__()
         self.tipo = tipo
         self.posicion_matriz = posicion_matriz
         self.posicion_matrizx = posicion_matriz[0]
         self.posicion_matrizy = posicion_matriz[1]
         self.ataque = None
-
+        self.timer_ataque = timer_ataque
         
         if self.tipo.upper() == "FUEGO":
             self.image =  pygame.image.load('Rooks/fire_rook.png')
@@ -29,7 +29,6 @@ class Rooks(pygame.sprite.Sprite):
 
         self.rect.topleft = ((posicion_matriz[0]+1)*16,(posicion_matriz[1]+2)*16)
 
-
     def iniciar_ataque(self,grupo1,grupo2,imagen,frames,damage):
         if self.ataque==None:
             for sprite in grupo1.sprites():
@@ -45,3 +44,13 @@ class Rooks(pygame.sprite.Sprite):
                     #print(grupo2)
                 else:
                     pass
+        else:
+            if isinstance(self.ataque,int):
+                if self.ataque > 0:
+                    self.ataque -= self.timer_ataque
+                    #print(self.ataque)
+                else:
+                    self.ataque = None
+            else:
+                pass
+                
