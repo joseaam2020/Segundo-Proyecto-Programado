@@ -626,6 +626,7 @@ def juego():
                     g.write(guarda)
                 #Se carga el menu principal otra vez
                 menu_principal()
+                
             if event.type==pygame.KEYDOWN:
                 if event.key== pygame.K_1:
                     musica=False
@@ -633,83 +634,85 @@ def juego():
                 if event.key== pygame.K_2:
                     musica=True
                     pygame.mixer.music.play()
+                    
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if seleccionando_casilla:
-                    if matriz_monedas[pos_y-2][pos_x-1]!= 0:
-                        ele = matriz_monedas[pos_y-2][pos_x-1]
-                        if ele == "1":
-                            monedas += 25
-                        elif ele == "2":
-                            monedas += 50
-                        elif ele == "3":
-                            monedas += 100
-                        sonido_moneda.play(0)
-                        colocar_matriz(matriz_monedas,0,pos_y-2,pos_x-1)
-                    else:
-                        copia_posx = pos_x 
-                        copia_posy = pos_y
-                        casilla_seleccionada = True
-                        seleccionador = pygame.transform.scale(seleccionador2,(53,43))
-                else:
-                    if casilla_seleccionada:
-                        if rook_rect.collidepoint(mouse_pos):
-                            seleccion_x = mouse_pos[0] - rook_rect.x
-                            seleccion_y = mouse_pos[1] - rook_rect.y
-                            #Id de los diferentes rooks en la matriz
-                            #Sand = 1
-                            #Rock = 2
-                            #Water = 3
-                            #Fire = 4
-                            columna = copia_posx-1
-                            fila = copia_posy-2
-                            if seleccion_x < rook_rect.width/2:
-                                if seleccion_y < rook_rect.height/2:
-                                    print("Rook sand")
-                                    rook = Rooks("desierto",[columna,fila])
-                                    rook.image = rook.image.convert()
-                                    rook.image.set_colorkey((255,255,255))
-                                    rook.add(allsprites,grupo_rooks)
-                                    colocar_matriz(matriz_rooks,1,copia_posy-2,copia_posx-1)
-                                else:
-                                    print("Rook rock")
-                                    rook = Rooks("roca",[columna,fila])
-                                    rook.image = rook.image.convert()
-                                    rook.image.set_colorkey((255,255,255))
-                                    rook.add(allsprites,grupo_rooks)
-                                    colocar_matriz(matriz_rooks,2,copia_posy-2,copia_posx-1)
-                            else:
-                                if seleccion_y < rook_rect.height/2:
-                                    print("Rook water")
-                                    rook = Rooks("agua",[columna,fila])
-                                    rook.image = rook.image.convert()
-                                    rook.image.set_colorkey((255,255,255))
-                                    rook.add(allsprites,grupo_rooks)
-                                    colocar_matriz(matriz_rooks,3,copia_posy-2,copia_posx-1)
-                                else:
-                                    print("Rook fire")
-                                    rook = Rooks("fuego",[columna,fila])
-                                    rook.image = rook.image.convert()
-                                    rook.image.set_colorkey((255,255,255))
-                                    rook.add(allsprites,grupo_rooks)
-                                    colocar_matriz(matriz_rooks,4,copia_posy-2,copia_posx-1)
-                            print(matriz_rooks)
-                            print(allsprites.sprites())
-                                
+                if event.button == pygame.BUTTON_LEFT:    
+                    if seleccionando_casilla:
+                        if matriz_monedas[pos_y-2][pos_x-1]!= 0:
+                            ele = matriz_monedas[pos_y-2][pos_x-1]
+                            if ele == "1":
+                                monedas += 25
+                            elif ele == "2":
+                                monedas += 50
+                            elif ele == "3":
+                                monedas += 100
+                            sonido_moneda.play(0)
+                            colocar_matriz(matriz_monedas,0,pos_y-2,pos_x-1)
                         else:
-                            pass
-                        
-                    seleccionador = pygame.transform.scale(seleccionador1,(53,43))
-                    seleccionando_casilla = True
-                    casilla_seleccionada = False
-                #if y < 0:
-                 #   meta = y + 11
-                  #  while y != meta:
-                   #     escenario(int(y))
-                   #     y += 0.25
-                   #     pygame.display.update()
-                    #y = int(y)
-                #else:
-                   #pass
+                            copia_posx = pos_x 
+                            copia_posy = pos_y
+                            casilla_seleccionada = True
+                            seleccionador = pygame.transform.scale(seleccionador2,(53,43))
+                    else:
+                        if casilla_seleccionada:
+                            if rook_rect.collidepoint(mouse_pos):
+                                seleccion_x = mouse_pos[0] - rook_rect.x
+                                seleccion_y = mouse_pos[1] - rook_rect.y
+                                #Id de los diferentes rooks en la matriz
+                                #Sand = 1
+                                #Rock = 2
+                                #Water = 3
+                                #Fire = 4
+                                columna = copia_posx-1
+                                fila = copia_posy-2
+                                if seleccion_x < rook_rect.width/2:
+                                    if seleccion_y < rook_rect.height/2:
+                                        print("Rook sand")
+                                        rook = Rooks("desierto",[columna,fila])
+                                        rook.image = rook.image.convert()
+                                        rook.image.set_colorkey((255,255,255))
+                                        rook.add(allsprites,grupo_rooks)
+                                        colocar_matriz(matriz_rooks,1,copia_posy-2,copia_posx-1)
+                                    else:
+                                        print("Rook rock")
+                                        rook = Rooks("roca",[columna,fila])
+                                        rook.image = rook.image.convert()
+                                        rook.image.set_colorkey((255,255,255))
+                                        rook.add(allsprites,grupo_rooks)
+                                        colocar_matriz(matriz_rooks,2,copia_posy-2,copia_posx-1)
+                                else:
+                                    if seleccion_y < rook_rect.height/2:
+                                        print("Rook water")
+                                        rook = Rooks("agua",[columna,fila])
+                                        rook.image = rook.image.convert()
+                                        rook.image.set_colorkey((255,255,255))
+                                        rook.add(allsprites,grupo_rooks)
+                                        colocar_matriz(matriz_rooks,3,copia_posy-2,copia_posx-1)
+                                    else:
+                                        print("Rook fire")
+                                        rook = Rooks("fuego",[columna,fila])
+                                        rook.image = rook.image.convert()
+                                        rook.image.set_colorkey((255,255,255))
+                                        rook.add(allsprites,grupo_rooks)
+                                        colocar_matriz(matriz_rooks,4,copia_posy-2,copia_posx-1)
+                                print(matriz_rooks)
+                                print(allsprites.sprites())
+                                    
+                            else:
+                                pass
+                            
+                        seleccionador = pygame.transform.scale(seleccionador1,(53,43))
+                        seleccionando_casilla = True
+                        casilla_seleccionada = False
+                    #if y < 0:
+                     #   meta = y + 11
+                      #  while y != meta:
+                       #     escenario(int(y))
+                       #     y += 0.25
+                       #     pygame.display.update()
+                        #y = int(y)
+                    #else:
+                       #pass
                    
         pygame.display.update()
         clock.tick(60)

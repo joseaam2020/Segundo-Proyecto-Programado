@@ -28,7 +28,7 @@ Atributos:
 class Escudero(pygame.sprite.Sprite):
     def __init__(self, position,velocidad,lapso_entre_ataques,posicion_matriz,matriz):
         self.sheet = pygame.image.load('Avatares/Escudero/sprites_escudero.png')
-        self.sheet.set_clip(pygame.Rect(0, 0, 10, 50))
+        self.sheet.set_clip(pygame.Rect(0, 0, 10, 10))
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         self.rect = self.image.get_rect()
         self.rect.topleft=position
@@ -97,7 +97,6 @@ class Escudero(pygame.sprite.Sprite):
             else:
                 self.update('up')
                 for i in pygame.sprite.spritecollide(self,atq_rooks,False):
-                    print(self.life)
                     self.life-=i.damage  
         else:
             self.kill()
@@ -105,7 +104,7 @@ class Escudero(pygame.sprite.Sprite):
 class Caníbal(pygame.sprite.Sprite):
     def __init__(self, position,velocidad,lapso_entre_ataques,posicion_matriz,matriz):
         self.sheet = pygame.image.load('Avatares/Caníbal/caníbal_sprite.png')
-        self.sheet.set_clip(pygame.Rect(0, 0, 10, 40))
+        self.sheet.set_clip(pygame.Rect(0, 0, 10, 10))
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         self.rect = self.image.get_rect()
         self.rect.topleft = position
@@ -167,7 +166,6 @@ class Caníbal(pygame.sprite.Sprite):
             else:
                 self.update('up')
                 for i in pygame.sprite.spritecollide(self,atq_rooks,False):
-                    print(self.life)
                     self.life-=i.damage  
         else:
             self.kill()
@@ -175,7 +173,7 @@ class Caníbal(pygame.sprite.Sprite):
 class Flechador(pygame.sprite.Sprite):
     def __init__(self, position,velocidad,lapso_entre_ataques,posicion_matriz,matriz):
         self.sheet = pygame.image.load('Avatares/Flechador/sprites_flechador.png')
-        self.sheet.set_clip(pygame.Rect(0, 0, 10, 50))
+        self.sheet.set_clip(pygame.Rect(0, 0, 10, 10))
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         self.rect = self.image.get_rect()
         self.rect.topleft = position
@@ -236,8 +234,7 @@ class Flechador(pygame.sprite.Sprite):
                 self.update('stand_up')            
             else:
                 self.update('up')
-                for i in pygame.sprite.spritecollide(self,atq_rooks,False):
-                    print(self.life)
+                for i in pygame.sprite.spritecollide(self,atq_rooks,False):                    
                     self.life-=i.damage  
         else:
             self.kill()
@@ -245,7 +242,7 @@ class Flechador(pygame.sprite.Sprite):
 class Leñador(pygame.sprite.Sprite):
     def __init__(self, position,velocidad,lapso_entre_ataques,posicion_matriz,matriz):
         self.sheet = pygame.image.load('Avatares/Leñador/sprites_leñador.png')
-        self.sheet.set_clip(pygame.Rect(0, 0, 10, 50))
+        self.sheet.set_clip(pygame.Rect(0, 0, 10, 10))
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         self.rect = self.image.get_rect()
         self.rect.topleft = position
@@ -306,8 +303,7 @@ class Leñador(pygame.sprite.Sprite):
                 self.update('stand_up')           
             else:
                 self.update('up')
-                for i in pygame.sprite.spritecollide(self,atq_rooks,False):
-                    print(self.life)
+                for i in pygame.sprite.spritecollide(self,atq_rooks,False):                    
                     self.life-=i.damage  
         else:
             self.kill()
