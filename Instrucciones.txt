@@ -7,57 +7,26 @@ casilla utilizando
 las Rooks y sus 
 poderes para impedirlo.
 
-Existen cuatro tipos de 
-Rook: La de Arena, ataca 
-lanzando una rafaga de 
-arena que ejerce un danho
-de 4 puntos, su resistencia 
-es la mas debil de todas 
-pues solo posee cuatro puntos 
-de resistencia, tiene un 
-coste de 50 monedas;
-La rook de Fuego ataca con
-bolas de fuego que causan un 
-danho de 8 puntos y su 
-resistencia es de 16 puntos,
-tiene un coste de 150 monedas;
-La Rook de Roca, ataca tirando
-piedras a los enemigos que causan
-4 puntos de danho, tiene un costo
-de 100 monedas; por ultimo la 
-Rook de Agua la cual ataca con
-esferas de agua causando 8 
-puntos de danho y posee una
-resistencia a ataques de 16
-puntos, su costo es de 150 
-monedas.
-
-Los Avatares se distinguen por
-ser distribuidos en cuatro 
-facciones, estan los arqueros,
-atacantes a distancia que causan
-2 puntos de danho, pero compensa
-al ser el atacante mas veloz,
-al ejercerle 5 puntos de danho
-muere; los escuderos, valerosos
-atacantes que usan su espada
-para causar 3 puntos de danho,
-son veloces pues se especializan
-en proter a sus compañeros,
-son capaces de resistir hasta 10 
-puntos de danho antes de caer;
-los leñadores, seres grandes
-que junto a sus grandes hachas
-causan 9 puntos de danho, al ser
-tan grandes se vuelven lentos,
-pero poseen una gran resistencia
-pues son capaces de resistir
-hasta 20 puntos de danho;
-los canibales seres atroces
-que causan un gran danho al golpear
-con sus garrotes causando 12 puntos
-de danho, son muy resistentes por
-sus habitos logrando soportar 
-hasta 25 puntos de danho.
+El sistema de juego es 
+simple, al hacer clic
+izquierdo sobre una ca-
+silla vacia, podras el-
+egir el tipo de Rook 
+que desees colocar al
+hacer clic izquierdo
+sobre su simbolo,
+el simbolo superior iz-
+quierdo es la Rook de 
+Arena, el simbolo inf-
+erior izquierdo es la
+Rook de Roca, el simb-
+olo inferior derecho
+es la Rook de Fuego y
+por ultimo, el simbolo
+superior derecho es
+la Rook de Agua.
+siempre y cuando cuen-
+tes con las monedas
+necesarias.
  
 

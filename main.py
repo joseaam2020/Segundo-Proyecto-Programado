@@ -479,10 +479,6 @@ def instrucciones():
 
     #Cargando Imagen triangulo_seleccion
     global triangulo_seleccion
-
-    #Cargando fotos
-    foto_jose = pygame.image.load("Tiles2/foto_jose.jpg").convert()
-    foto_jordy = pygame.image.load("Tiles2/foto_jordy.jpg").convert()
     
     #Iniciando ciclo de menu
     while running:
@@ -500,14 +496,14 @@ def instrucciones():
         scrollrect = scroll.get_rect()
         scrollrect.topleft = (0,0)
         tsrect = triangulo_seleccion.get_rect()
-        tsrect.midtop= (125,300)
+        tsrect.midtop= (120,300)
         
         instrucciones = pygame.Surface((scrollrect.width,scrollrect.height))
         instrucciones.set_colorkey((0,0,0))
         instruccionesrect = instrucciones.get_rect()
-        instruccionesrect.midtop= (150,100)
+        instruccionesrect.midtop= (200,100)
         
-        frame =  pygame.Surface((150,240))
+        frame =  pygame.Surface((170,240))
         framerect = frame.get_rect()
         framerect.topleft = (55,50)
         frame.fill((255,255,255))
@@ -544,9 +540,9 @@ def instrucciones():
                 mouse_pos = pygame.mouse.get_pos()
                 x,y = mouse_pos
                 x,y=[x-instruccionesrect.x,y-instruccionesrect.y]
-                if tsrect.collidepoint((x,y)):
+                if tsrect.collidepoint((x,y)) and instrucciones_y == 0:
                     instrucciones_y -= frame.get_height()
-                elif instrucciones_y < 0 :
+                elif instrucciones_y < 0 and instrucciones_y == - frame.get_height(): 
                     if  ts2rect.collidepoint((x,y)):
                         instrucciones_y += frame.get_height()
                            
@@ -632,6 +628,7 @@ def buscar_img(nombre,lista):
 #S: inicia el cliclo de juego
 #R: - 
 def juego():
+    global appear
     global musica
     global aparicion
     global matriz_avatares
@@ -665,6 +662,12 @@ def juego():
     
     #Ciclo de juego
     while running:
+        appear+=1
+        if appear == 1000:
+            colocar_aleatorio(matriz_de_spawn,[0,"1","2","3","4"],[1,50,100,10,5])
+            matriz_avatares[-1] = matriz_de_spawn[0]
+            leer_matriz_avatar('Normal')
+            appear=0
 
         mouse = False
 
@@ -756,35 +759,41 @@ def juego():
                                 columna = copia_posx-1
                                 fila = copia_posy-2
                                 if seleccion_x < rook_rect.width/2:
-                                    if seleccion_y < rook_rect.height/2:
-                                        print("Rook sand")
-                                        rook = Rooks("desierto",[columna,fila],velocidad_ataque)
-                                        rook.image = rook.image.convert()
-                                        rook.image.set_colorkey((255,255,255))
-                                        rook.add(allsprites,grupo_rooks)
-                                        colocar_matriz(matriz_rooks,1,copia_posy-2,copia_posx-1)
-                                    else:
-                                        print("Rook rock")
-                                        rook = Rooks("roca",[columna,fila],velocidad_ataque)
-                                        rook.image = rook.image.convert()
-                                        rook.image.set_colorkey((255,255,255))
-                                        rook.add(allsprites,grupo_rooks)
-                                        colocar_matriz(matriz_rooks,2,copia_posy-2,copia_posx-1)
+                                    if monedas>=50:
+                                        if seleccion_y < rook_rect.height/2:
+                                            print("Rook sand")
+                                            rook = Rooks("desierto",[columna,fila],velocidad_ataque)
+                                            rook.image = rook.image.convert()
+                                            rook.image.set_colorkey((255,255,255))
+                                            rook.add(allsprites,grupo_rooks)
+                                            colocar_matriz(matriz_rooks,1,copia_posy-2,copia_posx-1)
+                                        monedas-=50
+                                    elif monedas>=100:
+                                        if seleccion_y > rook_rect.height/2:
+                                            print("Rook rock")
+                                            rook = Rooks("roca",[columna,fila],velocidad_ataque)
+                                            rook.image = rook.image.convert()
+                                            rook.image.set_colorkey((255,255,255))
+                                            rook.add(allsprites,grupo_rooks)
+                                            colocar_matriz(matriz_rooks,2,copia_posy-2,copia_posx-1)
+                                        monedas-=100
                                 else:
-                                    if seleccion_y < rook_rect.height/2:
-                                        print("Rook water")
-                                        rook = Rooks("agua",[columna,fila],velocidad_ataque)
-                                        rook.image = rook.image.convert()
-                                        rook.image.set_colorkey((255,255,255))
-                                        rook.add(allsprites,grupo_rooks)
-                                        colocar_matriz(matriz_rooks,3,copia_posy-2,copia_posx-1)
-                                    else:
-                                        print("Rook fire")
-                                        rook = Rooks("fuego",[columna,fila],velocidad_ataque)
-                                        rook.image = rook.image.convert()
-                                        rook.image.set_colorkey((255,255,255))
-                                        rook.add(allsprites,grupo_rooks)
-                                        colocar_matriz(matriz_rooks,4,copia_posy-2,copia_posx-1)
+                                    if monedas>=150:
+                                        if seleccion_y < rook_rect.height/2:
+                                            print("Rook water")
+                                            rook = Rooks("agua",[columna,fila],velocidad_ataque)
+                                            rook.image = rook.image.convert()
+                                            rook.image.set_colorkey((255,255,255))
+                                            rook.add(allsprites,grupo_rooks)
+                                            colocar_matriz(matriz_rooks,3,copia_posy-2,copia_posx-1)
+                                        else:
+                                            print("Rook fire")
+                                            rook = Rooks("fuego",[columna,fila],velocidad_ataque)
+                                            rook.image = rook.image.convert()
+                                            rook.image.set_colorkey((255,255,255))
+                                            rook.add(allsprites,grupo_rooks)
+                                            colocar_matriz(matriz_rooks,4,copia_posy-2,copia_posx-1)
+                                        monedas-=150
                                 print(matriz_rooks)
                                 print(allsprites.sprites())
                             else:
