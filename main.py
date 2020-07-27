@@ -11,12 +11,14 @@ pygame.init()
 #Variable que se encarga de si la musica suena o se mutea
 musica=True
 
+
 #Iniciando ventana
 ancho_ventana=400
 alto_ventana=480
 window_size = (400,480)
 screen = pygame.display.set_mode(size=window_size)
 pygame.display.set_caption("Proyecto Programado")
+
 
 #Creando Superficie 
 display = pygame.Surface((112,176))
@@ -35,6 +37,7 @@ def mapa(archivo):
 #E: nombre de la caprpeta donde se encuentran las imagenes
 #S: lista de la forma [[nombre de la imagen(string), superficie]]
 #R: -
+
 def cargar_img(carpeta):
     path = Path(".")/carpeta
     lista_archivos = list(path.iterdir())
@@ -100,8 +103,9 @@ matriz_rooks = crear_matriz(9,5)
 
 #Iniciando Sprite Groups
 allsprites = pygame.sprite.Group()
-grupo_avatares = pygame.sprite.Group()
+grupo_avatares=pygame.sprite.Group()
 grupo_rooks = pygame.sprite.Group()
+grupo_particulas = pygame.sprite.Group()
             
 #Iniciando monedas
 monedas =  0
@@ -145,7 +149,9 @@ def leer_matriz_monedas(superficie):
 
 #Cargando Imagenes del menu
 scroll = pygame.image.load("Tiles2/scroll.png").convert()
+triangulo_seleccion = pygame.image.load("Tiles2/triangulo_seleccion.png").convert()
 scroll.set_colorkey((255,255,255))
+triangulo_seleccion.set_colorkey((255,255,255))
 
 #Cargando Imagenes del escenario1
 casilla1= pygame.image.load("Tiles2/casilla1.png").convert()
@@ -156,14 +162,70 @@ casilla4= pygame.image.load("Tiles2/casilla4.png").convert()
 
 #Creando matriz de avatares
 matriz_avatares=crear_matriz(10,5)
+matriz_de_spawn= crear_matriz(1,5)
+colocar_aleatorio(matriz_de_spawn,[0,"1","2","3","4"],[1000,50,100,10,5])
+matriz_avatares[-1] = matriz_de_spawn[0]
 
+def leer_matriz_avatar(dificultad):
+    global allsprites
+    global grupo_avatares
+    
+    spawn = matriz_avatares[-1]
+
+    for i in range(0,len(spawn)):
+        if dificultad=='Facil':
+            if spawn[i] == '1':
+                avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            if spawn[i] == '3':
+                avatar= player.Caníbal(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares) 
+            if spawn[i] == '2':
+                avatar= player.Flechador(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            if spawn[i] == '4':
+                avatar= player.Leñador(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            else:
+                pass
+        if dificultad=='Normal':
+            if spawn[i] == '1':
+                avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            if spawn[i] == '3':
+                avatar= player.Caníbal(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares) 
+            if spawn[i] == '2':
+                avatar= player.Flechador(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            if spawn[i] == '4':
+                avatar= player.Leñador(((i+1)*16,(len(matriz_avatares)+1)*16),0.03,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            else:
+                pass
+        if dificultad=='Dificil':
+            if spawn[i] == '1':
+                avatar= player.Escudero(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            if spawn[i] == '3':
+                avatar= player.Caníbal(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares) 
+            if spawn[i] == '2':
+                avatar= player.Flechador(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            if spawn[i] == '4':
+                avatar= player.Leñador(((i+1)*16,(len(matriz_avatares)+1)*16),0.3,5,[i,len(matriz_avatares)],matriz_avatares)
+                avatar.add(allsprites,grupo_avatares)
+            else:
+                pass
+
+            
 #Cargando imagenes de avatares
 aparicion=[70,300,130,190,250]
-Escudero = player.Escudero((random.choice(aparicion), alto_ventana+80),0.2,5)
-canibal=player.Caníbal(((ancho_ventana/2)-10, alto_ventana))
-arquero= player.Flechador(((ancho_ventana/2), alto_ventana/2))
-leñador= player.Leñador(((ancho_ventana/2), alto_ventana/2))
-
+#Escudero = player.Escudero(((i+1)*16,(len(matriz_avatar)+2)*16),0.2,5,[i,len(matriz_avatar-1)],matriz_avatares)
+#canibal=player.Caníbal(((ancho_ventana/2)-10, alto_ventana))
+#arquero= player.Flechador(((ancho_ventana/2), alto_ventana/2))
+#leñador= player.Leñador(((ancho_ventana/2), alto_ventana/2))
 
 #Cargando imagenes de rooks
 seleccionador1 = pygame.image.load("Tiles2/seleccionador1.png").convert()
@@ -172,6 +234,22 @@ seleccionador_rook = pygame.image.load("Tiles2/seleccionador_rook.png").convert(
 seleccionador1.set_colorkey((255,255,255))
 seleccionador2.set_colorkey((255,255,255))
 seleccionador_rook.set_colorkey((255,255,255))
+
+#Cargando imagenes particula
+particulas_fuego = pygame.image.load('Effects/Explosion_Poof.png').convert()
+particulas_agua =pygame.image.load('Effects/Bright_Sparkle.png').convert()
+particulas_roca =pygame.image.load('Effects/Cloud_Poof.png').convert()
+particulas_desierto =pygame.image.load('Effects/Yellow_sparkle.png').convert()
+
+particulas_fuego.set_colorkey((255,255,255))
+particulas_agua.set_colorkey((255,255,255))
+particulas_roca.set_colorkey((255,255,255))
+particulas_desierto.set_colorkey((255,255,255))
+
+particulas_fuego = pygame.transform.rotate(particulas_fuego,90)
+particulas_agua = pygame.transform.rotate(particulas_agua,90)
+particulas_roca = pygame.transform.rotate(particulas_roca,90)
+particulas_desierto = pygame.transform.rotate(particulas_desierto,90)
 
 #Creando fonts 
 font40 = pygame.font.SysFont('berlinsansfbdemi', 40)
@@ -220,6 +298,7 @@ def menu_principal():
         Iniciar = texto("Iniciar",font35,(255,255,255),screen,200,100,"centro")
         Opciones = texto("Opciones",font35,(255,255,255),screen,200,150,"centro")
         Creditos = texto("Creditos",font35,(255,255,255),screen,200,200,"centro")
+        Instrucciones = texto("Instrucciones",font35,(255,255,255),screen,200,250,"centro")
 
         #Ciclo de eventos
         for event in pygame.event.get():
@@ -228,7 +307,7 @@ def menu_principal():
             if event.type==pygame.KEYDOWN:
                 if event.key== pygame.K_1:
                     musica=False
-                    pygame.mixer.music.stop()
+                    pygame.mixer.music.fadeout(2000)
                 if event.key== pygame.K_2:
                     musica=True
                     pygame.mixer.music.play()
@@ -243,6 +322,9 @@ def menu_principal():
                     opciones()
                 if Creditos.collidepoint(pos_mouse):
                     creditos()
+                if Instrucciones.collidepoint(pos_mouse):
+                    instrucciones()
+                
                 
         pygame.display.update()
 
@@ -290,8 +372,17 @@ def creditos():
     creditos_lista = creditos.read()
     creditos.close()
     creditos_lista = creditos_lista.split('\n')
-    print(creditos_lista)
 
+    #Iniciando Valor y de display_creditos
+    creditos_y = 0
+
+    #Cargando Imagen triangulo_seleccion
+    global triangulo_seleccion
+
+    #Cargando fotos
+    foto_jose = pygame.image.load("Tiles2/foto_jose.jpg").convert()
+    foto_jordy = pygame.image.load("Tiles2/foto_jordy.jpg").convert()
+    
     #Iniciando ciclo de menu
     while running:
 
@@ -306,44 +397,177 @@ def creditos():
 
         #Cargando imagen del menu
         scrollrect = scroll.get_rect()
-        scrollrect.midtop = (200,100)
+        scrollrect.topleft = (0,0)
+        tsrect = triangulo_seleccion.get_rect()
+        tsrect.midtop= (125,300)
+        
+        creditos = pygame.Surface((scrollrect.width,scrollrect.height))
+        creditos.set_colorkey((0,0,0))
+        creditosrect = creditos.get_rect()
+        creditosrect.midtop= (150,100)
+        
+        frame =  pygame.Surface((150,240))
+        framerect = frame.get_rect()
+        framerect.topleft = (55,50)
+        frame.fill((255,255,255))
         
         #Agregando Texto de Creditos
-        display_creditos = pygame.Surface((150,200))
-        display_creditos.fill((255,255,255))
-        display_creditos.set_colorkey((255,255,255))
+        texto_creditos = pygame.Surface((150,800))
+        texto_creditos.fill((255,255,255))
+        texto_creditos.set_colorkey((255,255,255))
+        texto_creditosrect = texto_creditos.get_rect()
     
         y = 0
         for ele in creditos_lista:
-            texto(ele,font15,(0,0,0),display_creditos,0,y,"topleft")
+            texto(ele,font15,(0,0,0),texto_creditos,0,y,"topleft")
             y += 15
-
-        scroll.blit(display_creditos,(55,50))
-
-        screen.blit(scroll,scrollrect)
+            
+        frame.blit(texto_creditos,(0,creditos_y))
+        frame.set_colorkey((255,255,255))
+        creditos.blit(scroll,scrollrect)
+        creditos.blit(frame,framerect)
+        creditos.blit(triangulo_seleccion,tsrect)
+        if creditos_y < 0:
+            triangulo_seleccion2 = pygame.transform.rotate(triangulo_seleccion,180)
+            ts2rect = triangulo_seleccion2.get_rect()
+            ts2rect.midtop = (125,10)
+            creditos.blit(triangulo_seleccion2,ts2rect)
+        
+        screen.blit(creditos,creditosrect)
+        screen.blit(foto_jordy,(280,150))
+        screen.blit(foto_jose,(280,300))
 
         #Ciclo de eventos
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                x,y = mouse_pos
+                x,y=[x-creditosrect.x,y-creditosrect.y]
+                if tsrect.collidepoint((x,y)) and creditos_y == 0:
+                    creditos_y -= frame.get_height()
+                elif creditos_y < 0 and creditos_y == -frame.get_height():
+                    if  ts2rect.collidepoint((x,y)):
+                        creditos_y += frame.get_height()
+                    
+                
                 
         pygame.display.update()
 
+#Creditos()
+#E: -
+#S: inicia el menu de opciones
+#R: -
+def instrucciones():
+    #Iniciando ciclo
+    running = True
+    global y_escenario
+
+    #Cargando instrucciones
+    instrucciones = open("Instrucciones.txt")
+    instrucciones_lista = instrucciones.read()
+    instrucciones.close()
+    instrucciones_lista = instrucciones_lista.split('\n')
+
+    #Iniciando Valor y de display_instrucciones
+    instrucciones_y = 0
+
+    #Cargando Imagen triangulo_seleccion
+    global triangulo_seleccion
+
+    #Cargando fotos
+    foto_jose = pygame.image.load("Tiles2/foto_jose.jpg").convert()
+    foto_jordy = pygame.image.load("Tiles2/foto_jordy.jpg").convert()
+    
+    #Iniciando ciclo de menu
+    while running:
+
+        #Reinciando pantalla
+        screen.fill((0,0,0))
+
+        #Inciando Escenario de fondo
+        escenario(y_escenario)
+
+        #Creando Texto
+        TowerDefense = texto("Tower Defense",font40,(255,255,255),screen,200,50,"centro")
+
+        #Cargando imagen del menu
+        scrollrect = scroll.get_rect()
+        scrollrect.topleft = (0,0)
+        tsrect = triangulo_seleccion.get_rect()
+        tsrect.midtop= (125,300)
+        
+        instrucciones = pygame.Surface((scrollrect.width,scrollrect.height))
+        instrucciones.set_colorkey((0,0,0))
+        instruccionesrect = instrucciones.get_rect()
+        instruccionesrect.midtop= (200,100)
+        
+        frame =  pygame.Surface((160,240))
+        framerect = frame.get_rect()
+        framerect.topleft = (55,50)
+        frame.fill((255,255,255))
+        
+        #Agregando Texto de instrucciones
+        texto_instrucciones = pygame.Surface((150,800))
+        texto_instrucciones.fill((255,255,255))
+        texto_instrucciones.set_colorkey((255,255,255))
+        texto_instruccionesrect = texto_instrucciones.get_rect()
+    
+        y = 0
+        for ele in instrucciones_lista:
+            texto(ele,font15,(0,0,0),texto_instrucciones,0,y,"topleft")
+            y += 15
+            
+        frame.blit(texto_instrucciones,(0,instrucciones_y))
+        frame.set_colorkey((255,255,255))
+        instrucciones.blit(scroll,scrollrect)
+        instrucciones.blit(frame,framerect)
+        instrucciones.blit(triangulo_seleccion,tsrect)
+        if instrucciones_y < 0:
+            triangulo_seleccion2 = pygame.transform.rotate(triangulo_seleccion,180)
+            ts2rect = triangulo_seleccion2.get_rect()
+            ts2rect.midtop = (125,10)
+            instrucciones.blit(triangulo_seleccion2,ts2rect)
+        
+        screen.blit(instrucciones,instruccionesrect)
+
+        #Ciclo de eventos
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                x,y = mouse_pos
+                x,y=[x-instruccionesrect.x,y-instruccionesrect.y]
+                if tsrect.collidepoint((x,y)) and instrucciones_y == 0:
+                    instrucciones_y -= frame.get_height()
+                elif instrucciones_y < 0 and instrucciones_y == -frame.get_height():
+                    if  ts2rect.collidepoint((x,y)):
+                        instrucciones_y += frame.get_height()
+                    
+                
+                
+        pygame.display.update()
+
+
+        
+appear=0
 #escenario()
 #E: -
 #S: se crea el escenario en la pantalla
 #R: - 
 def escenario(y_actual):
-
+    global appear
     global tiles
     y = y_actual
     y_display = 0 
     for fila in mapa:
         x = 0
         for columna in fila:
-            if y_display <= 22:
+            if y_display <= 11:
                 display.blit(casilla4,(x*16,y*16))
-            elif y_display > 22 and y_display < 33:
+            elif y_display > 11 and y_display < 22:
                 display.blit(casilla2,(x*16,y*16))
             else:
                 display.blit(casilla1,(x*16,y*16))
@@ -363,8 +587,29 @@ def escenario(y_actual):
             x += 1
         y += 1
 
-    leer_matriz_monedas(display)
+    for avatar in grupo_avatares.sprites():
+        #print(avatar,avatar.rect.y)
+        avatar.handle_event(grupo_rooks,grupo_particulas)
+        avatar.image = pygame.transform.scale(avatar.image,(14,20))
 
+    for rook in grupo_rooks.sprites():
+        if rook.tipo.upper() == "FUEGO":
+            rook.iniciar_ataque(grupo_avatares,grupo_particulas,particulas_fuego,7,8)
+        elif rook.tipo.upper() == "AGUA":
+            rook.iniciar_ataque(grupo_avatares,grupo_particulas,particulas_agua,4,8)
+        elif rook.tipo.upper() == "DESIERTO":
+            rook.iniciar_ataque(grupo_avatares,grupo_particulas,particulas_desierto,4,2)
+        elif rook.tipo.upper() == "ROCA":
+            rook.iniciar_ataque(grupo_avatares,grupo_particulas,particulas_roca,7,4)
+            
+    for particula in grupo_particulas.sprites():
+        particula.update(grupo_avatares)
+        particula.image.set_colorkey((0,0,0))
+        if grupo_particulas.has(particula):
+            particula.add(allsprites)
+            
+    leer_matriz_monedas(display)
+    #screen.blit()
     allsprites.draw(display)
 
     screen.blit(pygame.transform.scale(display,(window_size)),(0,0))#Tansformando superficie a la escala de la ventana
@@ -375,6 +620,7 @@ def escenario(y_actual):
 #R: - 
 def buscar_img(nombre,lista):
     for y in lista:
+        
         if y[0] == nombre:
             return y[1]
 
@@ -383,8 +629,16 @@ def buscar_img(nombre,lista):
 #S: inicia el cliclo de juego
 #R: - 
 def juego():
+
+    appear = 0
+    oleada = 0
+    
     global musica
     global aparicion
+    global matriz_avatares
+    global matriz_monedas
+    global matriz_rooks
+    
     #Iniciando ciclo
     running = True
     
@@ -405,10 +659,40 @@ def juego():
     global moneda_oro
     global sonido_moneda
 
-    monedas = 0
+    monedas = 500
+
+    #Definiendo Velocidad de ataque rooks
+    velocidad_ataque = 3
     
     #Ciclo de juego
     while running:
+        appear+=1
+        if appear == 1000:
+            colocar_aleatorio(matriz_de_spawn,[0,"1","2","3","4"],[100,50,4,20,15])
+            matriz_avatares[-1] = matriz_de_spawn[0]
+            leer_matriz_avatar('Normal')
+            appear=0
+
+            oleada+=1
+        if oleada==15:
+            matriz_rooks = crear_matriz(9,5)
+            matriz_avatares = crear_matriz(10,5)
+            matriz_monedas = crear_matriz(9,5)
+            allsprites.empty()
+            grupo_avatares.empty()
+            grupo_rooks.empty()
+            grupo_particulas.empty() 
+                
+ 
+            meta = y_escenario - 11
+            while y_escenario != meta:  
+                escenario(int(y_escenario))
+                y_escenario -= 0.25
+                pygame.display.update()
+            y_escenario = int(y_escenario)
+            oleada = 0
+        else:
+            pass
 
         mouse = False
 
@@ -423,8 +707,8 @@ def juego():
         moneda_oro = pygame.transform.scale(moneda_oro,(25,20))
         screen.blit(moneda_oro,(monedas_x,0))
         texto_moneda = texto(str(monedas),font15,(255,255,255),screen,monedas_x,0,"derecha")
-        colocar_aleatorio(matriz_monedas,[0,"1","2","3"],[100000,1,1,1])
-        
+        colocar_aleatorio(matriz_monedas,[0,"1","2","3"],[80000,1,1,1])
+
         #Posicionando seleccionador
         mouse_pos = pygame.mouse.get_pos()
         pos_x = mouse_pos[0]//58
@@ -432,7 +716,7 @@ def juego():
 
         #print(pos_x,pos_y)
 
-        if pos_x > 0 and pos_x < 6 and pos_y > 1 and not casilla_seleccionada:
+        if pos_x > 0 and pos_x < 6 and pos_y > 1 and pos_y < 11 and not casilla_seleccionada:
             screen.blit(seleccionador,(pos_x*58,pos_y*43))
             seleccionando_casilla = True
         elif casilla_seleccionada:
@@ -444,112 +728,107 @@ def juego():
         else:
             seleccionando_casilla = False
         #De momento esto funciona
-        Escudero.handle_event(allsprites)
-        screen.blit(Escudero.image, Escudero.rect)
+       
         
         #Ciclo de Eventos
         for event in pygame.event.get():
             
             
-            canibal.handle_event(event,allsprites)
-            screen.blit(canibal.image, canibal.rect)
-            random.shuffle(aparicion)
+            #canibal.handle_event(event,allsprites)
+            #screen.blit(canibal.image, canibal.rect)
+            #random.shuffle(aparicion)
             if event.type == pygame.QUIT:
                 running = False
+                #guarda=str(matriz_avatares)
+                #with open('Guardado.txt','w') as g:
+                    #g.write(guarda)
                 #Se carga el menu principal otra vez
                 menu_principal()
+                
             if event.type==pygame.KEYDOWN:
                 if event.key== pygame.K_1:
                     musica=False
-                    pygame.mixer.music.stop()
+                    pygame.mixer.music.fadeout(2000)
                 if event.key== pygame.K_2:
                     musica=True
                     pygame.mixer.music.play()
+                    
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if seleccionando_casilla:
-                    if matriz_monedas[pos_y-2][pos_x-1]!= 0:
-                        ele = matriz_monedas[pos_y-2][pos_x-1]
-                        if ele == "1":
-                            monedas += 25
-                        elif ele == "2":
-                            monedas += 50
-                        elif ele == "3":
-                            monedas += 100
-                        sonido_moneda.play(0)
-                        colocar_matriz(matriz_monedas,0,pos_y-2,pos_x-1)
-                    else:
-                        copia_posx = pos_x 
-                        copia_posy = pos_y
-                        casilla_seleccionada = True
-                        seleccionador = pygame.transform.scale(seleccionador2,(53,43))
-                else:
-                    if casilla_seleccionada:
-                        if rook_rect.collidepoint(mouse_pos):
-                            seleccion_x = mouse_pos[0] - rook_rect.x
-                            seleccion_y = mouse_pos[1] - rook_rect.y
-                            #Id de los diferentes rooks en la matriz
-                            #Sand = 1
-                            #Rock = 2
-                            #Water = 3
-                            #Fire = 4
-                            columna = copia_posx-1
-                            fila = copia_posy-2
-                            if seleccion_x < rook_rect.width/2:
-                                if seleccion_y < rook_rect.height/2:
-                                    print("Rook sand")
-                                    rook = Rooks("desierto",[columna,fila])
-                                    rook.rect.x = (columna+1)*16
-                                    rook.rect.y = (fila+2)*16
-                                    rook.image = rook.image.convert()
-                                    rook.image.set_colorkey((255,255,255))
-                                    rook.add(allsprites,grupo_rooks) 
-                                    colocar_matriz(matriz_rooks,1,copia_posy-2,copia_posx-1)
-                                else:
-                                    print("Rook rock")
-                                    rook = Rooks("roca",[columna,fila])
-                                    rook.rect.x = (columna+1)*16
-                                    rook.rect.y = (fila+2)*16
-                                    rook.image = rook.image.convert()
-                                    rook.image.set_colorkey((255,255,255))
-                                    rook.add(allsprites,grupo_rooks)
-                                    colocar_matriz(matriz_rooks,2,copia_posy-2,copia_posx-1)
-                            else:
-                                if seleccion_y < rook_rect.height/2:
-                                    print("Rook water")
-                                    rook = Rooks("agua",[columna,fila])
-                                    rook.rect.x = (columna+1)*16
-                                    rook.rect.y = (fila+2)*16
-                                    rook.image = rook.image.convert()
-                                    rook.image.set_colorkey((255,255,255))
-                                    rook.add(allsprites,grupo_rooks)
-                                    colocar_matriz(matriz_rooks,3,copia_posy-2,copia_posx-1)
-                                else:
-                                    print("Rook fire")
-                                    rook = Rooks("fuego",[columna,fila])
-                                    rook.rect.x = (columna+1)*16
-                                    rook.rect.y = (fila+2)*16
-                                    rook.image = rook.image.convert()
-                                    rook.image.set_colorkey((255,255,255))
-                                    rook.add(allsprites,grupo_rooks)
-                                    colocar_matriz(matriz_rooks,4,copia_posy-2,copia_posx-1)
-                            print(matriz_rooks)
-                            print(allsprites.sprites())
-                                
+                if event.button == pygame.BUTTON_LEFT:    
+                    if seleccionando_casilla:
+                        if matriz_monedas[pos_y-2][pos_x-1]!= 0:
+                            ele = matriz_monedas[pos_y-2][pos_x-1]
+                            if ele == "1":
+                                monedas += 25
+                            elif ele == "2":
+                                monedas += 50
+                            elif ele == "3":
+                                monedas += 100
+                            sonido_moneda.play(0)
+                            colocar_matriz(matriz_monedas,0,pos_y-2,pos_x-1)
                         else:
-                            pass
-                        
-                    seleccionador = pygame.transform.scale(seleccionador1,(53,43))
-                    seleccionando_casilla = True
-                    casilla_seleccionada = False
-                #if y < 0:
-                 #   meta = y + 11
-                  #  while y != meta:
-                   #     escenario(int(y))
-                   #     y += 0.25
-                   #     pygame.display.update()
-                    #y = int(y)
-                #else:
-                   #pass
+                            copia_posx = pos_x 
+                            copia_posy = pos_y
+                            casilla_seleccionada = True
+                            seleccionador = pygame.transform.scale(seleccionador2,(53,43))
+                    else:
+                        if casilla_seleccionada:
+                            if rook_rect.collidepoint(mouse_pos):
+                                seleccion_x = mouse_pos[0] - rook_rect.x
+                                seleccion_y = mouse_pos[1] - rook_rect.y
+                                #Id de los diferentes rooks en la matriz
+                                #Sand = 1
+                                #Rock = 2
+                                #Water = 3
+                                #Fire = 4
+                                columna = copia_posx-1
+                                fila = copia_posy-2
+                                if seleccion_x < rook_rect.width/2:
+                                    if seleccion_y < rook_rect.height/2:
+                                        if monedas>=50:
+                                            print("Rook sand")
+                                            rook = Rooks("desierto",[columna,fila],velocidad_ataque)
+                                            rook.image = rook.image.convert()
+                                            rook.image.set_colorkey((255,255,255))
+                                            rook.add(allsprites,grupo_rooks)
+                                            colocar_matriz(matriz_rooks,1,copia_posy-2,copia_posx-1)
+                                        monedas-=50
+                                    else:
+                                        if monedas>=100:
+                                            print("Rook rock")
+                                            rook = Rooks("roca",[columna,fila],velocidad_ataque)
+                                            rook.image = rook.image.convert()
+                                            rook.image.set_colorkey((255,255,255))
+                                            rook.add(allsprites,grupo_rooks)
+                                            colocar_matriz(matriz_rooks,2,copia_posy-2,copia_posx-1)
+                                        monedas-=100
+                                else:
+                                    if monedas>=150:
+                                        if seleccion_y < rook_rect.height/2:
+                                            print("Rook water")
+                                            rook = Rooks("agua",[columna,fila],velocidad_ataque)
+                                            rook.image = rook.image.convert()
+                                            rook.image.set_colorkey((255,255,255))
+                                            rook.add(allsprites,grupo_rooks)
+                                            colocar_matriz(matriz_rooks,3,copia_posy-2,copia_posx-1)
+                                        else:
+                                            print("Rook fire")
+                                            rook = Rooks("fuego",[columna,fila],velocidad_ataque)
+                                            rook.image = rook.image.convert()
+                                            rook.image.set_colorkey((255,255,255))
+                                            rook.add(allsprites,grupo_rooks)
+                                            colocar_matriz(matriz_rooks,4,copia_posy-2,copia_posx-1)
+                                        monedas-=150
+                                print(matriz_rooks)
+                                print(allsprites.sprites())
+                            else:
+                                pass
+                            
+                        seleccionador = pygame.transform.scale(seleccionador1,(53,43))
+                        seleccionando_casilla = True
+                        casilla_seleccionada = False
+      
+
                    
         pygame.display.update()
         clock.tick(60)

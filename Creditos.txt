@@ -1,5 +1,31 @@
 Tower Defense: 
 Creado por
-Jordi Calderon
+Jordy Calderon
 Najera y Jose 
 Andres Arroyo 
+estudiantes, del
+Instituto 
+Tecnologico de 
+Costa Rica.
+
+Arte: 
+El arte utilizado
+en el juego se 
+obtuvo de la pagina 
+de internet itch.io.
+Los tilesets utilizados
+fueron: 
+
+-16x16 Dungeon Tileset 
+por 0x72 
+-Toen's Medival Strategy
+v.1.0 por Toen
+-Another RPG Tileset
+(16x16) por fikry13
+
+Musica: 
+A hint of things to Come 
+y Enemies Appear 
+del juego 
+Fire Emblem
+Blazing sword
