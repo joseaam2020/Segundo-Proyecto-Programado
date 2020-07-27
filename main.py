@@ -591,12 +591,10 @@ def escenario(y_actual):
             x += 1
         y += 1
 
-
     for avatar in grupo_avatares.sprites():
         #print(avatar,avatar.rect.y)
         avatar.handle_event(grupo_rooks,grupo_particulas)
         avatar.image = pygame.transform.scale(avatar.image,(14,20))
-    
 
     for rook in grupo_rooks.sprites():
         if rook.tipo.upper() == "FUEGO":
@@ -613,6 +611,7 @@ def escenario(y_actual):
         particula.image.set_colorkey((0,0,0))
         if grupo_particulas.has(particula):
             particula.add(allsprites)
+            
     leer_matriz_monedas(display)
     #screen.blit()
     allsprites.draw(display)
@@ -661,7 +660,7 @@ def juego():
     monedas = 500
 
     #Definiendo Velocidad de ataque rooks
-    velocidad_ataque = 0.9
+    velocidad_ataque = 3
     print (allsprites.sprites(),grupo_avatares.sprites())
     
     #Ciclo de juego
@@ -685,8 +684,8 @@ def juego():
         moneda_oro = pygame.transform.scale(moneda_oro,(25,20))
         screen.blit(moneda_oro,(monedas_x,0))
         texto_moneda = texto(str(monedas),font15,(255,255,255),screen,monedas_x,0,"derecha")
-        colocar_aleatorio(matriz_monedas,[0,"1","2","3"],[100000,10,1,0.1])
-        
+        colocar_aleatorio(matriz_monedas,[0,"1","2","3"],[80000,1,1,1])
+
         #Posicionando seleccionador
         mouse_pos = pygame.mouse.get_pos()
         pos_x = mouse_pos[0]//58

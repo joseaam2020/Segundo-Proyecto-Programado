@@ -34,7 +34,7 @@ class Particula(pygame.sprite.Sprite):
             self.rect.midtop = pos_tmp
         else:
             self.kill()
-            self.rook.ataque = 100
+            self.rook.ataque = 1000
             #if self.altura_imagen <= 0:
              #   self.kill()
             #else:
