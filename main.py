@@ -556,6 +556,7 @@ def instrucciones():
 
 
         
+appear=0
 #escenario()
 #E: -
 #S: se crea el escenario en la pantalla
@@ -632,17 +633,12 @@ def buscar_img(nombre,lista):
 #S: inicia el cliclo de juego
 #R: - 
 def juego():
-    appear =0
-    oleada=0
+    global appear
     global musica
     global aparicion
     global matriz_avatares
-    global matriz_monedas
-    global matriz_rooks
-
     #Iniciando ciclo
     running = True
-    
     
     #Se detiene la musica del menu e inicia la musica del juego
     if musica==True:
@@ -670,33 +666,11 @@ def juego():
     #Ciclo de juego
     while running:
         appear+=1
-        if appear == 1000 and oleada<10:
+        if appear == 1000:
             colocar_aleatorio(matriz_de_spawn,[0,"1","2","3","4"],[1,50,100,10,5])
             matriz_avatares[-1] = matriz_de_spawn[0]
             leer_matriz_avatar('Normal')
             appear=0
-            oleada+=1
-            print (oleada)
-        if oleada==1:
-            matriz_rooks = crear_matriz(9,5)
-            matriz_avatares = crear_matriz(10,5)
-            matriz_monedas = crear_matriz(9,5)
-            allsprites.empty()
-            grupo_avatares.empty()
-            grupo_rooks.empty()
-            grupo_particulas.empty() 
-                
-            print("empezando")
- 
-            meta = y_escenario - 11
-            while y_escenario != meta:  
-                escenario(int(y_escenario))
-                y_escenario -= 0.25
-                pygame.display.update()
-            y_escenario = int(y_escenario)
-            oleada = 0
-        else:
-            pass
         mouse = False
 
         #Reiniciando superficie y pantalla
@@ -826,13 +800,19 @@ def juego():
                                 print(allsprites.sprites())
                             else:
                                 pass
-                        
                             
                         seleccionador = pygame.transform.scale(seleccionador1,(53,43))
                         seleccionando_casilla = True
                         casilla_seleccionada = False
-
-            
+                    #if y < 0:
+                     #   meta = y + 11
+                      #  while y != meta:
+                       #     escenario(int(y))
+                       #     y += 0.25
+                       #     pygame.display.update()
+                        #y = int(y)
+                    #else:
+                       #pass
                    
         pygame.display.update()
         clock.tick(60)
