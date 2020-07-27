@@ -548,6 +548,7 @@ def escenario(y_actual):
             x += 1
         y += 1
 
+    leer_matriz_monedas(display)
     for avatar in grupo_avatares.sprites():
         #print(avatar,avatar.rect.y)
         avatar.handle_event(grupo_rooks,grupo_particulas)
@@ -569,9 +570,7 @@ def escenario(y_actual):
         particula.image.set_colorkey((0,0,0))
         if grupo_particulas.has(particula):
             particula.add(allsprites)
-            
-    leer_matriz_monedas(display)
-
+    
     allsprites.draw(display)
 
     screen.blit(pygame.transform.scale(display,(window_size)),(0,0))#Tansformando superficie a la escala de la ventana
@@ -638,7 +637,7 @@ def juego():
         moneda_oro = pygame.transform.scale(moneda_oro,(25,20))
         screen.blit(moneda_oro,(monedas_x,0))
         texto_moneda = texto(str(monedas),font15,(255,255,255),screen,monedas_x,0,"derecha")
-        colocar_aleatorio(matriz_monedas,[0,"1","2","3"],[100000,1,1,1])
+        colocar_aleatorio(matriz_monedas,[0,"1","2","3"],[80000,1,1,1])
         
         #Posicionando seleccionador
         mouse_pos = pygame.mouse.get_pos()
