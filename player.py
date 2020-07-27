@@ -96,16 +96,21 @@ class Escudero(pygame.sprite.Sprite):
         
     def handle_event(self,rooks,atq_rooks):
         if self.life>0:
-            #print(self.posicion_matriz[1])
-            if self.wait==self.timeattack and pygame.sprite.spritecollide(self,rooks,False) :
+            #print(self.posicion_matriz[1]        
+            if pygame.sprite.spritecollide(self,rooks,False):
+                if self.wait>=self.timeattack :
                     self.update('attack')
                     self.wait=0
-            elif pygame.sprite.spritecollide(self,rooks,False) or self.posicion_matriz[1]<=0:
+                    
                 self.update('stand_up')
                 self.wait+=1
                 for i in pygame.sprite.spritecollide(self,atq_rooks,False):
                     self.life-=i.damage
-                    self.wait+=1               
+                    self.wait+=1          
+                    
+            elif self.posicion_matriz[1]<=0:
+                self.update('stand_up')
+                         
             else:
                 self.update('up')
                 for i in pygame.sprite.spritecollide(self,atq_rooks,False):

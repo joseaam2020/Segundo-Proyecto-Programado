@@ -677,7 +677,7 @@ def juego():
             appear=0
             oleada+=1
             print (oleada)
-        if oleada==1:
+        if oleada==15:
             matriz_rooks = crear_matriz(9,5)
             matriz_avatares = crear_matriz(10,5)
             matriz_monedas = crear_matriz(9,5)
