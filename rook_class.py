@@ -59,5 +59,5 @@ class Rooks(pygame.sprite.Sprite):
                 else:
                     pass
         else:
-            self.kil()
+            self.kill()
                 

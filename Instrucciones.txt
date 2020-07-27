@@ -6,7 +6,6 @@ lleguen a la ultima
 casilla utilizando 
 las Rooks y sus 
 poderes para impedirlo.
-
 El sistema de juego es 
 simple, al hacer clic
 izquierdo sobre una ca-
@@ -19,14 +18,17 @@ el simbolo superior iz-
 quierdo es la Rook de 
 Arena, el simbolo inf-
 erior izquierdo es la
-Rook de Roca, el simb-
-olo inferior derecho
-es la Rook de Fuego y
+Rook de Roca, el simbolo 
+inferior derecho es la 
+Rook de Fuego y
 por ultimo, el simbolo
 superior derecho es
 la Rook de Agua.
-siempre y cuando cuen-
-tes con las monedas
-necesarias.
+siempre y cuando cuentes 
+con las monedas necesarias.
+#Silenciar Musica:
+Para silenciar presione 1
+Para escuchar la musica
+presione 2
  
 

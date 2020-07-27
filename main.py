@@ -164,9 +164,7 @@ casilla4= pygame.image.load("Tiles2/casilla4.png").convert()
 matriz_avatares=crear_matriz(10,5)
 matriz_de_spawn= crear_matriz(1,5)
 colocar_aleatorio(matriz_de_spawn,[0,"1","2","3","4"],[1000,50,100,10,5])
-print(matriz_avatares,matriz_de_spawn)
 matriz_avatares[-1] = matriz_de_spawn[0]
-print(matriz_avatares)
 
 def leer_matriz_avatar(dificultad):
     global allsprites
@@ -374,7 +372,6 @@ def creditos():
     creditos_lista = creditos.read()
     creditos.close()
     creditos_lista = creditos_lista.split('\n')
-    print(creditos_lista)
 
     #Iniciando Valor y de display_creditos
     creditos_y = 0
@@ -448,9 +445,9 @@ def creditos():
                 mouse_pos = pygame.mouse.get_pos()
                 x,y = mouse_pos
                 x,y=[x-creditosrect.x,y-creditosrect.y]
-                if tsrect.collidepoint((x,y)):
+                if tsrect.collidepoint((x,y)) and creditos_y == 0:
                     creditos_y -= frame.get_height()
-                elif creditos_y < 0 :
+                elif creditos_y < 0 and creditos_y == -frame.get_height():
                     if  ts2rect.collidepoint((x,y)):
                         creditos_y += frame.get_height()
                     
@@ -472,7 +469,6 @@ def instrucciones():
     instrucciones_lista = instrucciones.read()
     instrucciones.close()
     instrucciones_lista = instrucciones_lista.split('\n')
-    print(instrucciones_lista)
 
     #Iniciando Valor y de display_instrucciones
     instrucciones_y = 0
@@ -505,7 +501,7 @@ def instrucciones():
         instrucciones = pygame.Surface((scrollrect.width,scrollrect.height))
         instrucciones.set_colorkey((0,0,0))
         instruccionesrect = instrucciones.get_rect()
-        instruccionesrect.midtop= (150,100)
+        instruccionesrect.midtop= (200,100)
         
         frame =  pygame.Surface((160,240))
         framerect = frame.get_rect()
@@ -544,9 +540,9 @@ def instrucciones():
                 mouse_pos = pygame.mouse.get_pos()
                 x,y = mouse_pos
                 x,y=[x-instruccionesrect.x,y-instruccionesrect.y]
-                if tsrect.collidepoint((x,y)):
+                if tsrect.collidepoint((x,y)) and instrucciones_y == 0:
                     instrucciones_y -= frame.get_height()
-                elif instrucciones_y < 0 :
+                elif instrucciones_y < 0 and instrucciones_y == -frame.get_height():
                     if  ts2rect.collidepoint((x,y)):
                         instrucciones_y += frame.get_height()
                     
@@ -667,20 +663,18 @@ def juego():
 
     #Definiendo Velocidad de ataque rooks
     velocidad_ataque = 3
-    print (allsprites.sprites(),grupo_avatares.sprites())
     
     #Ciclo de juego
     while running:
         appear+=1
         if appear == 1000:
-            colocar_aleatorio(matriz_de_spawn,[0,"1","2","3","4"],[1,50,100,10,5])
+            colocar_aleatorio(matriz_de_spawn,[0,"1","2","3","4"],[100,50,4,20,15])
             matriz_avatares[-1] = matriz_de_spawn[0]
             leer_matriz_avatar('Normal')
             appear=0
 
             oleada+=1
-            print (oleada)
-        if oleada==1:
+        if oleada==15:
             matriz_rooks = crear_matriz(9,5)
             matriz_avatares = crear_matriz(10,5)
             matriz_monedas = crear_matriz(9,5)
@@ -689,7 +683,6 @@ def juego():
             grupo_rooks.empty()
             grupo_particulas.empty() 
                 
-            print("empezando")
  
             meta = y_escenario - 11
             while y_escenario != meta:  

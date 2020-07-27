@@ -6,12 +6,10 @@ Tambien se creo la primera version de uno se los escenarios.
 Jueves 9-7-2020:
 5 horas trabajando en estudiar más sobre github, añadir partes al primer escenario, crear el segundo escenario y crear el menu.
 Tambien se logro animar el movimiento de los avatares. 
-<<<<<<< HEAD
 Viernes 10-7-2020:
 2 horas trabajando en el mapa
-Sabados 10-7-2020: 
+Sabados 11-7-2020: 
 3 horas trabajando en el mapa
 Sabado 18-7-2020:
 5 horas Haciendo arreglos en los avatares y torres y en el sistema de colocación de torres, implementando la aparicion de monedas de manera aleatoria(aun en proceso) y arreglos en el funcionamiento del programa
-=======
->>>>>>> refs/remotes/origin/master
+

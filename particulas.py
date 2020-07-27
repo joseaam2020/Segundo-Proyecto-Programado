@@ -32,6 +32,7 @@ class Particula(pygame.sprite.Sprite):
             pos_tmp = self.rect.midtop
             self.rect = self.image.get_rect()
             self.rect.midtop = pos_tmp
+
         else:
             self.kill()
             self.rook.ataque = 1000
